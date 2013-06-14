@@ -21,25 +21,24 @@
 %% $Id: elsarticle-template-2-harv.tex 155 2009-10-08 05:35:05Z rishi $
 %% $URL: http://lenova.river-valley.com/svn/elsbst/trunk/elsarticle-template-2-harv.tex $
 %%
-\documentclass[preprint,authoryear,12pt]{elsarticle}
+
+%%\documentclass[preprint,authoryear,12pt]{elsarticle}
 
 %% Use the option review to obtain double line spacing
 %% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
 
 %% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
 %% for a journal layout:
-%% \documentclass[final,authoryear,1p,times]{elsarticle}
-%% \documentclass[final,authoryear,1p,times,twocolumn]{elsarticle}
-%% \documentclass[final,authoryear,3p,times]{elsarticle}
-%% \documentclass[final,authoryear,3p,times,twocolumn]{elsarticle}
+
+%% Astronomy & Computing uses 5p
 %% \documentclass[final,authoryear,5p,times]{elsarticle}
-%% \documentclass[final,authoryear,5p,times,twocolumn]{elsarticle}
+\documentclass[final,authoryear,5p,times,twocolumn]{elsarticle}
 
 %% if you use PostScript figures in your article
 %% use the graphics package for simple commands
 %% \usepackage{graphics}
 %% or use the graphicx package for more complicated commands
-%% \usepackage{graphicx}
+\usepackage{graphicx}
 %% or use the epsfig package if you prefer to use the old commands
 %% \usepackage{epsfig}
 
@@ -76,7 +75,7 @@
 
 % \biboptions{}
 
-\journal{Nuclear Physics B}
+\journal{Astronomy \& Computing}
 
 \begin{document}
 
@@ -103,19 +102,47 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{}
+\title{Automated reduction of submillimetre single-dish heterodyne
+  data from the James Clerk Maxwell Telescope using ORAC-DR}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{<author name>}
 %% \address[label1]{<address>}
 %% \address[label2]{<address>}
 
-\author{}
+\author[jac]{Malcolm J.\ Currie\corref{cor1}}
+\ead{m.currie@jach.hawaii.edu}
+\author[jac,cornell]{Tim Jenness}
+\ead{tjenness@cornell.edu}
+\author[jac]{Remo P.\ J.\ Tilanus\fnref{rpt}}
+\author[jac]{Brad Cavanagh}
+\author[jac]{David S. Berry}
+\author[jac]{Jamie Leech\fnref{jxl}}
+\author[jac]{Luca Rizzi\fnref{lr}}
 
-\address{}
+\cortext[cor1]{Corresponding author}
+\fntext[rpt]{Present address: Leiden Observatory, PO Box 9513, 2300 RA
+  Leiden, The Netherlands}
+\fntext[jxl]{Present address: Department of Physics, University of
+  Oxford, Denys Wilkinson Building, Keble Road, Oxford, OX1 3RH, UK}
+\fntext[lr]{Present address: W.\ M.\ Keck Observatory, 65-1120 Mamalahoa Hwy, Kamuela,
+  HI 96743, USA}
+
+\address[jac]{Joint Astronomy Centre, 660 N.\ A`oh\=ok\=u Place, Hilo, HI
+  96720, USA}
+\address[cornell]{Department of Astronomy, Cornell University, Ithaca,
+  NY 14853, USA}
 
 \begin{abstract}
 %% Text of abstract
+
+With the advent of modern multi-receptor heterodyne instruments that
+can result in observations generating thousands of spectra per minute it is
+no longer feasible to reduce these data as individual spectra. This
+paper describes how baselined, mosaicked data cubes can be created by
+an automated pipeline in a reliable manner, including detection of bad
+spectra, removal of transient effects and creation of high fidelity
+moment maps.
 
 \end{abstract}
 
@@ -124,6 +151,13 @@
 
 %% MSC codes here, in the form: \MSC code \sep code
 %% or \MSC[2008] code \sep code (2000 is the default)
+
+submillimeter astronomy \sep
+methods: data analysis \sep
+pipelines \sep
+techniques: spectroscopic \sep
+techniques: image processing \sep
+James Clerk Maxwell Telescope
 
 \end{keyword}
 
