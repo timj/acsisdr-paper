@@ -1,0 +1,5 @@
+*.aux
+*.spl
+*.log
+*.blg
+acsisdr.pdf
