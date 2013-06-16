@@ -2,4 +2,6 @@
 *.spl
 *.log
 *.blg
+*.bbl
+*.out
 acsisdr.pdf
