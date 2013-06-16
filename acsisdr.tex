@@ -182,15 +182,18 @@ James Clerk Maxwell Telescope
 \label{sec:intro}
 
 As heterodyne receivers have progressed from single-receptor
-instruments \citep{1992IJIMW..13.1487P,1992IJIMW..13..647D,1992IJIMW..13.1827C} to small
-focal plane arrays \citep{2003SPIE.4855..322G,2004A&A...423.1171S} to
-16 element arrays such as HARP at JCMT \citep{2009MNRAS.399.1026B},
-and correlators have improved such that we can easily obtain spectra
-at 10\,Hz with 8192 channels (AOSC,DAS,ACSIS) data rates have
-increased substantially such that it is now common-place to take a
-short observation resulting in thousands of spectra. This is only
+instruments
+\citep{1992IJIMW..13.1487P,1992IJIMW..13..647D,1992IJIMW..13.1827C} to
+small focal plane arrays
+\citep{2003SPIE.4855..322G,2004A&A...423.1171S} to 16 element arrays
+such as HARP at JCMT \citep{2009MNRAS.399.1026B}, and beyond
+\citep{2007stt..conf..264G}, and correlators have improved such that
+we can easily obtain spectra at 10\,Hz with 8192 channels, data rates
+have increased substantially such that it is now common-place to take
+a short observation resulting in thousands of spectra. This is only
 going to become worse with the advent of instruments with 64,000
-channels and large format arrays such as CHAI on CCAT.
+channels and large format arrays such as CHAI on CCAT
+\citep{2009ASPC..417..113R}.
 
 In submillimeter astronomy data reductions packages such as
 \htmladdnormallinkfoot{CLASS}{http://www.iram.fr/IRAMFR/GILDAS} and
@@ -257,7 +260,8 @@ discussed further in this paper.
 
 \subsection{Determining Cube Parameters}
 
-Description from David on how MAKECUBE works out the correct gridding.
+Description from David on how MAKECUBE works out the correct
+gridding. Include how we handle moving sources.
 
 \subsection{Automated Baseline Removal}
 
@@ -274,7 +278,7 @@ Malcolm's ADASS XXII poster.
 
 \subsection{Flatfielding}
 
-Early HARP data from 2006 seemed to have problems with the relatives
+Early HARP data from 2006 seemed to have problems with the relative
 calibration of the receptors. A self flatfielding algorithm was
 developed that relied on the receptors on average seeing the same
 signal for large scan maps of molecular clouds
@@ -313,13 +317,16 @@ Works great.
 The James Clerk Maxwell Telescope is operated by the Joint Astronomy
 Centre on behalf of the Science and Technology Facilities Council of
 the United Kingdom, the Netherlands Organisation for Scientific
-Research, and the National Research Council of Canada.
+Research, and the National Research Council of Canada. We thank the
+many JCMT support scientists and survey scientists who have tested the
+pipeline. In particular we thank Jessica Dempsey, Holly Thomas, Jan
+Wouterloot and Jennifer Hatchell.
 
 This work was built on the Starlink Software Collection which was
 developed by the Starlink Project until 2005
-\citep{1982QJRAS..23..485D,2005ASPC..347...22D} and then opened up to the
-community. The source code is
-open-source and is available at
+\citep{1982QJRAS..23..485D,2005ASPC..347...22D} and then opened up to
+the community. The source code for the Starlink software and ORAC-DR
+is open-source and is available at
 \htmladdnormallink{https://github.com/Starlink}.
 
 %% The Appendices part is started with the command \appendix;
