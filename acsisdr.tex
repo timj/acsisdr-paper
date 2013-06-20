@@ -177,6 +177,9 @@ James Clerk Maxwell Telescope
 \newcommand{\an}{Astron.\ Nach.}
 \newcommand{\ijimw}{Int.\ J.\ Infrared \& Millimeter Waves}
 
+%% Applications
+\newcommand{\makecube}{\textsc{Makecube}}
+
 %% main text
 \section{Introduction}
 \label{sec:intro}
@@ -260,15 +263,23 @@ discussed further in this paper.
 
 \subsection{Determining Cube Parameters}
 
+Once we decided that we would not require that a PI specifies their
+pixel grid in advance, it became clear that we would have to provide
+software that would automatically determine the pixel grid from the
+data itself. In the SMURF package data cubes are created from
+calibrated spectra using the \makecube\ command. \makecube\ can be
+given an externally specified grid but also has an \texttt{autogrid}
+option that leaves optimal grid determination to the application itself.
+
 Autogrid first projects the supplied sky positions into pixel
-positions using an arbitrary tangent plane projection that has 1
-arc-min square pixels with north upwards and the target position (or
-the first supplied sky position if no target position is available) at
-pixel (1,1).
+positions using an arbitrary tangent plane projection that has
+1~arcmin square pixels with North upwards and the target position
+(or the first supplied sky position if no target position is
+available) at pixel (1,1).
 
 It then projects each of these pixel positions onto a straight line
-passing through pixel (1,1) at an angle, theta, to north. This line is
-divided up into sections of length 1 arc-min, and a histogram formed
+passing through pixel (1,1) at an angle, theta, to North. This line is
+divided up into sections of length 1~arcmin, and a histogram formed
 of the number of projected positions that fall in each section. The
 amplitude and wavelength of any periodicity in this histogram is found
 by looking at the auto-correlation of the histogram (the amplitude is
