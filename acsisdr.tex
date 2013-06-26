@@ -347,15 +347,29 @@ line. Don't need much detail.
 
 \section{Processing of Legacy Data}
 
-Mention GSD, modifications for multi-subband support. Sub-band merging
-in general. How we can use the same pipeline processing to make many
-additional years of JCMT data available in a reduced form with
-incremental effort.
+Until ACSIS was delivered in 2005, heterodyne data were taken with a
+variety of backend systems including the Acousto-Optical Spectrometer
+(AOSC) and the Dutch Autocorrelation Spectrometer (DAS)
+\citep{1986SPIE..598..134B}. These backends wrote data in the
+Global Section Data (GSD) format \citep[e.g.][]{GSD1999} which was
+understood by the SPECX data reduction package. To ensure that as much
+of this historical data as possible is made available to the community
+in a useable format we have developed an extension to the SMURF
+package called \textsc{gsd2acsis} that converts the legacy data to the
+newer ACSIS data format (which is based on the Starlink NDF format
+\citep{NDF}). This enables the legacy data to be re-processed using
+the modern data reduction pipeline and automatically leads to these
+products being easily available from the JCMT Science Archive.
 
-Would be nice if we could reduce some GSD data and compare it with a
+The main difficulty in supporting legacy data in the pipeline related
+to the DAS splitting the bandwidth into many overlapping
+subbands. ACSIS data only ever had included two subbands for hybrid
+mode observations and so the subband merging algorithm had to be
+extended to support arbitrary numbers of subbands.
+
+\textit{Would be nice if we could reduce some GSD data and compare it with a
 published map from SPECX. Something like Horsehead but I can't find
-that actually published anywhere.
-
+that actually published anywhere.}
 
 \section{Conclusion}
 
