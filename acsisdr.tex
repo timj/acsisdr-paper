@@ -301,6 +301,10 @@ from each pixel projected sample position to the nearest pixel centre.
 \textit{Is there anything else in makecube that we want to mention
   that contributes to the automated processing?}
 
+\subsection{Sub-band merging}
+
+\textit{Anything to say here?}
+
 \subsection{Automated Baseline Removal}
 
 The real meat: smoothing, basic baseline subtraction, group coadd,
@@ -317,7 +321,15 @@ clump finding, unmakecube, source masking, iteration.
 
 \subsection{Determination of moment maps}
 
-Clump finding and baseline masking critical.
+Moment maps can be compromised if excessive baseline is included in
+the calculation. For example, in an integrated intensity calculation
+the inclusion of all the baseline noise can hide a weak line. The data
+reduction system has already calculated where the baseline regions are
+for each spectrum and so for moment maps this mask is negated. This
+leads to much improved fidelity.
+
+\textit{Figure of integrated intensity image with masking compared to
+  one without the baseline masking}
 
 \subsection{Removal of Bad-Baseline Spectra}
 
@@ -449,16 +461,82 @@ Now discuss the pipeline implementation. Before and after flatfielding examples.
 
 \subsection{Recipe Tuning}
 
-Some mention of the ability to bin up the frequency axis.
+The data reduction system can be configured by using recipe parameters
+supplied to ORAC-DR in a file. Each recipe has its own set of
+parameters that are supported and these can include options to bin up
+the frequency scale, control the output grid, control and regridding
+parameters and enable or disable flatfielding and bad baseline filtering.
 
 \subsection{Quality Assurance Parameters}
 
-Some of the QA parameters are interesting and we should mention them.
+The survey teams required a comprehensive set of quality assurance
+testing to ensure that the data quality is consistent. A number of QA
+tests were added and a full list is shown in Table \ref{tab:qa:params}.
+
+\begin{table}
+\caption{Quality Assurance Parameters}
+\label{tab:qa:params}
+\begin{tabular}{ll}
+BADPIX\_MAP  & \\
+CALINTTOL & \textit{Not implemented?} \\
+CALPEAKTOL & \textit{Not implemented?} \\
+FLAGTSYSBAD & \textit{Not implemented?} \\
+GOODRECEP & \textit{Not implemented?} \\
+RESTOL & \textit{Not implemented?} \\
+RESTOL\_SM & \textit{Not implemented?}  \\
+RES\_CHAN & \textit{Not implemented?}  \\
+RMSMEANTSYSTOL & \\
+RMSTSYSTOL & \\
+RMSTSYSTOL\_FAIL & \\
+RMSTSYSTOL\_QUEST & \\
+RMSVAR\_MAP & \\
+RMSVAR\_RCP &  \textit{Not implemented?} \\
+RMSVAR\_SPEC & \\
+TSYSBAD &  \textit{Not implemented?} \\
+TSYSMAX &  \textit{Not implemented?} \\
+TSYSVAR &  \textit{Not implemented?} \\
+VELRES
+\end{tabular}
+\end{table}
 
 \subsection{Alternative Recipes}
 
-Something about the other recipes such as line forest and broad
-line. Don't need much detail.
+It is not possible or even desirable for a single data reduction
+technique to apply to many different types of sources and science
+goals. For that reason a number of different recipes are made
+available and these can be chosen by the observer in the Observing
+Tool, overridden later on the command-line or by using a
+configuration file at the JCMT Science Archive.
+
+\subsubsection{Gradient}
+
+This is the standard recipe optimized for nearby molecular clouds with
+relatively narrow lines where there can be a velocity gradient across
+the cloud. This velocity gradient is a major motivation for the
+automated detection of baseline regions as it allows you to maximize
+the baseline region rather than supplying a simple range that
+encompasses all the data.
+
+\subsubsection{Broad line}
+
+Nearby galaxies have broad lines of many km/s so this recipe is tuned
+to be less aggressive for automatic baseline subtraction than the
+standard recipe that is deisgned for nearby molecular clouds.
+
+\subsubsection{Line Forest}
+
+Some transitions are very close together, for example methanol, and
+different techniques are required for handling the automated basline
+subtraction.
+
+\textit{Do we use findback?}
+
+\subsubsection{Continuum}
+
+For continuum observations, such as planets, baseline subtraction
+should not be done.
+
+\subsubsection{Frequency Switch}
 
 \section{Processing of Legacy Data}
 
