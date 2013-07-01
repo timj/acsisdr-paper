@@ -13,3 +13,4 @@ To build the document use pdflatex and bibtex.
     pdflatex acsisdr
     pdflatex acsisdr
 
+Entries in the bibtex file should be sorted.
