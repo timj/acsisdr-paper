@@ -328,8 +328,22 @@ reduction system has already calculated where the baseline regions are
 for each spectrum and so for moment maps this mask is negated. This
 leads to much improved fidelity.
 
-\textit{Figure of integrated intensity image with masking compared to
-  one without the baseline masking}
+\begin{figure}
+\includegraphics[width=0.46\textwidth]{integ_manual.pdf}
+\includegraphics[width=0.46\textwidth]{integ_auto.pdf}
+\caption{Two integrated intensity images from the same set of
+  observations of Serpens from 2007. The top figure uses a naive sum
+  over a significant part of the baseline. The lower figure uses the
+  automated baseline masking.}
+\label{fig:integ}
+\end{figure}
+
+Fig.\ \ref{fig:integ} compares integrated intensity images calculated
+in two different ways from the same data set. This data set has some
+interference in a few spectral channels of a few receptors that has
+not yet been handled by the main pipeline processing. Neverthless, the
+lower image shows no sign of the grid printing through and shows much
+more dynamic range than the naive integrated intensity image.
 
 \subsection{Removal of Bad-Baseline Spectra}
 
