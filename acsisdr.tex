@@ -279,13 +279,24 @@ positions using an arbitrary tangent plane projection that has
 available) at pixel (1,1).
 
 It then projects each of these pixel positions onto a straight line
-passing through pixel (1,1) at an angle, $\theta$, to North. This line is
-divided up into sections of length 1~arcmin, and a histogram formed
-of the number of projected positions that fall in each section. The
-amplitude and wavelength of any periodicity in this histogram is found
-by looking at the auto-correlation of the histogram (the amplitude is
-the auto-correlation at zero shift, and the wavelength is the shift at
-the first significant peak in the auto-correlation function).
+passing through pixel (1,1) at an angle, $\theta$, to North (see
+Fig.~\ref{fig:autogrid}). This line is divided up into sections of
+length 1~arcmin, and a histogram formed of the number of projected
+positions that fall in each section. The amplitude and wavelength of
+any periodicity in this histogram is found by looking at the
+auto-correlation of the histogram (the amplitude is the
+auto-correlation at zero shift, and the wavelength is the shift at the
+first significant peak in the auto-correlation function).
+
+\begin{figure}
+\includegraphics[width=0.48\textwidth]{autogrid}
+\caption{The Autogrid algorithm works by projecting each spectrum
+  position onto a straight line at an arbitrary angle $\theta$, and then
+  forming a histogram of the number of samples at each point along
+  this line. At the optimal value of $\theta$, the projected positions
+  line up, giving strong periodicity in the histogram.}
+\label{fig:autogrid}
+\end{figure}
 
 This is repeated for many different line orientations in order to find
 the value of $\theta$ (line orientation) that gives the strongest
