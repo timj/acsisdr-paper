@@ -304,6 +304,16 @@ create a 1-dimensional list of spectra in which the position of each
 spectrum is recorded explicitly in a table using the FITS-WCS
 \texttt{-TAB} algorithm \citep{2006A&A...446..747G}.
 
+The output spectrum at each position on the grid is formed by
+averaging the nearby input spectra. Various averaging schemes are
+available, the simplest being to place each input spectrum entirely
+into the nearest output pixel. Other schemes allow a 2-dimensional
+kernel to be used to spread each input spectrum out over a range of
+output pixels. Available kernels are those supported by the AST
+library \citep{SUN211,2012ASPC..461..825B} and include a simple
+bi-linear division between the four nearest neighbours, a Gaussian
+kernel, and various flavours of kernels based on a sinc function.
+
 \textit{Is there anything else in makecube that we want to mention
   that contributes to the automated processing?}
 
