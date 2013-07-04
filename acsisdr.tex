@@ -325,8 +325,53 @@ library \citep{SUN211,2012ASPC..461..825B} and include a simple
 bi-linear division between the four nearest neighbours, a Gaussian
 kernel, and various flavours of kernels based on a sinc function.
 
-\textit{Is there anything else in makecube that we want to mention
-  that contributes to the automated processing?}
+When using nearest neighbour resampling there are multiple ways to
+determine how bad pixels are propagated from input spectra into the
+output cube. The \texttt{AND} scheme uses all input data (thus
+reducing the noise in the output) and also minimises the number of bad
+pixels in the output. However, the memory requirements of the
+\texttt{AND} scheme can be excessive. For this reason, two other
+schemes, \texttt{FIRST} and \texttt{OR}, are provided which greatly
+reduce the memory requirements, at the expense either of introducing
+more bad pixels into the output (\texttt{OR}) or producing higher
+output noise levels (\texttt{FIRST}).
+
+\begin{description}
+\item[\texttt{FIRST}] The bad-pixel mask in each output spectrum is
+  inherited from the first input spectrum that contributes to the
+  output spectrum. Any subsequent input spectra that contribute to the
+  same output spectrum but which have a different bad-pixel mask are
+  ignored. So an output pixel will be bad if and only if the
+  corresponding pixel in the first input NDF that contributes to it is
+  bad. Since this scheme ignores entire input spectra if they do not
+  conform to the expected bad-pixel mask, the noise in the output can
+  be higher than using the other schemes. However, this scheme has the
+  benefit of using much less memory than the \texttt{AND} scheme, and
+  will in general produce fewer bad pixels in the output than the
+  \texttt{OR} scheme.
+
+\item[\texttt{OR}] The bad pixel mask in each output spectrum is the
+  union (logical OR) of the bad pixel masks for all input spectra that
+  contribute to the output spectrum. So an output pixel will be bad if
+  any of the input pixels that contribute to it are bad.  This scheme
+  will in general produce more bad output pixels than the
+  \texttt{FIRST} scheme, but the non-bad output pixels will have a
+  lower noise because, unlike \texttt{FIRST}, all the contributing
+  input data are coadded to produce the good output pixels. Like
+  \texttt{FIRST}, this scheme uses much less memory than \texttt{AND}.
+
+\item[\texttt{ AND}] The bad pixel mask for each output spectrum is
+  the intersection (logical AND) of the bad pixel masks for all input
+  spectra that contribute to the output spectrum. So an output pixel
+  will be bad only if all the input pixels that contribute to it are
+  bad. This scheme will produce fewer bad output pixels and will also
+  give lower output noise levels than \texttt{FIRST} or \texttt{OR},
+  but at the expense of much greater memory requirements.
+
+\end{description}
+
+The pipeline processing defaults to using the \texttt{AND} scheme but
+can be overridden if speed or memory are an issue.
 
 \subsection{Sub-band merging}
 
