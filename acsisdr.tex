@@ -263,13 +263,14 @@ discussed further in this paper.
 
 \subsection{Determining Cube Parameters}
 
-Once we decided that we would not require that a PI specifies their
-pixel grid in advance, it became clear that we would have to provide
-software that would automatically determine the pixel grid from the
-data itself. In the SMURF package data cubes are created from
-calibrated spectra using the \makecube\ command. \makecube\ can be
-given an externally specified grid but also has an \texttt{autogrid}
-option that leaves optimal grid determination to the application itself.
+Once we decided that we would not require that a PI specifies the
+output pixel grid of the data cube in advance, it became clear that we
+would have to provide software that would automatically determine the
+pixel grid from the data itself. In the SMURF package data cubes are
+created from calibrated spectra using the \makecube\
+command. \makecube\ can be given an externally specified grid but also
+has an \texttt{autogrid} option that leaves optimal grid determination
+to the application itself.
 
 Autogrid first projects the supplied sky positions into pixel
 positions using an arbitrary tangent plane projection that has
@@ -278,7 +279,7 @@ positions using an arbitrary tangent plane projection that has
 available) at pixel (1,1).
 
 It then projects each of these pixel positions onto a straight line
-passing through pixel (1,1) at an angle, theta, to North. This line is
+passing through pixel (1,1) at an angle, $\theta$, to North. This line is
 divided up into sections of length 1~arcmin, and a histogram formed
 of the number of projected positions that fall in each section. The
 amplitude and wavelength of any periodicity in this histogram is found
@@ -287,14 +288,14 @@ the auto-correlation at zero shift, and the wavelength is the shift at
 the first significant peak in the auto-correlation function).
 
 This is repeated for many different line orientations in order to find
-the value of theta (line orientation) that gives the strongest
+the value of $\theta$ (line orientation) that gives the strongest
 periodicity in the histogram. This orientation is used as the
 direction for the X pixel axis in the final grid. The corresponding
 wavelength is used as the pixel spacing on the X axis. The wavelength
-of the periodicity perpendicular to his direction is then found and
+of the periodicity perpendicular to this direction is then found and
 used as the pixel spacing on the Y axis.
 
-FInally, we shift the reference pixel coordinates by up to one pixel
+Finally, we shift the reference pixel coordinates by up to one pixel
 on each axis in order to minimise the sum of the squared distances
 from each pixel projected sample position to the nearest pixel centre.
 
