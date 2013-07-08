@@ -401,6 +401,29 @@ have edge effects and is duplicating data found in other tiles.
 The real meat: smoothing, basic baseline subtraction, group coadd,
 clump finding, unmakecube, source masking, iteration.
 
+\begin{enumerate}
+\item Create a cube coadd of all input observations
+\item Smooth using 3-D tophat function with BLOCK
+\item Use mfittrend in AUTO mode with first order baseline each
+  spectrum in turn (single mode)
+\item Mask out non-baseline region in original cube using the mask
+  from fit to smoothed data.
+\item Run mfittrend again AUTO=false single mode baseline=1 and
+  subtract baseline from cube
+\item \textit{Line forest baseline offset estimate seems to be for
+    hybrid mode}
+\item \textit{Create moment maps here but not relevant}
+\item I'm actually a bit confused at this point. I thought that we
+  determined a mask in 3D using CUPID and then we used it to make the
+  time series masks. As written I can't see that happening. The mask
+  is created for moment maps but then is not used elsewhere. The mask
+  fed back to the time series seems to be the one initially guessed by
+  mfittrend in REMOVE BASELINE THROUGH SMOOTHING.
+
+
+
+\end{enumerate}
+
 \begin{figure}
 \includegraphics[width=90mm]{flowchart.png}
 \caption{Flow chart of the pipeline recipe. This is currently Holly's
