@@ -211,27 +211,28 @@ pipeline that sent the calibrated spectra, with optional baselining,
 to a component that would place the spectra in to a data
 cube. Although it was possible to store the raw data in CASA
 measurement sets \citep{2012ASPC..461..849P}\footnote{At the time this
-  was being developed CASA was known as AIPS++}, the data cube was the product that was archived and
-taken away by the astronomer for further analysis. This strategy was
-forced on us given the computer resources available when ACSIS was
-being designed and developed and was known to have risks associated
-with it. Coadding spectra into the cube allowed for impressive ``data
-compression'' for stare and jiggle observing modes although the gains
-were much less in scanning observing modes. There were many downsides
-though. The observing system required that the cube parameters be
-specified and initially it was felt that the observer should select
-the parameters in the Observing Tool \citep{2002ASPC..281..453F}. It
-was also necessary that the observer specify the baseline regions and
-any frequency binning required. The gridding and the frequency binning
-were irreversible and the observer needed to ensure they did not make
-a mistake. Additionally, baselining with anything other than a DC
-offset was also problematic as the fit parameters for every spectrum
-were not stored and so could not be reversed. The burden placed on the
-observer having to specify everything, whilst simultaneously not
-making a mistake, was not acceptable and by 2006 we realised that
-computers were fast enough and storage large enough to be able to
-write the calibrated spectra directly to disk and defer further data
-reduction to a pipeline.
+  was being developed CASA was known as AIPS++
+  \citep{2004ASPC..314..468M}}, the data cube was the product that was
+archived and taken away by the astronomer for further analysis. This
+strategy was forced on us given the computer resources available when
+ACSIS was being designed and developed and was known to have risks
+associated with it. Coadding spectra into the cube allowed for
+impressive ``data compression'' for stare and jiggle observing modes
+although the gains were much less in scanning observing modes. There
+were many downsides though. The observing system required that the
+cube parameters be specified and initially it was felt that the
+observer should select the parameters in the Observing Tool
+\citep{2002ASPC..281..453F}. It was also necessary that the observer
+specify the baseline regions and any frequency binning required. The
+gridding and the frequency binning were irreversible and the observer
+needed to ensure they did not make a mistake. Additionally, baselining
+with anything other than a DC offset was also problematic as the fit
+parameters for every spectrum were not stored and so could not be
+reversed. The burden placed on the observer having to specify
+everything, whilst simultaneously not making a mistake, was not
+acceptable and by 2006 we realised that computers were fast enough and
+storage large enough to be able to write the calibrated spectra
+directly to disk and defer further data reduction to a pipeline.
 
 \section{Heterodyne Data Reduction Pipeline}
 
