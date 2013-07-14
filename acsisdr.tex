@@ -469,7 +469,8 @@ leads to much improved fidelity. As discussed in \S \ref{sec:makecube}
 the data are potentially spread over multiple data cubes that must be
 processed independently and the resulting moment map is created by
 mosaicking the individual submaps taking into account the border
-regions.
+regions. This is configured such that no resampling is required as
+\textsc{makecube} ensures that all tiles are on the same pixel grid.
 
 \begin{figure}
 \includegraphics[width=0.46\textwidth]{integ_manual.pdf}
