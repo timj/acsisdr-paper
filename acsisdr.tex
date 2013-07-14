@@ -421,9 +421,33 @@ clump finding, unmakecube, source masking, iteration.
   fed back to the time series seems to be the one initially guessed by
   mfittrend in REMOVE BASELINE THROUGH SMOOTHING.
 
+\item A new time-series is then created for each input observation
+  using the \textsc{unmakecube} command and the original time-series
+  as templates. The result is a time-series with the baseline
+  indicated in each spectrum.
 
+\item The inverse of the baseline mask is then applied to the original
+  observations to blank out the emission leaving a time-series which
+  contains only baseline regions.
+
+\item \textsc{mfittrend} is then used to calcualate a baseline using
+  just the baseline regions. A spline or polynomial fit can be used
+  here although the most common options are 3rd order polynomials or
+  simple linear baselines.
+
+\item The baseline fits are then subtracted from the original input
+  observations.
+
+\item A new cube is created by combining all the baselined observations.
 
 \end{enumerate}
+
+We can then repeat this step one more time by creating a new
+mask from the newly-created coadd and then iterating. In practice,
+given the linear properties of baseline addition, one iteration can be
+enough. More iterations are needed if bad baseline detection and QA
+parameters are recalculated which result in different numbers of
+spectra being available each iteration.
 
 \begin{figure}
 \includegraphics[width=90mm]{flowchart.png}
