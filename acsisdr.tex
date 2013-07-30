@@ -466,7 +466,9 @@ the calculation. For example, in an integrated intensity calculation
 the inclusion of all the baseline noise can hide a weak line. The data
 reduction system has already calculated where the baseline regions are
 for each spectrum and so for moment maps this mask is negated. This
-leads to much improved fidelity. As discussed in \S \ref{sec:makecube}
+leads to much improved fidelity and improves upon using a simple threshold or
+the smoothing scheme used in the \textsc{momnt} command in AIPS
+\cite[][ascl:9911.003]{2003ASSL..285..109G}. As discussed in \S \ref{sec:makecube}
 the data are potentially spread over multiple data cubes that must be
 processed independently and the resulting moment map is created by
 mosaicking the individual submaps taking into account the border
