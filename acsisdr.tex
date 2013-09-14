@@ -392,7 +392,20 @@ have edge effects and is duplicating data found in other tiles.
 
 \subsection{Sub-band merging}
 
-\textit{Anything to say here?}
+In hybrid modes the correlator is configured to use multiple
+hardware subsystems to process parts of the required bandwidth so
+that they can be combined in the data reduction. The correlator is
+usually configured such that the individual spectra overlap and also
+have channels that are aligned to within a few per cent of a pixel.
+
+The data acqusition system does not combine the subbands and so this
+must be done by the pipeline. If the pipeline determines that it is
+dealing with a hybrid mode observation the merging is done in
+bulk. First the spectra are sorted by time (the ACSIS acquisition
+computer does not guarantee that spectra will be written to files in
+time order), then the overlap region is determined and the noisy ends
+are trimmed before they are combined. The spectra can optionally have
+their DC level adjusted before combining.
 
 \textit{Could put up a plot of a DAS observation with all the
   overlapping subbands displayed. There is a reasonable plot on the
