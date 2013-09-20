@@ -743,11 +743,22 @@ The main difficulty in supporting legacy data in the pipeline related
 to the DAS splitting the bandwidth into many overlapping
 subbands. ACSIS data only ever had included two subbands for hybrid
 mode observations and so the subband merging algorithm had to be
-extended to support arbitrary numbers of subbands.
+extended to support arbitrary numbers of subbands. Additionally, the
+historical data are dominated by single-receptor instruments and most
+observations generated relatively few spectra, and few repeats of the
+same area of sky (depth in the first pass was preferred over short
+integration times but many repeats). This sometimes
+restricts the benefits that can be obtained by using a pipeline
+designed for focal plane arrays.
 
-\textit{Would be nice if we could reduce some GSD data and compare it with a
-published map from SPECX. Something like Horsehead but I can't find
-that actually published anywhere.}
+We tested the pipeline on one of the largest data sets from the
+historical era. Observations of the Horsehead nebula were an
+observatory backup project from 1995 to 1997. The $^{13}$CO
+$J=2\rightarrow 1$ component of the project consisted of approximately
+14,000 spectra from 154 observations spread over 12 nights. Reducing
+the data with SPECX was an involved process and preliminary results
+were presented in \citet{2001AAS...19915601S}. The GSD data were
+downloaded from the CADC and converted to ACSIS format.
 
 \section{Conclusion}
 
@@ -791,7 +802,11 @@ Research. We thank the many JCMT support scientists and survey
 scientists who have tested the pipeline. In particular we thank
 Jessica Dempsey, Holly Thomas, Jan Wouterloot, Jane Buckle and
 Jennifer Hatchell. We would also like to thank Jennifer Balfour and
-Vincent Tilanus for their work on \textsc{gsd2acsis}.
+Vincent Tilanus for their work on \textsc{gsd2acsis}. We thank
+G.~Sandell for providing us with the SPECX reductions of the Horsehead
+Nebula. This research used the facilities of the Canadian Astronomy
+Data Centre operated by the National Research Council of Canada with
+the support of the Canadian Space Agency.
 
 This work was built on the Starlink Software Collection, which was
 developed by the Starlink Project until 2005
