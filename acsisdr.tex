@@ -755,10 +755,51 @@ We tested the pipeline on one of the largest data sets from the
 historical era. Observations of the Horsehead nebula were an
 observatory backup project from 1995 to 1997. The $^{13}$CO
 $J=2\rightarrow 1$ component of the project consisted of approximately
-14,000 spectra from 154 observations spread over 12 nights. Reducing
+14,000 spectra from 154 observations spread over 12 nights using the
+single receptor receiver RxA2 \citep{1992IJIMW..13..647D}. Reducing
 the data with SPECX was an involved process and preliminary results
-were presented in \citet{2001AAS...19915601S}. The GSD data were
+were presented in \citet{2001AAS...19915601S}. For this test the GSD data were
 downloaded from the CADC and converted to ACSIS format.
+
+For these observations there were two major difficulties. The data
+were taken in raster scan mode with over-sampling in the scan
+direction (to prevent beam-smearing) and Nyquist sampling between
+rows. For the JCMT beam at this frequency this corresponds for
+5\,arcsec and 10\,arcsec spacing. The pipeline has not been optimized
+for this observing scheme although it correctly selected a 5\,arcsec
+pixel size. This meant that half of the map contained bad pixels and
+so an additional interpolation routine was required before the final
+integrated intensity image could be calculated. A consequence of the
+large number of flagged pixels in the map was that the quality
+assurance test associated with bad pixel map fraction had to be
+relaxed significantly.
+
+For some of the observations a bad reference position had been chosen,
+which leads to absorption features in some spectra. These data were
+used in the manual reduction because a long observation was taken on
+this reference position along with a new ``off'' position and the
+spectra corrected. Doing this in an automated fashion is difficult
+without more investigation into the related observations as GSD data
+did not record the location of the reference position in the
+header. For the purposes of the test these observations were not used.
+
+The results can be seen in Fig.\ \ref{fig:hhcmp}. The SPECX ``manual''
+reduction does look better than the automated reduction, especially in
+the region in the north east where some contamination still seems to
+be present. It seems feasible to assume that some of this can be
+improved upon by writing recipes specifically targeted at legacy data
+but the proof of concept is encouraging.
+
+%% How can I span two columns?
+\begin{figure}
+\includegraphics[width=0.23\textwidth]{horsehead-specx}
+\includegraphics[width=0.23\textwidth]{horsehead-pipeline}
+\caption{Left is an integrated intensity image created from
+  a cube made interactively using SPECX. Right is an
+  integrated intensity image made from a pipeline reduction of the
+  same raw data. Intensity scales are 0 to 35 K\,km/s.}
+\label{fig:hhcmp}
+\end{figure}
 
 \section{Conclusion}
 
