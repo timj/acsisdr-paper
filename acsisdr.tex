@@ -418,8 +418,15 @@ their DC level adjusted before combining.
 
 \subsection{Automated Baseline Removal}
 
+\begin{figure}
+\includegraphics[width=90mm]{flowchart}
+\caption{Flow chart of the pipeline recipe.}
+\label{fig:flowchart}
+\end{figure}
+
 The real meat: smoothing, basic baseline subtraction, group coadd,
-clump finding, unmakecube, source masking, iteration.
+clump finding, unmakecube, source masking, iteration. A basic outline
+is shown in Fig.\ \ref{fig:flowchart}.
 
 \begin{enumerate}
 \item Create a cube coadd of all input observations
@@ -467,12 +474,6 @@ given the linear properties of baseline addition, one iteration can be
 enough. More iterations are needed if bad baseline detection and QA
 parameters are recalculated which result in different numbers of
 spectra being available each iteration.
-
-\begin{figure}
-\includegraphics[width=90mm]{flowchart}
-\caption{Flow chart of the pipeline recipe.}
-\label{fig:flowchart}
-\end{figure}
 
 \subsection{Determination of moment maps}
 
