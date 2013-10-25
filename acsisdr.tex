@@ -244,15 +244,15 @@ directly to disk and defer further data reduction to a pipeline.
 
 It was decided that data reduction recipes would be written for the
 existing ORAC-DR pipeline infrastructure in use at JCMT
-\citep{2011tfa..confE..42J,2008AN....329..295C} with key requirements that
-the output data cube should be specified from the telescope pointing
-information and the location of each receptor on the sky, and that
-baseline regions should be determined automatically by examining the
-spectra as an ensemble. Furthermore, as progress was made on the
+\citep{2011tfa..confE..42J,2008AN....329..295C} with key requirements
+that the output data cube should be specified from the telescope
+pointing information and the location of each receptor on the sky, and
+that baseline regions should be determined automatically by examining
+the spectra as an ensemble. Furthermore, as progress was made on the
 pipeline we additionally realised that we should also be able to
 detect bad spectra and remove them from the coadd as well as doing
-quality assurance tests. The latter were critical for the JCMT Legacy
-Survey projects
+quality assurance (QA) tests (see \S\,\ref{sec:qa}). The latter were
+critical for the JCMT Legacy Survey projects
 \citep{2007PASP..119..855W,2009ApJ...693.1736W,2007PASP..119..102P}
 who wanted to ensure they received data of consistent quality.
 
@@ -671,36 +671,50 @@ parameters and enable or disable flatfielding and bad baseline filtering.
 
 \subsection{Quality Assurance Parameters \label{sec:qa}}
 
-The survey teams required a comprehensive set of quality assurance (QA)
-testing to ensure that the data quality is consistent for the duration
-of the surveys \citep{2008JCMTLSQA}. A number of QA tests were added
-to the pipeline and a full list is shown in Table \ref{tab:qa:params}.
-
 \begin{table}
-\caption{Quality Assurance Parameters}
+  \caption{Summary of the quality assurance parameters supported by
+    the pipeline. More details can be found in \citep{2008JCMTLSQA}.}
 \label{tab:qa:params}
 \begin{tabular}{ll}
-BADPIX\_MAP  & \\
-CALINTTOL & \textit{Not implemented?} \\
-CALPEAKTOL & \textit{Not implemented?} \\
-FLAGTSYSBAD & \textit{Not implemented?} \\
-GOODRECEP & \textit{Not implemented?} \\
-RESTOL & \textit{Not implemented?} \\
-RESTOL\_SM & \textit{Not implemented?}  \\
-RES\_CHAN & \textit{Not implemented?}  \\
-RMSMEANTSYSTOL & \\
-RMSTSYSTOL & \\
-RMSTSYSTOL\_FAIL & \\
-RMSTSYSTOL\_QUEST & \\
-RMSVAR\_MAP & \\
-RMSVAR\_RCP &  \textit{Not implemented?} \\
-RMSVAR\_SPEC & \\
-TSYSBAD &  \textit{Not implemented?} \\
-TSYSMAX &  \textit{Not implemented?} \\
-TSYSVAR &  \textit{Not implemented?} \\
-VELRES
+BADPIX\_MAP  & Percentage of bad spatial pixels\\
+   & in output product\\
+CALINTTOL & Percentage discrepancy allowed\\
+    &  in calibrator integrated intensity \\
+CALPEAKTOL & Percentage discrepancy allowed\\
+    & in calibrator peak\\
+FLAGTSYSBAD & Percentage of data allowed \\
+   & to be flagged due to T$_{sys}$\\
+GOODRECEP & Number of functioning receptors\\
+RESTOL & Tolerance on residuals of baseline \\
+   & region after baseline subtraction\\
+RESTOL\_SM & Variation of baseline residuals \\
+  & over restricted range\\
+RMSTOL & Consistency check comparing\\
+  & T$_{sys}$ with spectrum rms\\
+RMSVAR\_MAP & Percentage variation of\\
+  & rms noise across map \\
+RMSVAR\_RCP &  Percentage average rms receptors\\
+  & are allowed to vary from each other\\
+RMSVAR\_SPEC & Percentage variation of RMS\\
+  & across spectrum \\
+TSYSBAD &  Maximum allowable T$_{sys}$\\
+TSYSMAX & Threshold for  average T$_{sys}$ \\
+  & allowed for a receptor\\
+TSYSVAR &  Maximum allowed variation of\\
+  & T$_{sys}$ for a single receptor\\
 \end{tabular}
 \end{table}
+
+The survey teams required a comprehensive set of quality assurance
+testing to ensure that the data quality is consistent for the duration
+of the surveys \citep{2008JCMTLSQA}. A number of QA tests were added
+to the pipeline and a full list is shown in Table
+\ref{tab:qa:params}. Some of these QA parameters are designed to be
+run on spectral line standards observations prior to starting science
+observations to determine whether the system is configured properly
+and to allow the observer to decide which, if any, of the projects can
+be observed next. There are also QA tests designed to look at the
+time-series data and others that analyse the map/cube products.
 
 \subsection{Alternative Recipes}
 
