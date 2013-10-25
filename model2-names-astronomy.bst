@@ -1,7 +1,7 @@
 %%
-%% This is file `model2-names.bst'  (Version 2.0),
+%% This is file `model2-names-astronomy.bst'  (Version 1.0),
 %% 
-%% Copyright 2009-2013 Elsevier Ltd
+%% Copyright 2013 Elsevier Ltd
 %% 
 %% This file is part of the 'Elsarticle Bundle'.
 %% ---------------------------------------------
@@ -13,9 +13,9 @@
 %% and version 1.2 or later is part of all distributions of LaTeX
 %% version 1999/12/01 or later.
 %%
-%% $Id: model2-names.bst 217 2013-03-13 11:50:49Z rishi $
+%% $Id: model2-names-astronomy.bst 221 2013-10-25 07:34:20Z rishi $
 %%
-%% $URL: http://lenova.river-valley.com/svn/elsbst/trunk/New-Model-2/model2-names.bst $
+%% $URL: http://lenova.river-valley.com/svn/elsbst/trunk/New-Model-2/model2-names-astronomy.bst $
 %% 
 
 ENTRY
@@ -55,12 +55,16 @@ INTEGERS { output.state before.all mid.sentence after.sentence after.block }
 
 STRINGS { urlprefix doiprefix eprintprefix pubmedprefix }
 
+% Specify a maximum number (8) of authors to be shown.
+INTEGERS { maxauthors }
+
 FUNCTION {init.web.variables}
 {
- "\URLprefix "     'urlprefix :=
- "\DOIprefix"      'doiprefix :=
- "\ArXivprefix  "   'eprintprefix :=
- "\Pubmedprefix "  'pubmedprefix :=
+  "\URLprefix "     'urlprefix :=
+  "\DOIprefix"      'doiprefix :=
+  "\ArXivprefix  "   'eprintprefix :=
+  "\Pubmedprefix "  'pubmedprefix :=
+  #8 'maxauthors :=
 }
 
 FUNCTION {init.state.consts}
@@ -434,44 +438,48 @@ INTEGERS { nameptr namesleft numnames }
 
 FUNCTION {format.names}
 { 'bibinfo :=
-  duplicate$ empty$ 'skip$ {
-  's :=
-  "" 't :=
-  #1 'nameptr :=
-  s num.names$ 'numnames :=
-  numnames 'namesleft :=
-    { namesleft #0 > }
-    { s nameptr
-      "{vv~}{ll}{, jj}{, f{.}.}"
-      format.name$
-      bibinfo bibinfo.check
-      't :=
-      nameptr #1 >
-        {
-          namesleft #1 >
-            { ", " * t * }
-            {
-              "," *
-              s nameptr "{ll}" format.name$ duplicate$ "others" =
-                { 't := }
-                { pop$ }
-              if$
-              t "others" =
-                {
-                  " " * bbl.etal *
-                }
-                { " " * t * }
-              if$
-            }
-          if$
+  duplicate$ empty$
+    'skip$ 
+    { 's :=
+      "" 't :=
+      s num.names$ 'numnames :=
+      numnames maxauthors >
+        { % too many authors -- format as first author et al.
+          s #1 "{vv }{ll}{ jj}{, f. }" format.name$  % last name first
+          bbl.etal *
         }
-        't
+        { % maxauthors or fewer -- print them all
+          numnames 'namesleft :=
+          #1 'nameptr :=
+          { namesleft #0 > }
+            { s nameptr "{vv~}{ll}{, jj}{, f{.}.}" format.name$
+              bibinfo bibinfo.check
+              't :=
+              nameptr #1 >
+                { namesleft #1 >
+                    { ", " * t * }
+                    { "," *
+                      s nameptr "{ll}" format.name$ duplicate$ "others" =
+                        { 't := }
+                        { pop$ }
+                      if$
+                      t "others" =
+                        { " " * bbl.etal * }
+                        { " " * t * }
+                      if$
+                    }
+                  if$
+                }
+                't
+              if$
+              nameptr #1 + 'nameptr :=
+              namesleft #1 - 'namesleft :=
+            }
+          while$
+        }
       if$
-      nameptr #1 + 'nameptr :=
-      namesleft #1 - 'namesleft :=
     }
-  while$
-  } if$
+  if$
 }
 FUNCTION {format.names.ed}
 {
@@ -636,6 +644,8 @@ FUNCTION {output.bibitem}
   "}]{" * write$
   cite$ write$
   "}" write$
+  % debugging: define eg \def\logsortkey#1{{[\tiny #1]}} to see this
+  %"\logsortkey{" sort.key$ * "}" * write$
   newline$
   ""
   before.all 'output.state :=
@@ -946,7 +956,7 @@ FUNCTION {print.eprint}
  {eprint duplicate$ empty$
    { pop$ "" }
    { new.sentence
-     duplicate$ "\href{http://arxiv.org/abs/" swap$ * "}{\tt arXiv:" * swap$ * "}" *   }
+     duplicate$ "\href{http://arxiv.org/abs/" swap$ * "}{{\tt arXiv:" * swap$ * "}}" *   }
    if$
  }
 
@@ -1165,8 +1175,8 @@ FUNCTION {inproceedings}
           format.publisher.address output
         }
       if$
-%      format.bvolume output
-%      format.number.series output
+      format.bvolume output
+      format.number.series output
 %      format.pages output
     }
     { format.incoll.inproc.crossref output.nonnull
@@ -1362,7 +1372,7 @@ FUNCTION {format.lab.names}
         'skip$
         { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
             {
-              " " * bbl.etal *
+              "  " * bbl.etal *
             }
             { bbl.and space.word * s #2 "{vv~}{ll}" format.name$
               * }
@@ -1452,7 +1462,13 @@ FUNCTION {sort.format.names}
         {
           "   "  *
           namesleft #1 = t "others" = and
-            { "zzzzz" * }
+            { % adding "9999" here means that 'A Smith and B Jones and
+              % others' sorts after 'A Smith and B Jones' but before 
+              % 'A Smith and B Jones and C Brown'.  Putting "zzzz" here
+              % (which is what this once was) means that 'and others'
+              % sorts at the very end, and in reverse order of the
+              % length of the number of authors.
+              "9999" * }
             { t sortify * }
           if$
         }
@@ -1641,16 +1657,8 @@ FUNCTION {end.bib}
 EXECUTE {end.bib}
 %% End of customized bst file
 %%
-%% End of file `model2-names.bst'.
+%% End of file `model2-names-astronomy.bst'.
 %%
 %% Change log:
 %% -----------
-%% 22.04.2011
-%%
-%% 10.08.2012
-%%   a. doi, url, eprint, pmid added
-%%   b. Bibtype `webpage' defined
-%%
-%% 30.08.2012
-%%   a. collaboration added.
 %%
