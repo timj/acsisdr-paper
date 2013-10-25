@@ -432,62 +432,68 @@ baseline region.
 
 \begin{figure}
 \includegraphics[width=90mm]{flowchart}
-\caption{Flow chart of the pipeline recipe.}
+\caption{Flow chart of the pipeline recipe, including the initial step
+  where individual observations are analysed. \emph{QA} here indicates
+a quality assurance test (see \S\,\ref{sec:qa})}
 \label{fig:flowchart}
 \end{figure}
 
-The real meat: smoothing, basic baseline subtraction, group coadd,
-clump finding, unmakecube, source masking, iteration. A basic outline
-is shown in Fig.\ \ref{fig:flowchart}.
+Fig.\ \ref{fig:flowchart} shows the key steps in the automated
+baseline removal algorithm. The initial phase involves the creation of
+cubes from individual observations and a basic quality assurance test
+to remove obviously problematic spectra. Once this is completed a cube
+is created from all the observations. This cube will have baseline
+offsets and an estimate for these offsets has to be calculated before
+the advanced baseline processing can be performed. This is done by
+applying a tophat smooth in three dimensions to spread the line
+emission and baseline errors across multiple spatial positions. The
+Starlink KAPPA task \textsc{mfittrend} then is used to calculate a
+first order baseline fit for each spectrum in the data cube
+independently. The baseline region is estimated by... \emph{MJC to
+  write a description of AUTO mode in MFITTREND}.
 
-\begin{enumerate}
-\item Create a cube coadd of all input observations
-\item Smooth using 3-D tophat function with BLOCK
-\item Use mfittrend in AUTO mode with first order baseline each
-  spectrum in turn (single mode)
-\item Mask out non-baseline region in original cube using the mask
-  from fit to smoothed data.
-\item Run mfittrend again AUTO=false single mode baseline=1 and
-  subtract baseline from cube
-\item \textit{Line forest baseline offset estimate seems to be for
-    hybrid mode}
-\item \textit{Create moment maps here but not relevant}
-\item I'm actually a bit confused at this point. I thought that we
-  determined a mask in 3D using CUPID and then we used it to make the
-  time series masks. As written I can't see that happening. The mask
-  is created for moment maps but then is not used elsewhere. The mask
-  fed back to the time series seems to be the one initially guessed by
-  mfittrend in REMOVE BASELINE THROUGH SMOOTHING.
+Once \textsc{mfittrend} has calculated and removed a first pass at the
+baseline a mask is written out containing the baseline regions of the
+smoothed data cube. This mask is applied to the original
+unsmoothed data cube resulting in a cube consisting solely of
+baselines. \textsc{mfittrend} is then used again but this time fitting
+the entire (masked) spectrum, fitting a linear baseline to each
+spectrum in turn. The baselines are then finally subtracted from the
+original data cube.
 
-\item A new time-series is then created for each input observation
-  using the \textsc{unmakecube} command and the original time-series
-  as templates. The result is a time-series with the baseline
-  indicated in each spectrum.
+Now that a good estimate for a baseline has been subtracted the data
+cube can be analysed using more holistic approaches that can use
+information from source features in the molecular cloud or galaxy that
+span multiple spatial pixels. A clump-finding algorithm can be used to
+accurately distinguish the line features from baseline regions which
+can maximize optimize the baseline subtraction and aid in moment map
+creation (see \S \ref{sec:moment}). The Starlink \textsc{cupid}
+\citep{2007ASPC..376..425B} application contains a number of
+clump-finding algorithms that work in three dimensions. The choice of
+a particular algorithm is not critical and either Fellwalker or
+Clumpfind \citep{1994ApJ...428..693W} can be used.
 
-\item The inverse of the baseline mask is then applied to the original
-  observations to blank out the emission leaving a time-series which
-  contains only baseline regions.
+With an accurate knowledge of the line emission regions in the data
+there is now the option of applying this mask to the raw data. The
+SMURF \textsc{unmakecube} task is used for this. This application
+reads a raw time series cube and generates a new time series by
+calculating the position of each spectrum, looking up this position in
+the group data cube mask and writing the emission-masked spectrum to
+an output time-series cube. This time-series cube can then be used to
+mask the original time-series allowing the baseline to be fitted to
+each individual input spectrum.
 
-\item \textsc{mfittrend} is then used to calcualate a baseline using
-  just the baseline regions. A spline or polynomial fit can be used
-  here although the most common options are 3rd order polynomials or
-  simple linear baselines.
+This is critically important for generating properly
+baseline-subtracted cubes of the individual observations but can also
+be important for quality assurance tests. The enhanced baseline
+subtraction can ``resurrect'' spectra that were originally determined
+to be of poor quality and not used in the final cube. This iterative
+cube production with enhanced QA can lead to minor improvements in
+quality of the final product.  In practice, given the linear
+properties of baseline addition, one iteration can be enough and more
+are rarely needed.
 
-\item The baseline fits are then subtracted from the original input
-  observations.
-
-\item A new cube is created by combining all the baselined observations.
-
-\end{enumerate}
-
-We can then repeat this step one more time by creating a new
-mask from the newly-created coadd and then iterating. In practice,
-given the linear properties of baseline addition, one iteration can be
-enough. More iterations are needed if bad baseline detection and QA
-parameters are recalculated which result in different numbers of
-spectra being available each iteration.
-
-\subsection{Determination of moment maps}
+\subsection{Determination of moment maps \label{sec:moment}}
 
 Moment maps can be compromised if excessive baseline is included in
 the calculation. For example, in an integrated intensity calculation
@@ -663,7 +669,7 @@ parameters that are supported and these can include options to bin up
 the frequency scale, control the output grid, control any regridding
 parameters and enable or disable flatfielding and bad baseline filtering.
 
-\subsection{Quality Assurance Parameters}
+\subsection{Quality Assurance Parameters \label{sec:qa}}
 
 The survey teams required a comprehensive set of quality assurance (QA)
 testing to ensure that the data quality is consistent for the duration
