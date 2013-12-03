@@ -330,6 +330,7 @@ discussed further in this paper.
 
 
 \subsection{Heterodyne Data Format}
+\label{sec:format}
 
 A full description of the heterodyne data files at the JCMT can be
 found in (***...***), but the NDF (***...***) files store meta-data
@@ -591,9 +592,9 @@ include a simple bi-linear division between the four nearest
 neighbours, a Gaussian kernel, and various flavours of kernels based
 on a sinc function.
 
-The resampling can use either of the three schemes described in the
-previous section to determine how bad pixels are propagated from input
-spectra into the output cube.
+The resampling can use either of the three schemes described in
+section \S\ref{sec:format} to determine how bad pixels are propagated
+from input spectra into the output cube.
 
 One complication is that the data cube for a large area survey is
 potentially extremely large and many software package do not support
