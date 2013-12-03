@@ -50,6 +50,8 @@
 \usepackage[pdftex,pdfpagemode={UseOutlines},bookmarks,bookmarksopen,colorlinks,linkcolor={blue},citecolor={green},urlcolor={red}]{hyperref}
 \usepackage{hypernat}
 
+\usepackage{color}
+
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
 %% for the whole article with \linenumbers after \end{frontmatter}.
@@ -396,9 +398,9 @@ a quality assurance test (see \S\,\ref{sec:qa})}
 \label{fig:flowchart}
 \end{figure}
 
-(***RPT: the figure is incorrect: we do not make a cube for individual observation
+{\color{red}(***RPT: the figure is incorrect: we do not make a cube for individual observation
  (this is optional): the group cube is created from ungridded observations.
-  We need to work on the diagram  ***)
+  We need to work on the diagram  ***)}
 
 \section{Pipeline processing}
 
@@ -478,7 +480,7 @@ dimensions to spread the line emission and baseline errors across
 multiple spatial positions.
 
 
-(***RPT: THIS IS HOW FAR I GOT ***)
+{\color{red}(***RPT: THIS IS HOW FAR I GOT ***)}
 
 Once \textsc{mfittrend} has calculated and removed a first pass at the
 baseline a mask is written out containing the baseline regions of the
@@ -651,7 +653,8 @@ baseline region.
 
 The Starlink KAPPA task \textsc{mfittrend} is used to calculate a
 first order baseline fit for each spectrum in the data cube
-independently. The baseline region is estimated by... \emph{MJC to
+independently. The baseline region is estimated by...
+\emph{\color{red} MJC to
   write a description of AUTO mode in MFITTREND}.
 
 
@@ -699,8 +702,8 @@ integrated intensity image.
 \subsection{Removal of Bad-Baseline Spectra}
 
 
-\textit{Malcolm's ADASS XXII poster and JCMT Newsletter article. Blog mentions
-that we might also handle ringing in spectra.}
+\textit{\color{red} Malcolm's ADASS XXII poster and JCMT Newsletter article. Blog mentions
+that we might also handle ringing in spectra. Needs to be rewritten.}
 
 The bad baselines can be divided roughly into two classes:
 high-frequency, high amplitude; and low frequency, lower
@@ -1023,7 +1026,7 @@ facility may be important as more and more detectors are added to
 focal plane arrays and would be similar to dealing with readout issues
 of bolometer arrays.
 
-\textit{At one point Per was mentioning that Kriging would be a useful
+\textit{\color{red} At one point Per was mentioning that Kriging would be a useful
   option in makecube for doing an optimal unbiased linear
   interpolation method. I wonder if we should mention it here as an
   option for future work. In terms of ``Bolometer map-maker'' we do
