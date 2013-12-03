@@ -335,8 +335,9 @@ discussed further in this paper.
 \label{sec:format}
 
 A full description of the heterodyne data files at the JCMT can be
-found in (***...***), but the NDF (***...***) files store meta-data
-(single values, arrays, and tables) in addition to the astronomical
+found in \citet{OCS_ICD_022}, using NDF
+\citep{NDF,1988STARB...2...11C,P91_adassxxiii} files to store
+meta-data (single values, arrays, and tables) in addition to the astronomical
 data in a hierachical structure. Spectra from HARP arrive
 asynchronously from data-acquisition paths that in parallel handle
 data from the individual receptors. Long observations are split
@@ -356,7 +357,8 @@ While this roughly doubles the data volume, this is the only way to
 ensure correct error statistics and assignment of relative weights
 when data are combined.
 
-The JCMT heterodyne pipeline uses STARLINK (***...***) routines which
+The JCMT heterodyne pipeline uses Starlink \citep[see
+e.g.][]{2013ASPC..475..247B} routines which
 have been designed to maintain accurate variance and flagging data.
 Nevertheless, this is not sufficient to fully deal with the issue of
 bad data. An simple illustration is the coadding of two spectra with a
@@ -933,8 +935,7 @@ understood by the SPECX data reduction package. To ensure that as much
 of this historical data as possible is made available to the community
 in a useable format we have developed an extension to the SMURF
 package called \textsc{gsd2acsis} that converts the legacy data to the
-newer ACSIS data format (which is based on the Starlink NDF format
-\citep{NDF,1988STARB...2...11C,P91_adassxxiii}). This enables the legacy data to be re-processed using
+newer ACSIS data format. This enables the legacy data to be re-processed using
 the modern data reduction pipeline and automatically leads to these
 products being easily available from the JCMT Science Archive.
 
