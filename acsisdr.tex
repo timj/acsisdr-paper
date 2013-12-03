@@ -213,48 +213,107 @@ algorithms that work on the full data set
 \citep[e.g.,][]{2002ASPC..278..329M} were suggested. The ACSIS data
 reduction system \citep{2000ASPC..216..502L,2000SPIE.4015..114H},
 delivered to the JCMT in 2005, aimed to deal with the data rate issues
-by providing a pipeline that sent the calibrated spectra, with
-optional baselining, to a component that would place the spectra in to
-a data cube. Although it was possible to store the raw data in CASA
-(ascl:1107.013) measurement sets \citep{2012ASPC..461..849P}\footnote{At the time this
-  was being developed CASA was known as AIPS++
-  \citep{2004ASPC..314..468M}}, the data cube was the product that was
-archived and taken away by the astronomer for further analysis. This
-strategy was forced on us given the computer resources available when
-ACSIS was being designed and developed and was known to have risks
-associated with it. Coadding spectra into the cube allowed for
-impressive ``data compression'' for stare and jiggle observing modes
-although the gains were much less in scanning observing modes. There
-were many downsides though. The observing system required that the
-cube parameters be specified and initially it was felt that the
-observer should select the parameters in the Observing Tool
-\citep{2002ASPC..281..453F}. It was also necessary that the observer
-specify the baseline regions and any frequency binning required. The
-gridding and the frequency binning were irreversible and the observer
-needed to ensure they did not make a mistake. Additionally, baselining
-with anything other than a DC offset was also problematic as the fit
-parameters for every spectrum were not stored and so could not be
-reversed. The burden placed on the observer having to specify
-everything, whilst simultaneously not making a mistake, was not
-acceptable and by 2006 we realised that computers were fast enough and
-storage large enough to be able to write the calibrated spectra
-directly to disk and defer further data reduction to a pipeline.
+by providing a pipeline that in real-time co-added the calibrated
+spectra, with optional baselining, in to a data cube.  This strategy
+was forced on us given the computer resources available when ACSIS was
+being designed and developed and was known to have risks associated
+with it. Coadding spectra into the cube allowed for impressive ``data
+compression'' for stare and jiggle observing modes although the gains
+were less in scanning observing modes.
+The data cube was the product that was archived and taken away by the
+astronomer for further analysis, although it was also possible to
+store the raw data in CASA (ascl:1107.013) measurement sets
+\citep{2012ASPC..461..849P}\footnote{At the time this was being
+  developed CASA was known as AIPS++ \citep{2004ASPC..314..468M}},
+
+There are obvious downsides associated with this approach. The
+observing system required that the cube parameters be specified and
+initially it was felt that the observer should select the parameters
+in the Observing Tool \citep{2002ASPC..281..453F}. It was also
+necessary that the observer specify the baseline regions and any
+frequency binning required. Since such a process as a whole is
+irreversable, on a fundamental level it is not well-adapted to
+astronomical research where observations are not a well characterized
+and pre-set values may turn out to be a poor choice.  Consequently,
+when it became clear in 2006 computers were fast enough and storage
+large enough to be able to store the observed spectra without the need
+of real-time regridding and coadding, this further data reduction was
+migrated to a pipeline.
+
+A post-acquisition data reduction pipeline has clear advantages and in
+some form is now implemented at most modern observatories. Foremost,
+the process can be repeated both to correct for errors, but also, if
+necessary, to iteratively file-tune the reduction to the
+characteristics of the individual observations. Although tunable, the
+scripts or recipes that drive the pipeline impose a standard of
+reduction that can include advanced techniques and sophisticated
+quality assessment checks that would be hard for the average user to
+master. Furthermore different incarnations of the pipeline can be
+deployed in different environments: a basic version to provide
+near-time feedback at the telescope during observing, a comprehensive
+version at the observer's home institution for the advanced reduction,
+and a version at an archive center that can process the result of a
+user query, possibly retrieving and combining observations from
+different projects.
+
 
 \section{Heterodyne Data Reduction Pipeline}
 
-It was decided that data reduction recipes would be written for the
-existing ORAC-DR pipeline infrastructure in use at JCMT
-\citep{2011tfa..confE..42J,2008AN....329..295C} with key requirements
-that the output data cube should be specified from the telescope
-pointing information and the location of each receptor on the sky, and
-that baseline regions should be determined automatically by examining
-the spectra as an ensemble. Furthermore, as progress was made on the
-pipeline we additionally realised that we should also be able to
-detect bad spectra and remove them from the coadd as well as doing
-quality assurance (QA) tests (see \S\,\ref{sec:qa}). The latter were
-critical for the JCMT Legacy Survey projects
+The pipeline at the JCMT is implemented by writing heterodyne data
+reduction recipes for the ORAC-DR pipeline infrastructure
+\citep{2011tfa..confE..42J,2008AN....329..295C} that was already in
+use at the telescope. The first guiding principle for the overall
+design is for the pipeline to deliver sensible results based only on
+information in the data files themselves, without any further user
+input. This results in a number of key requirements such as that the
+output data cube is specified from the telescope pointing information
+and the location of each receptor on the sky, and that baseline
+regions are determined automatically by examining the spectra as an
+ensemble. On a more advanced level, it requires for the pipeline to be
+able to detect and remove bad spectra as well as carrying out quality
+assurance (QA) tests (see \S\,\ref{sec:qa}). The latter are critical
+for the JCMT Legacy Survey projects
 \citep{2007PASP..119..855W,2009ApJ...693.1736W,2007PASP..119..102P}
-who wanted to ensure they received data of consistent quality.
+who want to ensure they receive data of consistent quality.  Quality
+assurance tests not only need to judge the data against absolute
+criteria, they also need to test the self-consistency of the overall
+data set being processed, which possibly attempts to combine
+observations taken under vastly different conditions and even
+different instrument configuration.
+
+A second design principle for the pipeline is that its products
+retain the spatial and spectral resolution of the original data.  The
+data reduction relies heavily on spatial and spectral smoothing of the
+data cubes to improve S/N and isolate the 3-D nature of astronomical
+objects. Results from such an analysis are used to mask the original
+data, thus maintaining the original resolution. An example is
+baselining: the data cube is spatially smoothed to a lower resolution,
+both spatially and spectrally, in order to auto-detect emission-free
+baseline regions. The result is then used to mask the original
+un-smoothed data cube and perform the actual fit of the baselines.
+
+A further design principle is for the pipeline to be iterative: the
+final results can be used to refine the reduction of the individual data
+sets for which the S/N may be much worse. These in turn are then used
+to re-derive the results. Although the pipeline in principle can be
+configured with an arbitrary number of loops, in practice only a
+two-step process is needed. For scanning observations implementing
+this requires for the results, such as baseline masks, to be
+re-expanded in the time domain. Further optimizations are optional in
+the second step. For example, while the baseline fit is linear in
+during the first step, with secure baseline regions higher order fits
+can be used during the second step.
+
+It is not possible to run a general heterodyne pipeline without any a
+priori user-input at all. The reason for this is that at a fundamental
+level it is impossible to distinguish between e.g. a broad spectral
+line and a non-linear baseline feature or a narrow emission feature
+and a spurious data spike extending over a few channels. For JCMT data
+different pipeline recipes have been designed optimized towards
+e.g. the broad and narrow line case. The observer specifies the choice
+of pipeline reduction recipe in the Observing Tool when preparing the
+observations. The desired recipe is documented in the meta-data of
+each data file. Recipes will be discussed in more detail below.
 
 The JCMT heterodyne pipeline has two operating modes. The default
 behaviour is for the pipeline to generate the best possible data
@@ -269,23 +328,220 @@ main pipeline. It's role is to provide simple quality assurance
 information and basic coadds to the observer and it will not be
 discussed further in this paper.
 
+
+\subsection{Heterodyne Data Format}
+
+A full description of the heterodyne data files at the JCMT can be
+found in (***...***), but the NDF (***...***) files store meta-data
+(single values, arrays, and tables) in addition to the astronomical
+data in a hierachical structure. Spectra from HARP arrive
+asynchronously from data-acquisition paths that in parallel handle
+data from the individual receptors. Long observations are split
+over several files. One of the basic data reduction steps is thus
+collating and ordering of spectra into a time and receptor sequence.
+
+For e.g. scanning observations different receptors will observe almost
+the same sky position and will contribute to the same output pixel in
+the final gridded data-cube. The data reduction will thus need to keep
+accurate track of the performance of each receptor and the noise of
+each of the spectra individually. Moreover, since different receptors
+and varying channels may intermittently have problems, such as
+interference, flagging and noise-tracking may need to be propagated on a
+per-channel basis. Heterodyne data cubes at the JCMT for this reason
+have a variance array and flagging bits associated with each data point.
+While this roughly doubles the data volume, this is the only way to
+ensure correct error statistics and assignment of relative weights
+when data are combined.
+
+The JCMT heterodyne pipeline uses STARLINK (***...***) routines which
+have been designed to maintain accurate variance and flagging data.
+Nevertheless, this is not sufficient to fully deal with the issue of
+bad data. An simple illustration is the coadding of two spectra with a
+different DC level: the DC level of the result will be the average
+level. However, if one of the spectra has a bad channel, adopting the
+one remaining point in the output would result in a positive or
+negative spike since its DC level will not be average. In other words,
+a policy for dealing with bad data that is acceptable in one situation,
+i.e. spectra without a DC level or corrected for the DC level, can be
+problematic in a different situation.
+
+In combining data, the gridding software recognizes three schemes for
+dealing with bad data:
+\begin{description}
+\item[\texttt{AND}] An output pixel will be bad only if all the input
+   pixels are bad. This scheme will produce the least number of bad
+   output pixels, but memory requirements can be excessive and are much
+   larger than for the other two schemes.
+\item[\texttt{OR}] An output pixel will be bad if any of the input
+   pixels are bad. This scheme will produce the most bad output pixels,
+   but a more homogenous noise across the image.
+\item[\texttt{FIRST}] Only spectra that have the same bad pixel mask
+   as the first spectrum contribute to the output spectrum. It
+   produces less bad pixels in the output than the \texttt{OR}
+   scheme without the large memory footprint of the \texttt{AND} scheme.
+   This scheme is useful in absence of intermittent problems and where
+   the bad pixel mask e.g. results from long-term instrumental effect.
+\end{description}
+
+The pipeline processing defaults to using the \texttt{AND} scheme but
+can be overridden if speed or memory are an issue.
+
+
+\begin{figure}
+\includegraphics[width=90mm]{flowchart}
+\caption{Flow chart of the pipeline recipe, including the initial step
+  where individual observations are analysed. \emph{QA} here indicates
+a quality assurance test (see \S\,\ref{sec:qa})}
+\label{fig:flowchart}
+\end{figure}
+
+(***RPT: the figure is incorrect: we do not make a cube for individual observation
+ (this is optional): the group cube is created from ungridded observations.
+  We need to work on the diagram  ***)
+
+\section{Pipeline processing}
+
+Fig.\ \ref{fig:flowchart} shows the key steps in the automatic
+pipeline reduction of heterodyne data at the JCMT. An initial phase
+that checks individual observations and prepares them for coadding and
+gridding into the \texttt{group} cube. This is followed by a group
+phase where baselines are removed and emission selected in the coadded
+cube.  Next follows an iterative step: the resulting masks are
+re-expanded into the time-domain and applied to the individual
+observations with the aim at producing a better group file. Given that
+accurate baseline (emission-free) regions are available, e.g. higher
+order baselines can be removed from the individual observations and
+tighter QA tests can be applied. These three phases are discussed in
+more detail next.
+
+\subsection{Preprocessing the individual observations}
+
+The initial phase works on the ungridded individual observations,
+which in essence are a time series of spectra from each individual
+receptor with a typical dump time of 1 second or faster for scan
+observations.  Not all recipes perform exactly the same reduction, but
+common steps for each observation are:
+\begin{itemize}
+\item Combine all data files belonging to the observation
+\item Sort spectra by time and receptor
+\item Remove median signal per time step (i.e. common mode signal over
+all receptors and channels)
+\item Basic despiking and interference flagging
+\item Combination of overlapping spectral windows (sub-band merging)
+\item Basic QA assessment checks: flag noisy receptors, unexpectedly noisy
+observations, spectra with large noise gradients etc.
+\item (Optional) Remove basic linear baseline and grid the individual
+observation.
+\end{itemize}
+
+The preprocessing aims at preparing individual observations for
+coadding and removing obviously problematic spectra and channels.
+Note that, although gridded cubes can be produced for manual
+inspection of the individual observations, this is not needed for
+further processing because the coadded group cube is produced by
+combining the ungridded data from all observations rather than
+averaging gridded cubes.  This avoids having to resample already
+gridded cubes onto a common frame and allows also for the combination
+of mosaicked or even separate fields into a single cube.
+
+\subsection{Group processing}
+
+After the preprocessing is completed a gridded group cube is created
+from all the observations and processed further. Here is where the 3-D
+structure of the data becomes critical for the analysis and the
+different data reduction recipes become more specific. The first
+distinction is whether single spectral lines extend over a signicant
+fraction of the available band or not. If not, the second distinction
+is whether smoothing should be spatially biased (e.g. narrow spectral
+lines) or spectrally biased (broader lines and/or strong velocity
+gradients within the field-of-view). The smoothing so done by applying
+a tophat convolution in three dimentions (x,y,v) with a smoothing
+factor in each direction that depends on the recipe.  By default a
+recipe biased towards spatial smoothing will have smoothing factors of
+(x=5,y=5,v=10) pixels, whereas one biased towards spectral smoothing
+will be (x=3, y=3, v=25). Note that both type of recipes will reduce
+the noise per pixel by a factor of about 15. While the smoothing
+factor in velocity may seem excessive, they reflect the very high
+resolution and frequency coverage of present-day correlators in
+comparison with typical spectral lines.
+
+
+
+
+
+
+This cube will have baseline offsets and an estimate for these offsets
+has to be calculated before the advanced baseline processing can be
+performed. This is done by applying a tophat smooth in three
+dimensions to spread the line emission and baseline errors across
+multiple spatial positions.
+
+
+(***RPT: THIS IS HOW FAR I GOT ***)
+
+Once \textsc{mfittrend} has calculated and removed a first pass at the
+baseline a mask is written out containing the baseline regions of the
+smoothed data cube. This mask is applied to the original
+unsmoothed data cube resulting in a cube consisting solely of
+baselines. \textsc{mfittrend} is then used again but this time fitting
+the entire (masked) spectrum, fitting a linear baseline to each
+spectrum in turn. The baselines are then finally subtracted from the
+original data cube.
+
+Now that a good estimate for a baseline has been subtracted the data
+cube can be analysed using more holistic approaches that can use
+information from source features in the molecular cloud or galaxy that
+span multiple spatial pixels. A clump-finding algorithm can be used to
+accurately distinguish the line features from baseline regions which
+can maximize optimize the baseline subtraction and aid in moment map
+creation (see \S \ref{sec:moment}). The Starlink \textsc{cupid}
+\citep{2007ASPC..376..425B} application contains a number of
+clump-finding algorithms that work in three dimensions. The choice of
+a particular algorithm is not critical and either Fellwalker or
+Clumpfind \citep{1994ApJ...428..693W} can be used.
+
+With an accurate knowledge of the line emission regions in the data
+there is now the option of applying this mask to the raw data. The
+SMURF \textsc{unmakecube} task is used for this. This application
+reads a raw time series cube and generates a new time series by
+calculating the position of each spectrum, looking up this position in
+the group data cube mask and writing the emission-masked spectrum to
+an output time-series cube. This time-series cube can then be used to
+mask the original time-series allowing the baseline to be fitted to
+each individual input spectrum.
+
+This is critically important for generating properly
+baseline-subtracted cubes of the individual observations but can also
+be important for quality assurance tests. The enhanced baseline
+subtraction can ``resurrect'' spectra that were originally determined
+to be of poor quality and not used in the final cube. This iterative
+cube production with enhanced QA can lead to minor improvements in
+quality of the final product.  In practice, given the linear
+properties of baseline addition, one iteration can be enough and more
+are rarely needed.
+
+
+
+\section{Component processes}
+
 \subsection{Determining Cube Parameters}
 \label{sec:makecube}
 
-Once we decided that we would not require that a PI specifies the
-output pixel grid of the data cube in advance, it became clear that we
-would have to provide software that would automatically determine the
-pixel grid from the data itself. In the SMURF package data cubes are
-created from calibrated spectra using the \makecube\
-command. \makecube\ can be given an externally specified grid but also
-has an \texttt{autogrid} option that leaves optimal grid determination
-to the application itself.
+Since the output pixel grid need not be specified in advance, software
+is required to determine the pixel grid from the data itself. In the
+SMURF package data cubes are created from calibrated spectra using the
+\makecube\ command. \makecube\ can be given an externally specified
+grid but also has an \texttt{autogrid} option that leaves optimal grid
+determination to the application itself.
 
-Autogrid first projects the supplied sky positions into pixel
-positions using an arbitrary tangent plane projection that has
-1~arcmin square pixels with North upwards and the target position
-(or the first supplied sky position if no target position is
-available) at pixel (1,1).
+Limited by the size of the horns, receptors in HARP are spaced
+30\,arcsecs apart, which introduces a natural scale of order an arcmin
+into the observations, even if scan and jiggle observations will be
+sampled on much smaller scales than that. Autogrid first projects the
+supplied sky positions into pixel positions using an arbitrary tangent
+plane projection that has 1~arcmin square pixels with North upwards
+and the target position (or the first supplied sky position if no
+target position is available) at pixel (1,1).
 
 It then projects each of these pixel positions onto a straight line
 passing through pixel (1,1) at an angle, $\theta$, to North (see
@@ -315,72 +571,29 @@ wavelength is used as the pixel spacing on the X axis. The wavelength
 of the periodicity perpendicular to this direction is then found and
 used as the pixel spacing on the Y axis.
 
-Finally, we shift the reference pixel coordinates by up to one pixel
+Finally, the reference pixel coordinates is shifted by up to one pixel
 on each axis in order to minimise the sum of the squared distances
 from each pixel projected sample position to the nearest pixel centre.
 
-If the positions do not form a regular grid, an option is available to
-create a 1-dimensional list of spectra in which the position of each
-spectrum is recorded explicitly in a table using the FITS-WCS
-\texttt{-TAB} algorithm \citep{2006A&A...446..747G}.
+\footnote{If the positions do not form a regular grid, an option is
+available to create a 1-dimensional list of spectra in which the
+position of each spectrum is recorded explicitly in a table using
+the FITS-WCS \texttt{-TAB} algorithm \citep{2006A&A...446..747G}.}
 
-The output spectrum at each position on the grid is formed by
-averaging the nearby input spectra. Various averaging schemes are
-available, the simplest being to place each input spectrum entirely
-into the nearest output pixel. Other schemes allow a 2-dimensional
-kernel to be used to spread each input spectrum out over a range of
-output pixels. Available kernels are those supported by the AST
-library \citep{SUN211,2012ASPC..461..825B} and include a simple
-bi-linear division between the four nearest neighbours, a Gaussian
-kernel, and various flavours of kernels based on a sinc function.
+Once the grid has been determined, the output spectrum at each
+position is formed by averaging the nearby input spectra. Various
+averaging schemes are available, the simplest being to place each
+input spectrum entirely into the nearest output pixel. Other schemes
+allow a 2-dimensional kernel to be used to spread each input spectrum
+out over a range of output pixels. Available kernels are those
+supported by the AST library \citep{SUN211,2012ASPC..461..825B} and
+include a simple bi-linear division between the four nearest
+neighbours, a Gaussian kernel, and various flavours of kernels based
+on a sinc function.
 
-When using nearest neighbour resampling there are multiple ways to
-determine how bad pixels are propagated from input spectra into the
-output cube. The \texttt{AND} scheme uses all input data (thus
-reducing the noise in the output) and also minimises the number of bad
-pixels in the output. However, the memory requirements of the
-\texttt{AND} scheme can be excessive. For this reason, two other
-schemes, \texttt{FIRST} and \texttt{OR}, are provided which greatly
-reduce the memory requirements, at the expense either of introducing
-more bad pixels into the output (\texttt{OR}) or producing higher
-output noise levels (\texttt{FIRST}).
-
-\begin{description}
-\item[\texttt{FIRST}] The bad-pixel mask in each output spectrum is
-  inherited from the first input spectrum that contributes to the
-  output spectrum. Any subsequent input spectra that contribute to the
-  same output spectrum but which have a different bad-pixel mask are
-  ignored. So an output pixel will be bad if and only if the
-  corresponding pixel in the first input NDF that contributes to it is
-  bad. Since this scheme ignores entire input spectra if they do not
-  conform to the expected bad-pixel mask, the noise in the output can
-  be higher than using the other schemes. However, this scheme has the
-  benefit of using much less memory than the \texttt{AND} scheme, and
-  will in general produce fewer bad pixels in the output than the
-  \texttt{OR} scheme.
-
-\item[\texttt{OR}] The bad pixel mask in each output spectrum is the
-  union (logical OR) of the bad pixel masks for all input spectra that
-  contribute to the output spectrum. So an output pixel will be bad if
-  any of the input pixels that contribute to it are bad.  This scheme
-  will in general produce more bad output pixels than the
-  \texttt{FIRST} scheme, but the non-bad output pixels will have a
-  lower noise because, unlike \texttt{FIRST}, all the contributing
-  input data are coadded to produce the good output pixels. Like
-  \texttt{FIRST}, this scheme uses much less memory than \texttt{AND}.
-
-\item[\texttt{ AND}] The bad pixel mask for each output spectrum is
-  the intersection (logical AND) of the bad pixel masks for all input
-  spectra that contribute to the output spectrum. So an output pixel
-  will be bad only if all the input pixels that contribute to it are
-  bad. This scheme will produce fewer bad output pixels and will also
-  give lower output noise levels than \texttt{FIRST} or \texttt{OR},
-  but at the expense of much greater memory requirements.
-
-\end{description}
-
-The pipeline processing defaults to using the \texttt{AND} scheme but
-can be overridden if speed or memory are an issue.
+The resampling can use either of the three schemes described in the
+previous section to determine how bad pixels are propagated from input
+spectra into the output cube.
 
 One complication is that the data cube for a large area survey is
 potentially extremely large and many software package do not support
@@ -432,70 +645,17 @@ Fig.\ \ref{fig:hybrid} shows an example hybrid spectrum consisting of
 example correcting for any DC offset is complicated by the lack of
 baseline region.
 
+(***RPT: remove the noise spikes at the end of the subbands or also
+show the resulting combined spectrum ***)
+
 \subsection{Automated Baseline Removal}
 
-\begin{figure}
-\includegraphics[width=90mm]{flowchart}
-\caption{Flow chart of the pipeline recipe, including the initial step
-  where individual observations are analysed. \emph{QA} here indicates
-a quality assurance test (see \S\,\ref{sec:qa})}
-\label{fig:flowchart}
-\end{figure}
-
-Fig.\ \ref{fig:flowchart} shows the key steps in the automated
-baseline removal algorithm. The initial phase involves the creation of
-cubes from individual observations and a basic quality assurance test
-to remove obviously problematic spectra. Once this is completed a cube
-is created from all the observations. This cube will have baseline
-offsets and an estimate for these offsets has to be calculated before
-the advanced baseline processing can be performed. This is done by
-applying a tophat smooth in three dimensions to spread the line
-emission and baseline errors across multiple spatial positions. The
-Starlink KAPPA task \textsc{mfittrend} then is used to calculate a
+The Starlink KAPPA task \textsc{mfittrend} is used to calculate a
 first order baseline fit for each spectrum in the data cube
 independently. The baseline region is estimated by... \emph{MJC to
   write a description of AUTO mode in MFITTREND}.
 
-Once \textsc{mfittrend} has calculated and removed a first pass at the
-baseline a mask is written out containing the baseline regions of the
-smoothed data cube. This mask is applied to the original
-unsmoothed data cube resulting in a cube consisting solely of
-baselines. \textsc{mfittrend} is then used again but this time fitting
-the entire (masked) spectrum, fitting a linear baseline to each
-spectrum in turn. The baselines are then finally subtracted from the
-original data cube.
 
-Now that a good estimate for a baseline has been subtracted the data
-cube can be analysed using more holistic approaches that can use
-information from source features in the molecular cloud or galaxy that
-span multiple spatial pixels. A clump-finding algorithm can be used to
-accurately distinguish the line features from baseline regions which
-can maximize optimize the baseline subtraction and aid in moment map
-creation (see \S \ref{sec:moment}). The Starlink \textsc{cupid}
-\citep{2007ASPC..376..425B} application contains a number of
-clump-finding algorithms that work in three dimensions. The choice of
-a particular algorithm is not critical and either Fellwalker or
-Clumpfind \citep{1994ApJ...428..693W} can be used.
-
-With an accurate knowledge of the line emission regions in the data
-there is now the option of applying this mask to the raw data. The
-SMURF \textsc{unmakecube} task is used for this. This application
-reads a raw time series cube and generates a new time series by
-calculating the position of each spectrum, looking up this position in
-the group data cube mask and writing the emission-masked spectrum to
-an output time-series cube. This time-series cube can then be used to
-mask the original time-series allowing the baseline to be fitted to
-each individual input spectrum.
-
-This is critically important for generating properly
-baseline-subtracted cubes of the individual observations but can also
-be important for quality assurance tests. The enhanced baseline
-subtraction can ``resurrect'' spectra that were originally determined
-to be of poor quality and not used in the final cube. This iterative
-cube production with enhanced QA can lead to minor improvements in
-quality of the final product.  In practice, given the linear
-properties of baseline addition, one iteration can be enough and more
-are rarely needed.
 
 \subsection{Determination of moment maps \label{sec:moment}}
 
@@ -538,7 +698,6 @@ printing through and shows much more dynamic range than the naive
 integrated intensity image.
 
 \subsection{Removal of Bad-Baseline Spectra}
-
 
 
 \textit{Malcolm's ADASS XXII poster and JCMT Newsletter article. Blog mentions
