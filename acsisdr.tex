@@ -483,7 +483,7 @@ point-like. Projects that search for such objects need to use specialized
 software to analyze the basic, unsmoothed, group file directly.
 
 For standard processing, the resulting smoothed high-S/N cube 
-is then used by the baseline  fitting routine, \textsc{mfittrend} , to detertmine
+is then used by the baseline  fitting routine, \textsc{mfittrend} from Starlink KAPPA, to determine
 emission-free spectral windows. 
 The details of this process depend on the recipe: ranging from using two 
 windows with a set width at each end of the frequency band 
@@ -761,7 +761,7 @@ independently. The baseline region is estimated by...
 
 \subsection{Clumpfind and moments maps \label{sec:moment}}
 
-The Starlink KAPPA task \textsc{findclump} is used to do the clump
+The Starlink CUPID task \textsc{findclumps} is used to do the clump
 find. This is an essential step since Moment maps can be compromised 
 if excessive baseline is included in the calculation. For example, in an 
 integrated intensity calculation the inclusion of all the baseline noise can 
