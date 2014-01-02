@@ -220,18 +220,19 @@ spectra, with optional baselining, in to a data cube.  This strategy
 was forced on us given the computer resources available when ACSIS was
 being designed and developed and was known to have risks associated
 with it. Coadding spectra into the cube allowed for impressive ``data
-compression'' for stare and jiggle observing modes although the gains
-were less in scanning observing modes.
-The data cube was the product that was archived and taken away by the
-astronomer for further analysis, although it was also possible to
-store the raw data in CASA (ascl:1107.013) measurement sets
+compression'' for stare and jiggle observing modes, which repeatedly 
+observe a fixed set of positions, but the gains were less in scanning 
+observing modes.
+The gridded and co-added data cube was the product that was archived 
+and taken away  by the astronomer for further analysis, although it was 
+also possible to store the raw data in CASA (ascl:1107.013) measurement sets
 \citep{2012ASPC..461..849P}\footnote{At the time this was being
   developed CASA was known as AIPS++ \citep{2004ASPC..314..468M}},
 
 There are obvious downsides associated with this approach. The
 observing system required that the cube parameters be specified and
-initially it was felt that the observer should select the parameters
-in the Observing Tool \citep{2002ASPC..281..453F}. It was also
+the observer had to pre-select those in the Observing Tool 
+\citep{2002ASPC..281..453F}. It was also
 necessary that the observer specify the baseline regions and any
 frequency binning required. Since such a process as a whole is
 irreversable, on a fundamental level it is not well-adapted to
@@ -245,7 +246,7 @@ migrated to a pipeline.
 A post-acquisition data reduction pipeline has clear advantages and in
 some form is now implemented at most modern observatories. Foremost,
 the process can be repeated both to correct for errors, but also, if
-necessary, to iteratively file-tune the reduction to the
+necessary, to iteratively fine-tune the reduction to the
 characteristics of the individual observations. Although tunable, the
 scripts or recipes that drive the pipeline impose a standard of
 reduction that can include advanced techniques and sophisticated
@@ -302,7 +303,7 @@ configured with an arbitrary number of loops, in practice only a
 two-step process is needed. For scanning observations implementing
 this requires for the results, such as baseline masks, to be
 re-expanded in the time domain. Further optimizations are optional in
-the second step. For example, while the baseline fit is linear in
+the second step. For example, while the baseline fit is linear
 during the first step, with secure baseline regions higher order fits
 can be used during the second step.
 
@@ -320,8 +321,8 @@ each data file. Recipes will be discussed in more detail below.
 The JCMT heterodyne pipeline has two operating modes. The default
 behaviour is for the pipeline to generate the best possible data
 products without regard to efficiency. This is generally what is
-required by scientists at their institutions and the mode we run in at
-the JCMT Science Archive
+required by scientists at their institutions and the mode the pipeline is run 
+when accessing the JCMT Science Archive
 \citep{2008ASPC..394..135G,2008ASPC..394..565J}. The other mode is a
 cut-down version of the recipes that runs at the JCMT itself during
 observing. This pipeline has constrained timing requirements and can
@@ -341,7 +342,7 @@ meta-data (single values, arrays, and tables) in addition to the astronomical
 data in a hierachical structure. Spectra from HARP arrive
 asynchronously from data-acquisition paths that in parallel handle
 data from the individual receptors. Long observations are split
-over several files. One of the basic data reduction steps is thus
+over several files. One of the basic first data reduction steps is thus
 collating and ordering of spectra into a time and receptor sequence.
 
 For e.g. scanning observations different receptors will observe almost
@@ -376,16 +377,19 @@ dealing with bad data:
 \item[\texttt{AND}] An output pixel will be bad only if all the input
    pixels are bad. This scheme will produce the least number of bad
    output pixels, but memory requirements can be excessive and are much
-   larger than for the other two schemes.
+   larger than for the other two schemes. It also is affected by issues such
+   as the DC-level problem discussed above.
 \item[\texttt{OR}] An output pixel will be bad if any of the input
    pixels are bad. This scheme will produce the most bad output pixels,
-   but a more homogenous noise across the image.
+   but a more homogenous noise across the image and avoids many
+   of the issues associated with the AND scheme.
 \item[\texttt{FIRST}] Only spectra that have the same bad pixel mask
    as the first spectrum contribute to the output spectrum. It
    produces less bad pixels in the output than the \texttt{OR}
    scheme without the large memory footprint of the \texttt{AND} scheme.
    This scheme is useful in absence of intermittent problems and where
-   the bad pixel mask e.g. results from long-term instrumental effect.
+   the bad pixel mask e.g. results from long-term instrumental effect, but
+   comes with the risk of rejecting large amounts of otherwise good data. 
 \end{description}
 
 The pipeline processing defaults to using the \texttt{AND} scheme but
@@ -400,9 +404,12 @@ a quality assurance test (see \S\,\ref{sec:qa})}
 \label{fig:flowchart}
 \end{figure}
 
-{\color{red}(***RPT: the figure is incorrect: we do not make a cube for individual observation
- (this is optional): the group cube is created from ungridded observations.
-  We need to work on the diagram  ***)}
+\textit{\color{red} ***RPT: the figure is incorrect: we do not make a cube for individual observation
+ (this is optional): the group cube is created from ungridded observations. Also the mask used
+  for th iteration is the baseline mask not the clumpfind. Baselines are fitted to the group
+  file during both iterations (at least that was the design given the option of non-linear fits).
+  Also the baselined date cube is smoothed for the clumpfind which generates the masks
+  for the moments.  We need to work on the diagram  ***)}
 
 \section{Pipeline processing}
 
@@ -423,7 +430,7 @@ more detail next.
 
 The initial phase works on the ungridded individual observations,
 which in essence are a time series of spectra from each individual
-receptor with a typical dump time of 1 second or faster for scan
+receptor with a typical dump time of 1 second or faster in case of scan
 observations.  Not all recipes perform exactly the same reduction, but
 common steps for each observation are:
 \begin{itemize}
@@ -459,7 +466,7 @@ distinction is whether single spectral lines extend over a signicant
 fraction of the available band or not. If not, the second distinction
 is whether smoothing should be spatially biased (e.g. narrow spectral
 lines) or spectrally biased (broader lines and/or strong velocity
-gradients within the field-of-view). The smoothing so done by applying
+gradients within the field-of-view). The smoothing is done by applying
 a tophat convolution in three dimentions (x,y,v) with a smoothing
 factor in each direction that depends on the recipe.  By default a
 recipe biased towards spatial smoothing will have smoothing factors of
@@ -468,46 +475,66 @@ will be (x=3, y=3, v=25). Note that both type of recipes will reduce
 the noise per pixel by a factor of about 15. While the smoothing
 factor in velocity may seem excessive, they reflect the very high
 resolution and frequency coverage of present-day correlators in
-comparison with typical spectral lines.
+comparison with typical width of spectral lines.
 
+Smoothing the data will emphasize extended regions of emission in the
+3-D data cube, but bias against weak narrow-line features that are also
+point-like. Projects that search for such objects need to use specialized
+software to analyze the basic, unsmoothed, group file directly.
 
-
-
-
-
-This cube will have baseline offsets and an estimate for these offsets
-has to be calculated before the advanced baseline processing can be
-performed. This is done by applying a tophat smooth in three
-dimensions to spread the line emission and baseline errors across
-multiple spatial positions.
-
-
-{\color{red}(***RPT: THIS IS HOW FAR I GOT ***)}
-
-Once \textsc{mfittrend} has calculated and removed a first pass at the
-baseline a mask is written out containing the baseline regions of the
-smoothed data cube. This mask is applied to the original
+For standard processing, the resulting smoothed high-S/N cube 
+is then used by the baseline  fitting routine, \textsc{mfittrend} , to detertmine
+emission-free spectral windows. 
+The details of this process depend on the recipe: ranging from using two 
+windows with a set width at each end of the frequency band 
+for the ``broad-line'' case,  to a full automatic search for emission-free
+windows in case of multi-line spectra. Note that using the smoothed data has
+two advantages. Firstly, the significantly higher S/N  allows for a better 
+distinction between emission and emission-free regions. Secondly, smoothing
+also spreads extended emission regions somewhat, both spatially and spectrally, 
+resulting in a conservative estimate of emission-free regions that is better suited for
+the fit of low-order baselines in this first  pass. Once \textsc{mfittrend} has
+had this first pass at the baselines,  a mask is written out containing the
+baseline  regions of the smoothed data cube. This mask is applied to the original
 unsmoothed data cube resulting in a cube consisting solely of
 baselines. \textsc{mfittrend} is then used again but this time fitting
-the entire (masked) spectrum, fitting a linear baseline to each
-spectrum in turn. The baselines are then finally subtracted from the
+the entire (masked) spectrum, fitting a linear (or, optionally, higher-order) baseline 
+to each spectrum in turn. The baselines are then finally subtracted from the
 original data cube.
 
-Now that a good estimate for a baseline has been subtracted the data
-cube can be analysed using more holistic approaches that can use
-information from source features in the molecular cloud or galaxy that
-span multiple spatial pixels. A clump-finding algorithm can be used to
-accurately distinguish the line features from baseline regions which
-can maximize optimize the baseline subtraction and aid in moment map
-creation (see \S \ref{sec:moment}). The Starlink \textsc{cupid}
-\citep{2007ASPC..376..425B} application contains a number of
-clump-finding algorithms that work in three dimensions. The choice of
-a particular algorithm is not critical and either Fellwalker or
+With proper baselines subtracted  the data cube can be analysed  using more 
+holistic approaches to isolate emission associated with the astronomical
+target. This step is critical since for most target fields the number of pixels with
+noise far exceed those with a signal rendering a simple collapse along an axis 
+or moments  analysis of the baselined data cube virtually unusable. Instead
+the JCMT pipeline uses a clump-finding algorithm to isolate and identify
+emission features. 
+The Starlink \textsc{cupid} \citep{2007ASPC..376..425B} application contains 
+a number of clump-finding algorithms that work in three dimensions. 
+The choice of a particular algorithm is not critical and either Fellwalker or
 Clumpfind \citep{1994ApJ...428..693W} can be used.
+As for the baseline fit, the clump find is performed on  a smoothed version 
+of the baselined group cube, resulting in masks of emission regions that 
+are applied to the unsmoothed baselined data. A moments analysis routine 
+(see \S \ref{sec:moment}) is then be used with masked data set to extract
+e.g. a total emisson map or velocity field. SInce higher-order moments are 
+more sensitive to noise feature, different S/N cutoffs are used for the
+clump masks used for the different moments. This approach results in deep
+total emission (zero-moment) maps as well as reliable anomaly-free 
+velocity (first-moment) maps.
 
-With an accurate knowledge of the line emission regions in the data
-there is now the option of applying this mask to the raw data. The
-SMURF \textsc{unmakecube} task (ascl:1310.007) is used for this. This application
+
+\subsection{Iterative processing}
+
+The group processing described above delivers a baselines data cube, 
+baseline and clump masks, and moments maps. Iterative processing uses
+the baseline mask from the group data cube to improve the baseline fit
+of the individual observations. There in turn are used to generate an improved
+group file, which is then reduced using the same steps as in the first iteration.
+
+In order to apply the masks to the raw data, the masks need to be resampled
+in a time and receptor domain. The SMURF \textsc{unmakecube} task 
+(ascl:1310.007) is used for this. This application
 reads a raw time series cube and generates a new time series by
 calculating the position of each spectrum, looking up this position in
 the group data cube mask and writing the emission-masked spectrum to
@@ -515,17 +542,89 @@ an output time-series cube. This time-series cube can then be used to
 mask the original time-series allowing the baseline to be fitted to
 each individual input spectrum.
 
-This is critically important for generating properly
-baseline-subtracted cubes of the individual observations but can also
+This is critically important for generating properly baseline-subtracted 
+cubes of the individual observations but can also
 be important for quality assurance tests. The enhanced baseline
 subtraction can ``resurrect'' spectra that were originally determined
 to be of poor quality and not used in the final cube. This iterative
 cube production with enhanced QA can lead to minor improvements in
-quality of the final product.  In practice, given the linear
-properties of baseline addition, one iteration can be enough and more
-are rarely needed.
+quality of the final product.  In practice,  one iteration in general is enough 
+and more are rarely needed.
 
+A main objective for the iterative step was to allow for non-linear baseline fits 
+(except for the broad-line recipe), both for  individual observations as well as 
+the group cube, given that accurate baseline windows have been determined.
+Initially the pipeline was configured to use up to fifth order baselines in 
+the second iteration step. In general this was very effective in successfully 
+removing even high order baselines from observations taken when the 
+conditions or instrumentation was unstable, without negatively impacting
+the vast majority of the observations for which linear or second order baselines
+were sufficient.  However, a subset of users objected to an automatic fitting of 
+non-linear baselines and the default pipeline behaviour was changed to 
+fit linear baselines only, leaving higher order fitting to a custom pipeline reduction
+by the users themselves.  In our opinion this is unfortunate since it significantly
+diminishes the benefits of the iterative scheme e.g. for pipeline processing
+in place for the JCMT Archive.
 
+\subsection{Customization}
+
+The JCMT heterodyne pipeline is highly customizable. At the highest level, recipes 
+are simple text files with calls to ``primitives''. Each primitive has a list of
+parameters associated with it that can be set or changed by editing the recipe.
+The pipeline can then be instructed to use this custom recipe instead of the default one.
+
+The parameters associated with the primitives, however, give access to only a small
+number of the full set of parameters allowable for the Starlink routines. A user can access
+these by setting up  special configuration file. A single configuration file for a project can
+be used to assign different parameter values for observations of different fields and
+different observing frequencies. An example is setting an allowable velocity range for
+spectral features: the default pipeline makes no assumption about this which often results
+in including in its analysis large sections of the data cube with only noise. This can lead
+to problems from the cumulative effect of 4 or 5-sigma noise spikes. Pre-specifying the
+allowed velocity range typically is an effective way to improve pipeline results.
+
+The JCMT Archive is configured to accept ``user'' defined configuration files: if such
+a file exists for the observation being requested, it will be used in place of the default
+pipeline reduction of the data.
+
+\subsection{Improvements}
+
+Although the JCMT heterodyne pipeline has proven to be effective in delivering
+high-quality results, there are a number of potential improvements that remain 
+un-implemented or unexplored due to lack of resources.
+
+\begin{itemize}
+\item  Higher-order baseline fits during iterative processing. As discussed, the
+iterative processing aspect of the pipeline aimed at allowing for higher order
+baseline fits during subsequent iterations, but a subset of users objected
+to this. This can be addressed by a routine that critically examines the
+parameters associated with fits to either flag high-order baselines
+or to optimize the choice of order used. The fraction of poor fits associated
+with a particular fit order can be used as quality-assessment parameter.
+\item Fields with narrow and broad profile features.  The current pipeline
+is ill-equiped to deal with that fields mix narrow and broad spectral
+lines, such as found in the central regions of galaxies or compact
+outflow sources. Given that the regular baseline routine also produces a 
+cube with ``noise-free''  fitted baselines, this cube can be analyzed similar to a 
+broad-line observation to extract and check for broad
+spectral components that were erroneously subtracted.
+\item Similar tactics could be applied in reducing continuum observations:
+in the current default recipe  no baseline is subtracted. Instead the continuum
+level could be determined from the median level of each baseline fitted. 
+\item Adding a routine that ``auto-detects'' the main velocity range based
+on a statistical analysis of the distribution of baseline windows or detected clumps
+within the cube. As discussed in the previous section, restricting the allowable 
+velocity range is a simply way to improve the pipeline result. In addition,
+such routine can flag serendipitous sources or spurious features outside 
+a primary velocity range.  
+\item Using a profile fitting routine instead of a moments analysis. Recently a
+comprehensive gauss-hermite mult-profile fitting task \textsc{Fit1d}  was 
+added to Starlink that produces a cube with the fitted profiles as well
+as cubes with the fitted parameters (amplitude, position, width, etc.) for 
+each spectral feature. Gauss-hermite functions can fit complex, asymmetric
+profiles and for certain projects, e.g. a spectral survey, this may be more
+appropriate than fitting moments.
+\end{itemize}
 
 \section{Component processes}
 
@@ -660,19 +759,19 @@ independently. The baseline region is estimated by...
   write a description of AUTO mode in MFITTREND}.
 
 
+\subsection{Clumpfind and moments maps \label{sec:moment}}
 
-\subsection{Determination of moment maps \label{sec:moment}}
-
-Moment maps can be compromised if excessive baseline is included in
-the calculation. For example, in an integrated intensity calculation
-the inclusion of all the baseline noise can hide a weak line. The data
-reduction system has already calculated where the baseline regions are
-for each spectrum and so for moment maps this mask is negated. This
-leads to much improved fidelity and improves upon using a simple threshold or
+The Starlink KAPPA task \textsc{findclump} is used to do the clump
+find. This is an essential step since Moment maps can be compromised 
+if excessive baseline is included in the calculation. For example, in an 
+integrated intensity calculation the inclusion of all the baseline noise can 
+hide a weak line. 
+Using a mask based on the detected clumps much improves
+fidelity and improves upon using a simple threshold or
 the smoothing scheme used in the \textsc{momnt} command in AIPS
 \cite[][ascl:9911.003]{2003ASSL..285..109G}. As discussed in \S \ref{sec:makecube}
-the data are potentially spread over multiple data cubes that must be
-processed independently and the resulting moment map is created by
+observations of extended regions  are potentially spread over multiple data cubes 
+that must be processed independently and the resulting moment map is created by
 mosaicking the individual submaps taking into account the border
 regions. This is configured such that no resampling is required as
 \textsc{makecube} ensures that all tiles are on the same pixel grid.
@@ -702,7 +801,6 @@ printing through and shows much more dynamic range than the naive
 integrated intensity image.
 
 \subsection{Removal of Bad-Baseline Spectra}
-
 
 \textit{\color{red} Malcolm's ADASS XXII poster and JCMT Newsletter article. Blog mentions
 that we might also handle ringing in spectra. Needs to be rewritten.}
@@ -736,10 +834,10 @@ Figure~\ref{fig:badbase:interference} displays some examples.
 \includegraphics[width=0.23\textwidth]{P61_f2a}
 \includegraphics[width=0.23\textwidth]{P61_f2b}
 \caption{Examples of low-frequency interference.  The top-left graphic
-  shows a band of low-frequency oscillations; below it is the band's
-  average spectrum.  The lower-left spectrum has a periodic weak
-  ripple hard to detect visually.  The right panel shows time-averaged
-  (clipped mean) spectra for each receptor in which the fourth and
+ shows a band of low-frequency oscillations; below it is the band's
+ average spectrum.  The lower-left spectrum has a periodic weak
+ ripple hard to detect visually.  The right panel shows time-averaged
+(clipped mean) spectra for each receptor in which the fourth and
   ninth from the bottom exhibit global non-linearity.}
 \label{fig:badbase:interference}
 \end{figure}
@@ -894,18 +992,27 @@ configuration file at the JCMT Science Archive.
 
 \subsubsection{Gradient}
 
-This is the standard recipe optimized for nearby molecular clouds with
-relatively narrow lines where there can be a velocity gradient across
-the cloud. This velocity gradient is a major motivation for the
+This is the standard recipe optimized for nearby galaxies or other 
+objects where there can be a velocity gradient across
+the field of view. This velocity gradient is a major motivation for the
 automated detection of baseline regions as it allows you to maximize
 the baseline region rather than supplying a simple range that
-encompasses all the data.
+encompasses all the data. The major difference with the narrow-band
+recipe below is that the smoothing is biased towards spectral smoothing
+rather than spatial smoothing. 
+
+\subsubsection{Narrow line}
+
+This recipe is used for observations of objects with relatively narrow
+lines and a small velocity gradient (compared to the total observed
+band). This applies to many Galactic targets. Smoothing is biases
+towards spatial smoothing.
 
 \subsubsection{Broad line}
 
-Nearby galaxies have broad lines of many km/s so this recipe is tuned
+Active galaxies have broad lines of many km/s so this recipe is tuned
 to be less aggressive for automatic baseline subtraction than the
-standard recipe that is deisgned for nearby molecular clouds. An early
+standard recipe that is deisgned for nearby galaxies. An early
 form of this recipe, in the form of a standalone script, was used for
 the initial Nearby Galaxy Survey data release and is documented in
 \citet{2010ApJ...714..571W}.
@@ -913,16 +1020,22 @@ the initial Nearby Galaxy Survey data release and is documented in
 \subsubsection{Line Forest}
 
 Some transitions are very close together, for example methanol, and
-different techniques are required for handling the automated basline
+different techniques are required for handling the automated baseline
 subtraction.
 
 \textit{\color{red} Actually, the recipe itself implies that it's more or less the
-  same as the standard gradient recipe}
+same as the standard narrow-band recipe. *RPT* I think the only
+difference is that the moment routines makes maps for each line}
 
 \subsubsection{Continuum}
 
 For continuum observations, such as planets, baseline subtraction
 should not be done.
+
+\textit{\color{red}  *RPT* I don't think this recipe
+was ever properly  implemented: the idea here was to do
+a baseline fit but to restore the DC component of the fit, not to
+just omit the fit}
 
 \section{Processing of Historical JCMT Data}
 
