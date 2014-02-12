@@ -241,12 +241,13 @@ the observer had to pre-select those in the Observing Tool
 necessary that the observer specify the baseline regions and any
 frequency binning required. Since such a process as a whole is
 irreversable, on a fundamental level it is not well-adapted to
-astronomical research where observations are not a well characterized
+astronomical research where observations are not well characterized
 and pre-set values may turn out to be a poor choice.  Consequently,
 when it became clear in 2006 computers were fast enough and storage
 large enough to be able to store the observed spectra without the need
 of real-time regridding and coadding, this further data reduction was
-migrated to a pipeline.
+migrated to a pipeline and the calibrated spectra were the raw data
+written by the instrument.
 
 A post-acquisition data reduction pipeline has clear advantages and in
 some form is now implemented at most modern observatories. Foremost,
@@ -367,13 +368,13 @@ The JCMT heterodyne pipeline uses Starlink \citep[see
 e.g.][]{2013ASPC..475..247B} routines which
 have been designed to maintain accurate variance and flagging data.
 Nevertheless, this is not sufficient to fully deal with the issue of
-bad data. An simple illustration is the coadding of two spectra with a
+bad data. A simple illustration is the coadding of two spectra with a
 different DC level: the DC level of the result will be the average
 level. However, if one of the spectra has a bad channel, adopting the
 one remaining point in the output would result in a positive or
 negative spike since its DC level will not be average. In other words,
 a policy for dealing with bad data that is acceptable in one situation,
-i.e. spectra without a DC level or corrected for the DC level, can be
+i.e.\ spectra without a DC level or corrected for the DC level, can be
 problematic in a different situation.
 
 In combining data, the gridding software recognizes three schemes for
