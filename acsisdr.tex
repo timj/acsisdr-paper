@@ -350,7 +350,7 @@ data from the individual receptors. Long observations are split
 over several files. One of the basic first data reduction steps is thus
 collating and ordering of spectra into a time and receptor sequence.
 
-For e.g. scanning observations different receptors will observe almost
+For scanning observations different receptors will observe almost
 the same sky position and will contribute to the same output pixel in
 the final gridded data-cube. The data reduction will thus need to keep
 accurate track of the performance of each receptor and the noise of
@@ -393,7 +393,7 @@ dealing with bad data:
    produces less bad pixels in the output than the \texttt{OR}
    scheme without the large memory footprint of the \texttt{AND} scheme.
    This scheme is useful in absence of intermittent problems and where
-   the bad pixel mask e.g. results from long-term instrumental effect, but
+   the bad pixel mask, for example, results from a long-term instrumental effect, but
    comes with the risk of rejecting large amounts of otherwise good data.
 \end{description}
 
@@ -426,7 +426,7 @@ phase where baselines are removed and emission selected in the coadded
 cube.  Next follows an iterative step: the resulting masks are
 re-expanded into the time-domain and applied to the individual
 observations with the aim at producing a better group file. Given that
-accurate baseline (emission-free) regions are available, e.g. higher
+accurate baseline (emission-free) regions are available, higher
 order baselines can be removed from the individual observations and
 tighter QA tests can be applied. These three phases are discussed in
 more detail next.
@@ -469,7 +469,7 @@ structure of the data becomes critical for the analysis and the
 different data reduction recipes become more specific. The first
 distinction is whether single spectral lines extend over a signicant
 fraction of the available band or not. If not, the second distinction
-is whether smoothing should be spatially biased (e.g. narrow spectral
+is whether smoothing should be spatially biased (e.g.\ narrow spectral
 lines) or spectrally biased (broader lines and/or strong velocity
 gradients within the field-of-view). The smoothing is done by applying
 a tophat convolution in three dimentions (x,y,v) with a smoothing
@@ -521,8 +521,8 @@ Clumpfind \citep[][ascl:1107.014]{1994ApJ...428..693W} can be used.
 As for the baseline fit, the clump find is performed on  a smoothed version
 of the baselined group cube, resulting in masks of emission regions that
 are applied to the unsmoothed baselined data. A moments analysis routine
-(see \S \ref{sec:moment}) is then be used with masked data set to extract
-e.g. a total emisson map or velocity field. SInce higher-order moments are
+(see \S \ref{sec:moment}) is then be used with masked data set to
+extract, for example, a total emisson map or velocity field. SInce higher-order moments are
 more sensitive to noise feature, different S/N cutoffs are used for the
 clump masks used for the different moments. This approach results in deep
 total emission (zero-moment) maps as well as reliable anomaly-free
@@ -568,8 +568,8 @@ were sufficient.  However, a subset of users objected to an automatic fitting of
 non-linear baselines and the default pipeline behaviour was changed to
 fit linear baselines only, leaving higher order fitting to a custom pipeline reduction
 by the users themselves.  In our opinion this is unfortunate since it significantly
-diminishes the benefits of the iterative scheme e.g. for pipeline processing
-in place for the JCMT Archive.
+diminishes the benefits of the iterative scheme when, for example, pipeline processing
+in place for the JCMT Science Archive.
 
 \subsection{Customization}
 
@@ -627,7 +627,7 @@ comprehensive gauss-hermite mult-profile fitting task \textsc{Fit1d}  was
 added to Starlink that produces a cube with the fitted profiles as well
 as cubes with the fitted parameters (amplitude, position, width, etc.) for
 each spectral feature. Gauss-hermite functions can fit complex, asymmetric
-profiles and for certain projects, e.g. a spectral survey, this may be more
+profiles and for certain projects, such as a spectral survey, this may be more
 appropriate than fitting moments.
 \end{itemize}
 
