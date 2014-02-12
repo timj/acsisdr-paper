@@ -348,6 +348,7 @@ MACRO {apss} {"Astrophys. Space Sci."}
 MACRO {aap} {"Astronom. Astrophys."}
 MACRO {aapr} {"Astron. Astrophys Rev"}
 MACRO {aaps} {"Astron. Astrophys. Sup."}
+MACRO {aspconf} {"Astron. Soc. Pac. Conf. Ser."}
 MACRO {azh} {"Astron. Zh+"}
 MACRO {caa} {"Chinese Astron. Astr."}
 MACRO {icarus} {"Icarus"}
@@ -367,7 +368,7 @@ MACRO {pasa} {"Publ. Astron. Soc. Aust."}
 MACRO {pasp} {"Publ. Astron. Soc. Pac."}
 MACRO {pasj} {"Publ. Astron. Soc. Jpn."}
 MACRO {rmxaa} {"Rev. Mex. Astron. Astr."}
-MACRO {rjras} {"Q. J. Roy. Astron. Soc."}
+MACRO {qjras} {"Q. J. Roy. Astron. Soc."}
 MACRO {skytel} {"Sky Telescope"}
 MACRO {solphys} {"Sol. Phys."}
 MACRO {sovast} {"Sov. Astron."}
