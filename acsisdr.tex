@@ -638,6 +638,16 @@ appropriate than fitting moments.
 \subsection{Determining Cube Parameters}
 \label{sec:makecube}
 
+\begin{figure}[t]
+\includegraphics[width=\columnwidth]{autogrid}
+\caption{The Autogrid algorithm works by projecting each spectrum
+  position onto a straight line at an arbitrary angle $\theta$, and then
+  forming a histogram of the number of samples at each point along
+  this line. At the optimal value of $\theta$, the projected positions
+  line up, giving strong periodicity in the histogram.}
+\label{fig:autogrid}
+\end{figure}
+
 Since the output pixel grid need not be specified in advance, software
 is required to determine the pixel grid from the data itself. In the
 SMURF package data cubes are created from calibrated spectra using the
@@ -663,16 +673,6 @@ any periodicity in this histogram is found by looking at the
 auto-correlation of the histogram (the amplitude is the
 auto-correlation at zero shift, and the wavelength is the shift at the
 first significant peak in the auto-correlation function).
-
-\begin{figure}
-\includegraphics[width=\columnwidth]{autogrid}
-\caption{The Autogrid algorithm works by projecting each spectrum
-  position onto a straight line at an arbitrary angle $\theta$, and then
-  forming a histogram of the number of samples at each point along
-  this line. At the optimal value of $\theta$, the projected positions
-  line up, giving strong periodicity in the histogram.}
-\label{fig:autogrid}
-\end{figure}
 
 This is repeated for many different line orientations in order to find
 the value of $\theta$ (line orientation) that gives the strongest
@@ -723,6 +723,20 @@ have edge effects and is duplicating data found in other tiles.
 
 \subsection{Sub-band merging}
 
+\begin{figure*}[t]
+\begin{minipage}{\textwidth}
+\includegraphics[width=\textwidth]{hybrid}
+\caption{A hybrid spectrum from an observation in Orion of multiple
+  methanol transitions. The frequency scale is for the kinematic local
+  standard of rest and the observations were taken with a rest
+  frequency of 241.791\,GHz. These data were taken on 1998 December 20
+  as part of project M98BA3I. The noisiest 15 channels have been
+  removed from each end of the sub-bands spectral range for
+  clarity. They would be removed as part of the merging process.}
+\label{fig:hybrid}
+\end{minipage}
+\end{figure*}
+
 In hybrid modes the correlator is configured to use multiple
 hardware subsystems to process parts of the required bandwidth so
 that they can be combined in the data reduction. The correlator is
@@ -737,20 +751,6 @@ computer does not guarantee that spectra will be written to files in
 time order), then the overlap region is determined and the noisy ends
 are trimmed before they are combined. The spectra can optionally have
 their DC level adjusted before combining.
-
-\begin{figure*}
-\begin{minipage}{\textwidth}
-\includegraphics[width=\textwidth]{hybrid}
-\caption{A hybrid spectrum from an observation in Orion of multiple
-  methanol transitions. The frequency scale is for the kinematic local
-  standard of rest and the observations were taken with a rest
-  frequency of 241.791\,GHz. These data were taken on 1998 December 20
-  as part of project M98BA3I. The noisiest 15 channels have been
-  removed from each end of the sub-bands spectral range for
-  clarity. They would be removed as part of the merging process.}
-\label{fig:hybrid}
-\end{minipage}
-\end{figure*}
 
 Fig.\ \ref{fig:hybrid} shows an example hybrid spectrum consisting of
 4 overlapping subbands from observations of methanol in Orion. In this
