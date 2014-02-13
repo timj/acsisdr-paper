@@ -489,7 +489,8 @@ point-like. Projects that search for such objects need to use specialized
 software to analyze the basic, unsmoothed, group file directly.
 
 For standard processing, the resulting smoothed high-S/N cube
-is then used by the baseline  fitting routine, \textsc{mfittrend} from Starlink KAPPA, to determine
+is then used by the baseline  fitting routine, \textsc{mfittrend} from
+Starlink KAPPA \citep{SUN95}, to determine
 emission-free spectral windows.
 The details of this process depend on the recipe: ranging from using two
 windows with a set width at each end of the frequency band
@@ -624,10 +625,10 @@ velocity range is a simply way to improve the pipeline result. In addition,
 such routine can flag serendipitous sources or spurious features outside
 a primary velocity range.
 \item Using a profile fitting routine instead of a moments analysis. Recently a
-comprehensive gauss-hermite mult-profile fitting task \textsc{Fit1d}  was
-added to Starlink that produces a cube with the fitted profiles as well
+comprehensive Gauss-Hermite multi-profile fitting task \textsc{Fit1d}  was
+added to the SMURF package \citep{SUN258} that produces a cube with the fitted profiles as well
 as cubes with the fitted parameters (amplitude, position, width, etc.) for
-each spectral feature. Gauss-hermite functions can fit complex, asymmetric
+each spectral feature. Gauss-Hermite functions can fit complex, asymmetric
 profiles and for certain projects, such as a spectral survey, this may be more
 appropriate than fitting moments.
 \end{itemize}
@@ -768,7 +769,7 @@ independently. The baseline region is estimated by...
 \subsection{Clumpfind and moments maps \label{sec:moment}}
 
 The Starlink CUPID task \textsc{findclumps} is used to do the clump
-find. This is an essential step since Moment maps can be compromised
+find. This is an essential step since moment maps can be compromised
 if excessive baseline is included in the calculation. For example, in an
 integrated intensity calculation the inclusion of all the baseline noise can
 hide a weak line.
