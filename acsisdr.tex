@@ -473,11 +473,11 @@ fraction of the available band or not. If not, the second distinction
 is whether smoothing should be spatially biased (e.g.\ narrow spectral
 lines) or spectrally biased (broader lines and/or strong velocity
 gradients within the field-of-view). The smoothing is done by applying
-a tophat convolution in three dimentions (x,y,v) with a smoothing
+a tophat convolution in three dimentions ($x$, $y$, $v$) with a smoothing
 factor in each direction that depends on the recipe.  By default a
 recipe biased towards spatial smoothing will have smoothing factors of
-(x=5,y=5,v=10) pixels, whereas one biased towards spectral smoothing
-will be (x=3, y=3, v=25). Note that both type of recipes will reduce
+($x=5$, $y=5$, $v=10$) pixels, whereas one biased towards spectral smoothing
+will be ($x=3$, $y=3$, $v=25$). Note that both type of recipes will reduce
 the noise per pixel by a factor of about 15. While the smoothing
 factor in velocity may seem excessive, they reflect the very high
 resolution and frequency coverage of present-day correlators in
