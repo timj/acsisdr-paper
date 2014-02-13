@@ -721,6 +721,15 @@ associated bit mask to ensure that it can be disabled during further
 mosaicking or combination steps as the data in the border region will
 have edge effects and is duplicating data found in other tiles.
 
+Heterodyne arrays currently require the detectors have spacing much
+larger than the beam such that the data are inherently
+under-sampled. Image rotators and clever scanning modes can overcome
+this deficiency to a certain extent but in many cases the spatial
+distribution of samples is inherently uneven. There may be benefits
+associated with using an unbiased linear interpolation method such as
+\emph{Kriging} \citep[e.g.][]{1990Cressie} rather than a simple
+convolution kernel.
+
 \subsection{Sub-band merging}
 
 \begin{figure*}[t]
@@ -1126,15 +1135,6 @@ and which detectors come from the same backend hardware. This latter
 facility may be important as more and more detectors are added to
 focal plane arrays and would be similar to dealing with readout issues
 of bolometer arrays.
-
-\textit{\color{red} At one point Per was mentioning that Kriging
-  \citep[e.g.][]{1990Cressie} would be a useful
-  option in makecube for doing an optimal unbiased linear
-  interpolation method. I wonder if we should mention it here as an
-  option for future work. In terms of ``Bolometer map-maker'' we do
-  have the problem that our sampling is much more course than these
-  big bolometer cameras so I'm not sure whether we need to point that
-  out.}
 
 \section{Acknowledgments}
 
