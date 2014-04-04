@@ -188,7 +188,16 @@ James Clerk Maxwell Telescope
 \newcommand{\aspconf}{ASP Conf. Ser.}
 
 %% Applications
-\newcommand{\makecube}{\textsc{Makecube}}
+\newcommand{\KAPPA}{\textsc{kappa}}
+\newcommand{\specx}{\textsc{specx}}
+\newcommand{\cupid}{\textsc{cupid}}
+\newcommand{\smurf}{\textsc{smurf}}
+
+\newcommand{\makecube}{\textsc{makecube}}
+\newcommand{\unmakecube}{\textsc{unmakecube}}
+\newcommand{\mfittrend}{\textsc{mfittrend}}
+\newcommand{\gsdacsis}{\textsc{gsd{\footnotesize{2}}acsis}}
+\newcommand{\findclumps}{\textsc{findclumps}}
 
 %% main text
 \section{Introduction}
@@ -212,7 +221,7 @@ detectors,  such as the CHAI instrument proposed for CCAT
 In submillimeter astronomy data reductions packages such as
 \htmladdnormallinkfoot{CLASS}{http://www.iram.fr/IRAMFR/GILDAS}
 \citep[][ascl:1305.010]{2005sf2a.conf..721P} and
-SPECX \citep[][ascl:1310.008]{SPECX} were developed that worked well with
+\specx\ \citep[][ascl:1310.008]{SPECX} were developed that worked well with
 single-receptor instruments. Scripting interfaces and tools for
 curating collections of spectra were insufficient as the data rates
 increased and data pipelines \citep[e.g.,][]{1995ASPC...75..117W} and
@@ -483,8 +492,8 @@ point-like. Projects that search for such objects need to use specialized
 software to analyze the basic, unsmoothed, group file directly.
 
 For standard processing, the resulting smoothed high-S/N cube
-is then used by the baseline  fitting routine, \textsc{mfittrend} from
-Starlink KAPPA \citep[][see \S\ref{sec:mfittrend}]{SUN95,2008ASPC..394..650C}, to determine
+is then used by the baseline  fitting routine, \mfittrend\ from
+Starlink \KAPPA\ \citep[][see \S\ref{sec:mfittrend}]{SUN95,2008ASPC..394..650C}, to determine
 emission-free spectral windows.
 The details of this process depend on the recipe: ranging from using two
 windows with a set width at each end of the frequency band
@@ -494,11 +503,11 @@ two advantages. Firstly, the significantly higher S/N  allows for a better
 distinction between emission and emission-free regions. Secondly, smoothing
 also spreads extended emission regions somewhat, both spatially and spectrally,
 resulting in a conservative estimate of emission-free regions that is better suited for
-the fit of low-order baselines in this first  pass. Once \textsc{mfittrend} has
+the fit of low-order baselines in this first  pass. Once \mfittrend\ has
 had this first pass at the baselines,  a mask is written out containing the
 baseline  regions of the smoothed data cube. This mask is applied to the original
 unsmoothed data cube resulting in a cube consisting solely of
-baselines. \textsc{mfittrend} is then used again but this time fitting
+baselines. \mfittrend\ is then used again but this time fitting
 the entire (masked) spectrum, fitting a linear (or, optionally, higher-order) baseline
 to each spectrum in turn. The baselines are then finally subtracted from the
 original data cube.
@@ -510,7 +519,7 @@ noise far exceed those with a signal rendering a simple collapse along an axis
 or moments  analysis of the baselined data cube virtually unusable. Instead
 the JCMT pipeline uses a clump-finding algorithm to isolate and identify
 emission features.
-The Starlink \textsc{cupid} \citep[][ascl:1311.007]{2007ASPC..376..425B} application contains
+The Starlink \cupid\ \citep[][ascl:1311.007]{2007ASPC..376..425B} application contains
 a number of clump-finding algorithms that work in three dimensions.
 The choice of a particular algorithm is not critical and either Fellwalker or
 Clumpfind \citep[][ascl:1107.014]{1994ApJ...428..693W} can be used.
@@ -534,7 +543,7 @@ of the individual observations. There in turn are used to generate an improved
 group file, which is then reduced using the same steps as in the first iteration.
 
 In order to apply the masks to the raw data, the masks need to be resampled
-in a time and receptor domain. The SMURF \textsc{unmakecube} task
+in a time and receptor domain. The \smurf\ \unmakecube\ task
 \citep[][ascl:1310.007]{SUN258} is used for this. This application
 reads a raw time series cube and generates a new time series by
 calculating the position of each spectrum, looking up this position in
@@ -619,8 +628,8 @@ velocity range is a simply way to improve the pipeline result. In addition,
 such routine can flag serendipitous sources or spurious features outside
 a primary velocity range.
 \item Using a profile fitting routine instead of a moments analysis. Recently a
-comprehensive Gauss-Hermite multi-profile fitting task \textsc{Fit1d}  was
-added to the SMURF package that produces a cube with the fitted profiles as well
+comprehensive Gauss-Hermite multi-profile fitting task \textsc{Fit{\footnotesize{1}}d}  was
+added to the \smurf\ package that produces a cube with the fitted profiles as well
 as cubes with the fitted parameters (amplitude, position, width, etc.) for
 each spectral feature. Gauss-Hermite functions can fit complex, asymmetric
 profiles and for certain projects, such as a spectral survey, this may be more
@@ -644,7 +653,7 @@ appropriate than fitting moments.
 
 Since the output pixel grid need not be specified in advance, software
 is required to determine the pixel grid from the data itself. In the
-SMURF package data cubes are created from calibrated spectra using the
+\smurf\ package data cubes are created from calibrated spectra using the
 \makecube\ command. \makecube\ can be given an externally specified
 grid but also has an \texttt{autogrid} option that leaves optimal grid
 determination to the application itself.
@@ -704,7 +713,7 @@ from input spectra into the output cube.
 One complication is that the data cube for a large area survey is
 potentially extremely large and many software package do not support
 data arrays with more than $2^{32}$ pixels. We overcome this by
-supporting the ability for the output cube from \textsc{makecube} to
+supporting the ability for the output cube from \makecube\ to
 be split into tiles. These tiles share projection parameters and can
 be recombined without further resampling if required. For pixel
 spreading techniques that are susceptible to edge effects care is
@@ -763,7 +772,7 @@ baseline region.
 \subsection{Automated Baseline Removal}
 \label{sec:mfittrend}
 
-The Starlink KAPPA task \textsc{mfittrend} is used to calculate a
+The Starlink \KAPPA\ task \mfittrend\ is used to calculate a
 first order baseline fit for each spectrum in the data cube
 independently. The baseline region is estimated by...
 \emph{\color{red} MJC to
@@ -772,7 +781,7 @@ independently. The baseline region is estimated by...
 
 \subsection{Clumpfind and moments maps \label{sec:moment}}
 
-The Starlink CUPID task \textsc{findclumps} is used to do the clump
+The Starlink \cupid\ task \findclumps\ is used to do the clump
 find. This is an essential step since moment maps can be compromised
 if excessive baseline is included in the calculation. For example, in an
 integrated intensity calculation the inclusion of all the baseline noise can
@@ -785,7 +794,7 @@ observations of extended regions  are potentially spread over multiple data cube
 that must be processed independently and the resulting moment map is created by
 mosaicking the individual submaps taking into account the border
 regions. This is configured such that no resampling is required as
-\textsc{makecube} ensures that all tiles are on the same pixel grid.
+\makecube\ ensures that all tiles are on the same pixel grid.
 
 \begin{figure*}[t]
 \begin{minipage}{\textwidth}
@@ -1036,7 +1045,7 @@ the initial Nearby Galaxy Survey data release and is documented in
 \includegraphics[width=0.46\textwidth]{horsehead-specx}
 \includegraphics[width=0.46\textwidth]{horsehead-pipeline}
 \caption{Left is an integrated intensity image created from
-  a cube made interactively using SPECX. Right is an
+  a cube made interactively using \specx. Right is an
   integrated intensity image made from a pipeline reduction of the
   same raw data. Intensity scales are 0 to 35 K\,km/s.}
 \label{fig:hhcmp}
@@ -1048,10 +1057,10 @@ variety of backend systems including the Acousto-Optical Spectrometer
 (AOSC) and the Dutch Autocorrelation Spectrometer (DAS)
 \citep{1986SPIE..598..134B}. These backends wrote data in the
 Global Section Data (GSD) format \citep[e.g.][]{GSD1999} which was
-understood by the SPECX data reduction package. To ensure that as much
+understood by the \specx\ data reduction package. To ensure that as much
 of this historical data as possible is made available to the community
-in a useable format we have developed an extension to the SMURF
-package called \textsc{gsd2acsis} that converts the legacy data to the
+in a useable format we have developed an extension to the \smurf\
+package called \gsdacsis\ that converts the legacy data to the
 newer ACSIS data format. This enables the legacy data to be re-processed using
 the modern data reduction pipeline and automatically leads to these
 products being easily available from the JSA.
@@ -1074,7 +1083,7 @@ observatory backup project from 1995 to 1997. The $^{13}$CO
 $J=2\rightarrow 1$ component of the project consisted of approximately
 14,000 spectra from 154 observations spread over 12 nights using the
 single receptor receiver RxA2 \citep{1992IJIMW..13..647D}. Reducing
-the data with SPECX was an involved process and preliminary results
+the data with \specx\ was an involved process and preliminary results
 were presented in \citet{2001AAS...19915601S}. For this test the GSD data were
 downloaded from the CADC and converted to ACSIS format.
 
@@ -1100,7 +1109,7 @@ without more investigation into the related observations as GSD data
 did not record the location of the reference position in the
 header. For the purposes of the test these observations were not used.
 
-The results can be seen in Fig.\ \ref{fig:hhcmp}. The SPECX ``manual''
+The results can be seen in Fig.\ \ref{fig:hhcmp}. The \specx\ ``manual''
 reduction does look better than the automated reduction, especially in
 the region in the north east where some contamination still seems to
 be present. It seems feasible to assume that some of this can be
@@ -1151,8 +1160,8 @@ scientists who have tested the pipeline. In particular we thank
 Jessica Dempsey, Holly Thomas, Jan Wouterloot, Jane Buckle and
 Jennifer Hatchell. We thank Doug Johnstone for useful comments on a
 draft of this paper. We would also like to thank Jennifer Balfour and
-Vincent Tilanus for their work on \textsc{gsd2acsis}. We thank
-G.~Sandell for providing us with the SPECX reductions of the Horsehead
+Vincent Tilanus for their work on \gsdacsis. We thank
+G.~Sandell for providing us with the \specx\ reductions of the Horsehead
 Nebula. This research used the facilities of the Canadian Astronomy
 Data Centre operated by the National Research Council of Canada with
 the support of the Canadian Space Agency. This research has made use
