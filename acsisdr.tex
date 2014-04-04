@@ -199,6 +199,9 @@ James Clerk Maxwell Telescope
 \newcommand{\gsdacsis}{\textsc{gsd{\footnotesize{2}}acsis}}
 \newcommand{\findclumps}{\textsc{findclumps}}
 
+%% Links
+\newcommand{\ascl}[1]{\href{http://www.ascl.net/#1}{ascl:#1}}
+
 %% main text
 \section{Introduction}
 \label{sec:intro}
@@ -220,8 +223,8 @@ detectors,  such as the CHAI instrument proposed for CCAT
 
 In submillimeter astronomy data reductions packages such as
 \htmladdnormallinkfoot{CLASS}{http://www.iram.fr/IRAMFR/GILDAS}
-\citep[][ascl:1305.010]{2005sf2a.conf..721P} and
-\specx\ \citep[][ascl:1310.008]{SPECX} were developed that worked well with
+\citep[][\ascl{1305.010}]{2005sf2a.conf..721P} and
+\specx\ \citep[][\ascl{1310.008}]{SPECX} were developed that worked well with
 single-receptor instruments. Scripting interfaces and tools for
 curating collections of spectra were insufficient as the data rates
 increased and data pipelines \citep[e.g.,][]{1995ASPC...75..117W} and
@@ -239,7 +242,7 @@ observe a fixed set of positions, but the gains were less in scanning
 observing modes.
 The gridded and co-added data cube was the product that was archived
 and taken away  by the astronomer for further analysis, although it was
-also possible to store the raw data in CASA (ascl:1107.013) measurement sets
+also possible to store the raw data in CASA (\ascl{1107.013}) measurement sets
 \citep{2012ASPC..461..849P}\footnote{At the time this was being
   developed CASA was known as AIPS++ \citep{2004ASPC..314..468M}},
 
@@ -279,7 +282,7 @@ different projects.
 
 The pipeline at the JCMT is implemented by writing heterodyne data
 reduction recipes for the ORAC-DR pipeline infrastructure
-\citep[][ascl:1310.001]{2011tfa..confE..42J,2008AN....329..295C} that was already in
+\citep[][\ascl{1310.001}]{2011tfa..confE..42J,2008AN....329..295C} that was already in
 use at the telescope. The first guiding principle for the overall
 design is for the pipeline to deliver sensible results based only on
 information in the data files themselves, without any further user
@@ -519,10 +522,10 @@ noise far exceed those with a signal rendering a simple collapse along an axis
 or moments  analysis of the baselined data cube virtually unusable. Instead
 the JCMT pipeline uses a clump-finding algorithm to isolate and identify
 emission features.
-The Starlink \cupid\ \citep[][ascl:1311.007]{2007ASPC..376..425B} application contains
+The Starlink \cupid\ \citep[][\ascl{1311.007}]{2007ASPC..376..425B} application contains
 a number of clump-finding algorithms that work in three dimensions.
 The choice of a particular algorithm is not critical and either Fellwalker or
-Clumpfind \citep[][ascl:1107.014]{1994ApJ...428..693W} can be used.
+Clumpfind \citep[][\ascl{1107.014}]{1994ApJ...428..693W} can be used.
 As for the baseline fit, the clump find is performed on  a smoothed version
 of the baselined group cube, resulting in masks of emission regions that
 are applied to the unsmoothed baselined data. A moments analysis routine
@@ -544,7 +547,7 @@ group file, which is then reduced using the same steps as in the first iteration
 
 In order to apply the masks to the raw data, the masks need to be resampled
 in a time and receptor domain. The \smurf\ \unmakecube\ task
-\citep[][ascl:1310.007]{SUN258} is used for this. This application
+\citep[][\ascl{1310.007}]{SUN258} is used for this. This application
 reads a raw time series cube and generates a new time series by
 calculating the position of each spectrum, looking up this position in
 the group data cube mask and writing the emission-masked spectrum to
@@ -789,7 +792,7 @@ hide a weak line.
 Using a mask based on the detected clumps much improves
 fidelity and improves upon using a simple threshold or
 the smoothing scheme used in the \textsc{momnt} command in AIPS
-\cite[][ascl:9911.003]{2003ASSL..285..109G}. As discussed in \S \ref{sec:makecube}
+\cite[][\ascl{9911.003}]{2003ASSL..285..109G}. As discussed in \S \ref{sec:makecube}
 observations of extended regions  are potentially spread over multiple data cubes
 that must be processed independently and the resulting moment map is created by
 mosaicking the individual submaps taking into account the border
@@ -1171,7 +1174,7 @@ This work was built on the Starlink Software Collection, which was
 developed by the Starlink Project until 2005
 \citep{1982QJRAS..23..485D,2005ASPC..347...22D,2008ASPC..394..650C}
 and then opened up to the community. The source code for the Starlink
-software (ascl:1110.012) and ORAC-DR is open-source and is
+software (\ascl{1110.012}) and ORAC-DR is open-source and is
 available on github at
 \htmladdnormallink{https://github.com/Starlink}.
 
