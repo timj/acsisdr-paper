@@ -231,8 +231,8 @@ algorithms that work on the full data set
 \citep[e.g.,][]{2002ASPC..278..329M} were suggested. The ACSIS data
 reduction system \citep{2000ASPC..216..502L,2000SPIE.4015..114H},
 delivered to the JCMT in 2005, aimed to deal with the data rate issues
-by providing a pipeline that in real-time co-added the calibrated
-spectra, with optional baselining, in to a data cube.  This strategy
+by providing a real-time pipeline that co-added the calibrated
+spectra, with optional baselining, into a data cube.  This strategy
 was forced on us given the computer resources available when ACSIS was
 being designed and developed and was known to have risks associated
 with it. Coadding spectra into the cube allowed for impressive ``data
@@ -247,14 +247,14 @@ also possible to store the raw data in CASA (\ascl{1107.013}) measurement sets
 
 There are obvious downsides associated with this approach. The
 observing system required that the cube parameters be specified and
-the observer had to pre-select those in the Observing Tool
+pre-selected by the observer in the Observing Tool
 \citep{2002ASPC..281..453F}. It was also
 necessary that the observer specify the baseline regions and any
 frequency binning required. Since such a process as a whole is
 irreversable, on a fundamental level it is not well-adapted to
 astronomical research where observations are not well characterized
 and pre-set values may turn out to be a poor choice.  Consequently,
-when it became clear in 2006 computers were fast enough and storage
+when it became clear in 2006 that computers were fast enough and storage
 large enough to be able to store the observed spectra without the need
 of real-time regridding and coadding, this further data reduction was
 migrated to a pipeline and the calibrated spectra were the raw data
@@ -318,8 +318,8 @@ sets for which the S/N may be much worse. These in turn are then used
 to re-derive the results. Although the pipeline in principle can be
 configured with an arbitrary number of loops, in practice only a
 two-step process is needed. For scanning observations implementing
-this requires for the results, such as baseline masks, to be
-re-expanded in the time domain. Further optimizations are optional in
+this iterative process some of the results, such as baseline masks,
+are required to be re-expanded in the time domain. Further optimizations are optional in
 the second step. For example, while the baseline fit is linear
 during the first step, with secure baseline regions higher order fits
 can be used during the second step.
@@ -402,7 +402,7 @@ dealing with bad data:
    of the issues associated with the AND scheme.
 \item[\texttt{FIRST}] Only spectra that have the same bad pixel mask
    as the first spectrum contribute to the output spectrum. It
-   produces less bad pixels in the output than the \texttt{OR}
+   produces fewer bad pixels in the output than the \texttt{OR}
    scheme without the large memory footprint of the \texttt{AND} scheme.
    This scheme is useful in absence of intermittent problems and where
    the bad pixel mask, for example, results from a long-term instrumental effect, but
@@ -426,7 +426,7 @@ a quality assurance test (see \S\,\ref{sec:qa}).
 
 Fig.\ \ref{fig:flowchart} shows the key steps in the automatic
 pipeline reduction of heterodyne data at the JCMT. An initial phase
-that checks individual observations and prepares them for coadding and
+checks individual observations and prepares them for coadding and
 gridding into the \texttt{group} cube. This is followed by a group
 phase where baselines are removed and emission selected in the coadded
 cube.  Next follows an iterative step: the resulting masks are
@@ -538,7 +538,7 @@ velocity (first-moment) maps.
 
 \subsection{Iterative processing}
 
-The group processing described above delivers a baselines data cube,
+The group processing described above delivers a baselined data cube,
 baseline and clump masks, and moments maps. Iterative processing uses
 the baseline mask from the group data cube to improve the baseline fit
 of the individual observations. There in turn are used to generate an improved
@@ -587,7 +587,7 @@ The pipeline can then be instructed to use this custom recipe instead of the def
 
 The parameters associated with the primitives, however, give access to only a small
 number of the full set of parameters allowable for the Starlink routines. A user can access
-these by setting up  special configuration file. A single configuration file for a project can
+these by setting up a special configuration file. A single configuration file for a project can
 be used to assign different parameter values for observations of different fields and
 different observing frequencies. An example is setting an allowable velocity range for
 spectral features: the default pipeline makes no assumption about this which often results
@@ -1126,8 +1126,8 @@ scheme described here is used continually at the JSA
 \citep{2011ASPC..442..203E} for daily and project processing and the
 tuned recipes are now generating the primary products from the
 heterodyne part of the Gould's Belt JCMT Legacy Survey
-\citep{2007PASP..119..855W} and also the CO High Resolution Survey
-(COHRS) from the JCMT \citep{2013ApJS..209....8D}.
+\citep{2007PASP..119..855W} and the CO High Resolution Survey
+(COHRS), also from the JCMT \citep{2013ApJS..209....8D}.
 
 The iterative pipeline processing described in this paper demonstrates
 the possibilities for advanced heterodyne cube reconstruction if we
