@@ -304,10 +304,10 @@ different instrument configuration.
 A second design principle for the pipeline is that its products
 retain the spatial and spectral resolution of the original data.  The
 data reduction relies heavily on spatial and spectral smoothing of the
-data cubes to improve S/N and isolate the 3-D nature of astronomical
+data cubes to improve S/N and isolate the three-dimensional nature of astronomical
 objects. Results from such an analysis are used to mask the original
 data, thus maintaining the original resolution. An example is
-baselining: the data cube is spatially smoothed to a lower resolution,
+baselining: the data cube is smoothed to a lower resolution,
 both spatially and spectrally, in order to auto-detect emission-free
 baseline regions. The result is then used to mask the original
 un-smoothed data cube and perform the actual fit of the baselines.
@@ -327,10 +327,10 @@ can be used during the second step.
 It is not possible to run a general heterodyne pipeline without any a
 priori user-input at all. The reason for this is that at a fundamental
 level it is impossible to distinguish between e.g. a broad spectral
-line and a non-linear baseline feature or a narrow emission feature
+line and a non-linear baseline feature, or a narrow emission feature
 and a spurious data spike extending over a few channels. For JCMT data
 different pipeline recipes have been designed optimized towards
-e.g. the broad and narrow line case. The observer specifies the choice
+e.g. the broad and narrow-line case. The observer specifies the choice
 of pipeline reduction recipe in the Observing Tool when preparing the
 observations. The desired recipe is documented in the meta-data of
 each data file. Recipes will be discussed in more detail below.
@@ -410,7 +410,7 @@ dealing with bad data:
 \end{description}
 
 The pipeline processing defaults to using the \texttt{AND} scheme but
-can be overridden if speed or memory are an issue.
+can be overridden if either speed or memory is an issue.
 
 
 \begin{figure}[t]
@@ -447,7 +447,7 @@ common steps for each observation are:
 \begin{itemize}
 \item Combine all data files belonging to the observation
 \item Sort spectra by time and receptor
-\item Remove median signal per time step (i.e.\ common mode signal over
+\item Remove median signal per time step (i.e.\ common-mode signal over
 all receptors and channels)
 \item Basic despiking and interference flagging
 \item Combination of overlapping spectral windows (sub-band merging)
@@ -470,9 +470,9 @@ of mosaicked or even separate fields into a single cube.
 \subsection{Group processing}
 
 After the preprocessing is completed a gridded group cube is created
-from all the observations and processed further. Here is where the 3-D
-structure of the data becomes critical for the analysis and the
-different data reduction recipes become more specific. The first
+from all the observations and processed further. Here is where the
+three-dimensional structure of the data becomes critical for the analysis
+and the different data reduction recipes become more specific. The first
 distinction is whether single spectral lines extend over a signicant
 fraction of the available band or not. If not, the second distinction
 is whether smoothing should be spatially biased (e.g.\ narrow spectral
@@ -489,7 +489,7 @@ resolution and frequency coverage of present-day correlators in
 comparison with typical width of spectral lines.
 
 Smoothing the data will emphasize extended regions of emission in the
-3-D data cube, but bias against weak narrow-line features that are also
+three-dimensional data cube, but bias against weak narrow-line features that are also
 point-like. Projects that search for such objects need to use specialized
 software to analyze the basic, unsmoothed, group file directly.
 
@@ -541,13 +541,13 @@ velocity (first-moment) maps.
 The group processing described above delivers a baselined data cube,
 baseline and clump masks, and moments maps. Iterative processing uses
 the baseline mask from the group data cube to improve the baseline fit
-of the individual observations. There in turn are used to generate an improved
+of the individual observations. These in turn are used to generate an improved
 group file, which is then reduced using the same steps as in the first iteration.
 
 In order to apply the masks to the raw data, the masks need to be resampled
 in a time and receptor domain. The \smurf\ \unmakecube\ task
 \citep[][\ascl{1310.007}]{SUN258} is used for this. This application
-reads a raw time series cube and generates a new time series by
+reads a raw time-series cube and generates a new time series by
 calculating the position of each spectrum, looking up this position in
 the group data cube mask and writing the emission-masked spectrum to
 an output time-series cube. This time-series cube can then be used to
@@ -556,7 +556,7 @@ each individual input spectrum.
 
 This is critically important for generating properly baseline-subtracted
 cubes of the individual observations but can also
-be important for quality assurance tests. The enhanced baseline
+be important for quality-assurance tests. The enhanced baseline
 subtraction can ``resurrect'' spectra that were originally determined
 to be of poor quality and not used in the final cube. This iterative
 cube production with enhanced QA can lead to minor improvements in
@@ -566,14 +566,14 @@ and more are rarely needed.
 A main objective for the iterative step was to allow for non-linear baseline fits
 (except for the broad-line recipe), both for  individual observations as well as
 the group cube, given that accurate baseline windows have been determined.
-Initially the pipeline was configured to use up to fifth order baselines in
+Initially the pipeline was configured to use up to fifth-order baselines in
 the second iteration step. In general this was very effective in successfully
-removing even high order baselines from observations taken when the
+removing even high-order baselines from observations taken when the
 conditions or instrumentation was unstable, without negatively impacting
 the vast majority of the observations for which linear or second order baselines
 were sufficient.  However, a subset of users objected to an automatic fitting of
 non-linear baselines and the default pipeline behaviour was changed to
-fit linear baselines only, leaving higher order fitting to a custom pipeline reduction
+fit linear baselines only, leaving higher-order fitting to a custom pipeline reduction
 by the users themselves.  In our opinion this is unfortunate since it significantly
 diminishes the benefits of the iterative scheme when, for example, pipeline processing
 in place for the JSA.
@@ -592,7 +592,7 @@ be used to assign different parameter values for observations of different field
 different observing frequencies. An example is setting an allowable velocity range for
 spectral features: the default pipeline makes no assumption about this which often results
 in including in its analysis large sections of the data cube with only noise. This can lead
-to problems from the cumulative effect of 4 or 5-sigma noise spikes. Pre-specifying the
+to problems from the cumulative effect of 4- or 5-sigma noise spikes. Pre-specifying the
 allowed velocity range typically is an effective way to improve pipeline results.
 
 The JSA is configured to accept ``user'' defined configuration files: if such
@@ -687,7 +687,7 @@ wavelength is used as the pixel spacing on the X axis. The wavelength
 of the periodicity perpendicular to this direction is then found and
 used as the pixel spacing on the Y axis.
 
-Finally, the reference pixel coordinate is shifted by up to one pixel
+Finally, the reference-pixel coordinate is shifted by up to one pixel
 on each axis in order to minimise the sum of the squared distances
 from each pixel projected sample position to the nearest pixel
 centre.\footnote{If the positions do not form a regular grid, an option is
@@ -701,24 +701,24 @@ Once the grid has been determined, the output spectrum at each
 position is formed by averaging the nearby input spectra. Various
 averaging schemes are available, the simplest being to place each
 input spectrum entirely into the nearest output pixel. Other schemes
-allow a 2-dimensional kernel to be used to spread each input spectrum
+allow a two-dimensional kernel to be used to spread each input spectrum
 out over a range of output pixels. Available kernels are those
 supported by the AST library \citep{SUN211,2012ASPC..461..825B} and
 include a simple bi-linear division between the four nearest
 neighbours, a Gaussian kernel, and various flavours of kernels based
 on a sinc function.
 
-The resampling can use either of the three schemes described in
-section \S\ref{sec:format} to determine how bad pixels are propagated
+The resampling can use any of the three schemes described in
+\S\ref{sec:format} to determine how bad pixels are propagated
 from input spectra into the output cube.
 
 One complication is that the data cube for a large area survey is
-potentially extremely large and many software package do not support
+potentially extremely large and many software packages do not support
 data arrays with more than $2^{32}$ pixels. We overcome this by
 supporting the ability for the output cube from \makecube\ to
 be split into tiles. These tiles share projection parameters and can
-be recombined without further resampling if required. For pixel
-spreading techniques that are susceptible to edge effects care is
+be recombined without further resampling if required. For
+pixel-spreading techniques that are susceptible to edge effects care is
 taken to ensure that sufficient border is included in the tiles such
 that the values in the output would be identical to those resulting
 from a single output data cube. The border region is flagged in an
@@ -757,7 +757,7 @@ that they can be combined in the data reduction. The correlator is
 usually configured such that the individual spectra overlap and also
 have channels that are aligned to within a few per cent of a pixel.
 
-The data acqusition system does not combine the subbands and so this
+The data acquisition system does not combine the sub-bands and so this
 must be done by the pipeline. If the pipeline determines that it is
 dealing with a hybrid mode observation the merging is done in
 bulk. First the spectra are sorted by time (the ACSIS acquisition
@@ -767,7 +767,7 @@ are trimmed before they are combined. The spectra can optionally have
 their DC level adjusted before combining.
 
 Fig.\ \ref{fig:hybrid} shows an example hybrid spectrum consisting of
-4 overlapping subbands from observations of methanol in Orion. In this
+four overlapping sub-bands from observations of methanol in Orion. In this
 example correcting for any DC offset is complicated by the lack of
 baseline region.
 
@@ -786,15 +786,16 @@ independently. The baseline region is estimated by...
 The Starlink \cupid\ task \findclumps\ is used to do the clump
 find. This is an essential step since moment maps can be compromised
 if excessive baseline is included in the calculation. For example, in an
-integrated intensity calculation the inclusion of all the baseline noise can
+integrated-intensity calculation the inclusion of all the baseline noise can
 hide a weak line.
 Using a mask based on the detected clumps much improves
 fidelity and improves upon using a simple threshold or
 the smoothing scheme used in the \textsc{momnt} command in AIPS
 \cite[][\ascl{9911.003}]{2003ASSL..285..109G}. As discussed in \S \ref{sec:makecube}
-observations of extended regions  are potentially spread over multiple data cubes
-that must be processed independently and the resulting moment map is created by
-mosaicking the individual submaps taking into account the border
+observations of extended regions are potentially spread over multiple
+data cubes, which must be processed independently, and the resulting
+moment map is created by
+mosaicking the individual submaps, taking into account the border
 regions. This is configured such that no resampling is required as
 \makecube\ ensures that all tiles are on the same pixel grid.
 
@@ -816,9 +817,9 @@ Fig.\ \ref{fig:integ} compares integrated intensity images calculated
 in two different ways from a single data cube generated by the
 pipeline \citep[see][for details of earlier
 reductions of these data]{2010MNRAS.409.1412G,2010A&A...523A..29D}. This data set
-has some interference in a few spectral channels of a few receptors
-that has not yet been handled by the main pipeline
-processing. Neverthless, the lower image shows no sign of the grid
+has some interference in a few spectral channels of a few receptors,
+which has not yet been handled by the main pipeline
+processing. Neverthless, the right-hand image shows no sign of the grid
 printing through and shows much more dynamic range than the naive
 integrated intensity image.
 
@@ -923,7 +924,7 @@ tunable minimum threshold.
 
 The methods appear highly effective at cleaning the pipeline
 products. It has been used to re-reduce one survey and several other
-datasets. Figure~\ref{fig:badbase:results} presents an example which
+data sets. Figure~\ref{fig:badbase:results} presents an example which
 had originally failed quality assurance, but now can be used for
 science.
 
@@ -953,8 +954,8 @@ striping from integrated intensity images.
 The data reduction system can be configured by using recipe parameters
 supplied to ORAC-DR in a file. Each recipe has its own set of
 parameters that are supported and these can include options to bin up
-the frequency scale, control the output grid, control any regridding
-parameters and enable or disable flatfielding and bad baseline filtering.
+the frequency scale, control the output grid and any regridding
+parameters, and enable or disable flatfielding and bad-baseline filtering.
 
 \subsection{Quality Assurance Parameters \label{sec:qa}}
 
@@ -1026,7 +1027,7 @@ rather than spatial smoothing.
 \subsubsection{Narrow line}
 
 This recipe is used for observations of objects with relatively narrow
-lines and a small velocity gradient (compared to the total observed
+lines and a small velocity gradient (compared with the total observed
 band). This applies to many Galactic targets. Smoothing is biased
 towards spatial smoothing.
 
@@ -1034,7 +1035,7 @@ towards spatial smoothing.
 
 Active galaxies have broad lines of many km/s so this recipe is tuned
 to be less aggressive for automatic baseline subtraction than the
-standard recipe that is deisgned for nearby galaxies. An early
+standard recipe that is designed for nearby galaxies. An early
 form of this recipe, in the form of a standalone script, was used for
 the initial Nearby Galaxy Survey data release and is documented in
 \citet{2010ApJ...714..571W}.
@@ -1059,19 +1060,19 @@ variety of backend systems including the Acousto-Optical Spectrometer
 (AOSC) and the Dutch Autocorrelation Spectrometer (DAS)
 \citep{1986SPIE..598..134B}. These backends wrote data in the
 Global Section Data (GSD) format \citep[e.g.][]{GSD1999} which was
-understood by the \specx\ data reduction package. To ensure that as much
-of this historical data as possible is made available to the community
-in a useable format we have developed an extension to the \smurf\
-package called \gsdacsis\ that converts the legacy data to the
+understood by the \specx\ data reduction package. To ensure that as many
+of these historical data as possible are made available to the community
+in a useable format, we have developed an extension to the \smurf\
+package called \gsdacsis, which converts the legacy data to the
 newer ACSIS data format. This enables the legacy data to be re-processed using
 the modern data reduction pipeline and automatically leads to these
 products being easily available from the JSA.
 
 The main difficulty in supporting legacy data in the pipeline related
 to the DAS splitting the bandwidth into many overlapping
-subbands. ACSIS data only ever had included two subbands for hybrid
-mode observations and so the subband merging algorithm had to be
-extended to support arbitrary numbers of subbands. Additionally, the
+sub-bands. ACSIS data only ever had included two sub-bands for hybrid-mode
+observations and so the sub-band merging algorithm had to be
+extended to support arbitrary numbers of sub-bands.  In addition the
 historical data are dominated by single-receptor instruments and most
 observations generated relatively few spectra, and few repeats of the
 same area of sky (depth in the first pass was preferred over short
@@ -1084,7 +1085,7 @@ historical era. Observations of the Horsehead nebula were an
 observatory backup project from 1995 to 1997. The $^{13}$CO
 $J=2\rightarrow 1$ component of the project consisted of approximately
 14,000 spectra from 154 observations spread over 12 nights using the
-single receptor receiver RxA2 \citep{1992IJIMW..13..647D}. Reducing
+single-receptor receiver RxA2 \citep{1992IJIMW..13..647D}. Reducing
 the data with \specx\ was an involved process and preliminary results
 were presented in \citet{2001AAS...19915601S}. For this test the GSD data were
 downloaded from the CADC and converted to ACSIS format.
@@ -1099,7 +1100,7 @@ pixel size. This meant that half of the map contained bad pixels and
 so an additional interpolation routine was required before the final
 integrated intensity image could be calculated. A consequence of the
 large number of flagged pixels in the map was that the quality
-assurance test associated with bad pixel map fraction had to be
+assurance test associated with bad-pixel map fraction had to be
 relaxed significantly.
 
 For some of the observations a bad reference position had been chosen,
