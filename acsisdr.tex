@@ -825,8 +825,28 @@ integrated intensity image.
 
 \subsection{Removal of Bad-Baseline Spectra}
 
-\textit{\color{red} Malcolm's ADASS XXII poster \citep{2013ASPC..475..341C} and JCMT Newsletter article. Blog mentions
-that we might also handle ringing in spectra. Needs to be rewritten.}
+
+The spectra delivered by ACSIS/HARP can often include non-astronomical
+signal arising from many sources, both local and external to JCMT. The
+extraneous signal can appear in all receptors or just one, for a short
+duration, or throughout an observation.  This interference gives rise
+to artefacts in the spectral cube made by \makecube.  The interference
+usually manifests as stripes or additional noise in the reduced
+spectral cube.  Their presence at best degrades and sometimes dwarfs
+the astronomical content.  The latter occurring with greater frequency
+for early HARP observations.
+
+While many of the artefacts are readily visible in the raw time
+series, and thus could be excised manually, some are subtle and easily
+overlooked.  After a few years of operation of HARP, astronomers were
+suspicious of all the data from a detector afflicted by interference,
+choosing to exclude that detector's spectra completely, and thus
+discarded perfectly good spectra in the presence of merely transient
+interference.  The automated pipeline sought to address the
+interference in a systematic fashion and to retain unaffected spectra.
+This approach leads to more-uniform products within a survey.  Further
+filters can be added as newly identified forms of interference become
+known.
 
 The bad baselines can be divided roughly into two classes:
 high-frequency, high amplitude; and low frequency, lower
