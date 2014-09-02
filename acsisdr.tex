@@ -196,7 +196,9 @@ James Clerk Maxwell Telescope
 \newcommand{\unmakecube}{\textsc{unmakecube}}
 \newcommand{\mfittrend}{\textsc{mfittrend}}
 \newcommand{\gsdacsis}{\textsc{gsd{\footnotesize{2}}acsis}}
+\newcommand{\findback}{\textsc{findback}}
 \newcommand{\findclumps}{\textsc{findclumps}}
+\newcommand{\fixsteps}{\textsc{fixsteps}}
 
 %% Links
 \newcommand{\ascl}[1]{\href{http://www.ascl.net/#1}{ascl:#1}}
@@ -902,15 +904,62 @@ The pipeline applies three steps in the quality-assurance stage:
 \subsubsection{Masking of High-Frequency Noise}
 
 The recipe applies a one-dimensional Laplacian edge filter to all the
-spectra for each receptor trimming the outer 15~\% where noise is
-always present.  This approximates to a difference-of-Gaussian
-filter. It next sums the rms `edginess' along the spectral axis to
-form a profile through the time series.  Drifts or steps in the
-profile are removed.  The final step is to eject spectra whose rms
-edginess exceeds the median level by a nominated number of clipped
-standard deviations.  Affected spectra are easily delineated.  An
-optional second iteration removes most of the striation noise once the
-pronounced edginess peaks are masked.
+spectra for each receptor, after trimming the outer 15\,\% where noise
+is always present.  This approximates to a difference-of-Gaussian
+filter.  It next averages the rms `edginess' along the spectral axis
+to form a profile through the time series.  An example profile is
+shown in Figure~\ref{fig:badbase:raw_edginess_profile}.  \cupid\
+\findback\ subtracts any drifting background level ignoring the narrow
+interference spikes.  Steps in the profile baseline are removed, where
+possible.\footnote{Step correction currently invokes the \smurf\ \fixsteps\
+application which was designed for long time series, and in practice
+requires hundreds of profile elements that are not always available.}
+The final stage is to eject spectra whose rms edginess exceeds the
+median level by a nominated number of clipped standard deviations.
+Affected spectra are easily delineated.  However, the clipping can
+leave residual spikes in the profile from the ramp up and down of the
+interference signal.  This occurs when the standard deviation includes
+both the noise and significant actual low-level variations, such as
+caused by ringing, and hence raises the threshold too high.  The
+algorithm applies a one- or two-element dilation to the excised
+regions.  While this may throw away the odd good spectrum, it is more
+than compensated by fewer artefacts in the reduced cube.
+
+
+\begin{figure}[!ht]
+\includegraphics[width=0.46\textwidth]{raw_edginess_profile.png}
+\caption{An example raw edginess profile.  There are five broad
+  peaks and one single-spectrum interference around 06:30.  Between
+  06:32 and 06:35 is the much weaker signature of ringing.}
+\label{fig:badbase:raw_edginess_profile}
+\end{figure}
+
+An optional second iteration removes most of the striation noise once
+the pronounced edginess peaks are masked.  Determining the extent of
+this ringing is problematic because of the noise, until we apply the
+knowledge that the interference is correlated, which permits smoothing
+along the time axis.
+Figure~\ref{fig:badbase:ringing_edginess_profile} shows that a ringing
+signal can persist for longer than a mere visual inspection would
+suggest, and there can also be weaker and shorter or periodic ringing
+noise.  Using an estimate of the background and noise, the pipeline
+then calls \cupid\ \findclumps\ to determine the location and extent
+of the ringing.
+
+At present the spectra affected ringing are masked.  Another approach
+is to determine a normalised form of the ringing pattern and subtract
+it for all affected spectra after using the edginess profile to scale
+the intensity.  Thus more spectra would be combined into the reduced
+cube.  Given the apparent periodicities, filtering in frequency
+space might also prove effective.
+
+\begin{figure}[!ht]
+\includegraphics[width=0.46\textwidth]{ringing_edginess_profile.png}
+\caption{The edginess profile after masking the short-duration
+  interference, leaving the ringing signal.}
+\label{fig:badbase:ringing_edginess_profile}
+\end{figure}
+
 
 \subsubsection{Non-linearity Filtering}
 
