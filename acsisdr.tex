@@ -849,27 +849,32 @@ filters can be added as newly identified forms of interference become
 known.
 
 The bad baselines can be divided roughly into two classes:
-high-frequency, high amplitude; and low frequency, lower
-amplitude. The former appear mostly in single isolated spectra or in
-narrow bands, but can also manifest as spiky spectra, or
-weaker-amplitude striations persistent over tens of spectra.
+high-frequency and low-frequency patterns.  The high-frequency
+interference is usually characterised by large-amplitude noise
+arranged mostly in single isolated spectra or in bands comprising
+around ten spectra.  Less frequently the interference manifests as
+spiky spectra.  For the last two types the noise pattern phase shifts
+between adjacent spectra.  In the first type there is beating in the
+amplitudes.  A further form comprises weaker-amplitude striations
+persistent over tens to 200 spectra, and it usually appears in
+addition to the short-duration intense noise.  This correlated
+`ringing' exhibits a bell-shape variation in intensity over time.
+
 Figure~\ref{fig:badbase:highfreq} presents the most-common forms.
 
 \begin{figure}[!ht]
-\includegraphics[width=0.23\textwidth]{P61_f1a}
-\includegraphics[width=0.23\textwidth]{P61_f1b}
-\caption{Examples of high-frequency interference in spectral-time
-  axes. The left panel shows high-amplitude interference affecting
-  single spectra; and part of an affected spectrum plotted below. The
-  amplitude dwarfs the normal signal by an order of magnitude. The
-  right panel shows bands of phase-shifting interference.}
+\includegraphics[width=0.46\textwidth]{high_freq_three_types.png}
+\caption{Examples of the three main types of high-frequency
+  interference in spectral-time axes.  To the foot of this extract
+  are bands of uncorrelated noise, and near the top is an isolated
+  noisy spectrum.  Between lie spectra affected by ringing.}
 \label{fig:badbase:highfreq}
 \end{figure}
 
 The low-frequency ripples tend to occur in time-series blocks that are
 often visible because of baseline drift, but can apply to all spectra
-for a receptor. They have a wide range of morphologies such as
-sinusoids, irregular ripples, and curved, twin headlight-like beams
+for a receptor.  They have a wide range of morphologies such as
+sinusoids, irregular ripples, curved, and twin headlight-like beams
 that start strong but gradually pan out and fade with time.
 Figure~\ref{fig:badbase:interference} displays some examples.
 
@@ -880,7 +885,7 @@ Figure~\ref{fig:badbase:interference} displays some examples.
  shows a band of low-frequency oscillations; below it is the band's
  average spectrum.  The lower-left spectrum has a periodic weak
  ripple hard to detect visually.  The right panel shows time-averaged
-(clipped mean) spectra for each receptor in which the fourth and
+ (clipped mean) spectra for each receptor in which the fourth and
   ninth from the bottom exhibit global non-linearity.}
 \label{fig:badbase:interference}
 \end{figure}
@@ -889,9 +894,9 @@ Figure~\ref{fig:badbase:interference} displays some examples.
 
 The pipeline applies three steps in the quality-assurance stage:
 \begin{itemize}
-\item Laplacian filtering of high-frequency noise
-\item non-linearity detection for individual spectra
-\item global non-linearity to reject whole receptors
+\item Laplacian filtering of high-frequency noise;
+\item non-linearity detection for individual spectra; and
+\item global non-linearity to reject whole receptors.
 \end{itemize}
 
 \subsubsection{Masking of High-Frequency Noise}
