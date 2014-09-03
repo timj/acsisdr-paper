@@ -966,23 +966,47 @@ space might also prove effective.
 The low-frequency rippled and wobbly baselines are addressed by
 determining the non-linearity of each spectrum.  First the recipe
 excludes non-baseline features that would dilute the non-linearity
-signal.  These comprise a threshold to remove spikes and masking a
-central region where the astronomical signal may be present. It
-estimates the background level, effectively smoothing to remove
-structure smaller than a nominated scale.  Next it fits linear
+signal.  These comprise a threshold to remove spikes and masking the
+astronomical signal.  To exclude the astronomical emission the recipe
+masks either in user-specified velocity ranges, or determines the
+location of the emission unaided.
+
+The automated method forms an integrated spectrum for the observation
+first by averaging in time, and then forming the clipped mean along
+receptors to exclude the effects of strong non-linearity in one or two
+detectors.  The representative spectrum is linear-baseline subtracted
+in automatic mode to remove any pronounced slope.  It is smoothed with
+a 51-element Gaussian kernel to narrow the histogram peak of baseline
+values, and make emission more prominent.  Then follows a multi-scale
+iterative approach using histograms and \mfittrend\ to progressively
+improve the baseline subtraction by excluding the outliers.  It starts
+with a smoothing box one eighth the width of the spectrum and halving
+the box at each iteration.  For each iteration the recipe forms a
+truncated histogram whose mode and standard deviation are estimated,
+the latter allowing for the positive skew from the astronomical
+signal.  Then the recipe masks positive outliers (defaults to a
+4-sigma clip).  Either \findback\ or a block smooth using the current
+box size is subtracted to give a flatish baseline for \mfittrend\ in
+automatic mode to determine the baseline regions and hence the
+remaining emission.  \mfittrend\ on its own can have difficulty
+separating broadline emission from baseline.  One iteration is usually
+sufficient.
+
+The recipe estimates the background level, effectively smoothing to
+remove structure smaller than a nominated scale.  Next it fits linear
 baselines to these and calculates the rms residuals to provide a
 rectified signal.  Then it averages the signal along the spectral axis
 to form a non-linearity profile through the time series for each good
 receptor.
 
 The non-linear profiles are much noisier than the summed Laplacians
-and discrimination is harder.  To identify anomalous spectra the
-recipe reduces the noise to obtain a smooth profile, correct for
-drifts or steps in the profile.  It rejects spectra whose mean
-non-linearity exceeds the mean level above a nominated number of
-clipped standard deviations.  The derived standard deviation allows
-for positive skewness.  It applies a mask of rejected spectra to the
-input cube.
+for the high-frequency interference, and discrimination is harder.  To
+identify anomalous spectra the recipe reduces the noise to obtain a
+smooth profile, correct for drifts or steps in the profile.  It
+rejects spectra whose mean non-linearity exceeds the mean level above
+a nominated number of clipped standard deviations.  The derived
+standard deviation allows for positive skewness.  The final stage
+is apply the mask of rejected spectra to the input cube.
 
 The global non-linearity test is applied last so that a block of
 transient highly deviant spectra will not cause the whole receptor to
