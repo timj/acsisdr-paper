@@ -777,11 +777,34 @@ baseline region.
 \label{sec:mfittrend}
 
 The Starlink \KAPPA\ task \mfittrend\ is used to calculate a
-first order baseline fit for each spectrum in the data cube
-independently. The baseline region is estimated by...
-\emph{\color{red} MJC to
-  write a description of AUTO mode in MFITTREND}.
+first-order baseline fit for each spectrum in the data cube
+independently. The baseline region is estimated by a technique lent
+from photographic surface photometry but applied to one-dimensional
+data.  A spectrum, or the mean spectrum over a region, is divided into
+bins, typically 32.  Then a linear fit is made to the mean values and
+outlier bins are excluded with progressive sigma-clipping leading to
+an improved fit.  This rejection process generates a mask of deviant
+bins, which is expanded back to elements in the original spectrum,
+whose baseline is then fit without binning.
 
+\mfittrend\ could attempt to refine the mask by narrowing the bin
+widths within the rejected bins to pinpoint the emission and yield
+more baseline to fit.  In practice the pipeline only determines a
+first-order fit and the loss of a small fraction of the baseline
+appears to make no significant difference.  Also it is better to be
+conservative to ensure that no weak line velocity dispersion is
+included to bias the fit's slope.  A further refinement is to perform
+progressive sigma-clipping or use the histogram within each bin to
+estimate the mode, thereby remove spikes and weak astronomical signal
+from secondary lines that bias the baseline fit.
+
+In the large majority of cases the masked spectrum will be free of
+emission.  However, the method is not guaranteed.  One such case is if
+the baseline is not linear, but that is indicative of interference in
+ACSIS data and such spectra are routinely rejected
+(\mbox{\S \ref{sec:non-linearity}}).  More of an issue are very broad
+lines that occupy a substantial fraction, more than half in some
+cases, of the spectral range.
 
 \subsection{Clumpfind and moments maps \label{sec:moment}}
 
@@ -963,6 +986,7 @@ space might also prove effective.
 
 
 \subsubsection{Non-linearity Filtering}
+\label{sec:non-linearity}
 
 The low-frequency rippled and wobbly baselines are addressed by
 determining the non-linearity of each spectrum.  First the recipe
