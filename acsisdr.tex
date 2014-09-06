@@ -1012,10 +1012,10 @@ the latter allowing for the positive skew from the astronomical
 signal.  Then the recipe masks positive outliers (defaults to a
 4-sigma clip).  Either \findback\ or a block smooth using the current
 box size is subtracted to give a flatish baseline for \mfittrend\ in
-automatic mode to determine the baseline regions and hence the
-remaining emission.  \mfittrend\ on its own can have difficulty
-separating broadline emission from baseline.  One iteration is usually
-sufficient.
+automatic mode (\mbox{\S \ref{sec:mfittrend}}) to determine the baseline
+regions and hence the remaining emission.  \mfittrend\ on its own can
+have difficulty separating broadline emission from baseline.  One
+iteration is usually sufficient.
 
 The recipe estimates the background level, effectively smoothing to
 remove structure smaller than a nominated scale.  Next it fits linear
