@@ -219,7 +219,7 @@ have increased substantially such that it is now common-place to take
 a short observation resulting in thousands of spectra. This is only
 going to become more challenging with the advent of instruments with
 64,000 channels and dual-waveband arrays each of which consist of 128
-detectors,  such as the CHAI instrument proposed for CCAT
+detectors, such as the CHAI instrument proposed for CCAT
 \citep{2009ASPC..417..113R,GoldsmithCHAI2012,P10_adassxxiii}.
 
 In submillimeter astronomy data reductions packages such as
@@ -242,10 +242,10 @@ compression'' for stare and jiggle observing modes, which repeatedly
 observe a fixed set of positions, but the gains were less in scanning
 observing modes.
 The gridded and co-added data cube was the product that was archived
-and taken away  by the astronomer for further analysis, although it was
+and taken away by the astronomer for further analysis, although it was
 also possible to store the raw data in CASA (\ascl{1107.013}) measurement sets
 \citep{2012ASPC..461..849P}\footnote{At the time this was being
-  developed CASA was known as AIPS++ \citep{2004ASPC..314..468M}},
+developed CASA was known as AIPS++ \citep{2004ASPC..314..468M}},
 
 There are obvious downsides associated with this approach. The
 observing system required that the cube parameters be specified and
@@ -496,38 +496,38 @@ point-like. Projects that search for such objects need to use specialized
 software to analyze the basic, unsmoothed, group file directly.
 
 For standard processing, the resulting smoothed high-S/N cube
-is then used by the baseline  fitting routine, \mfittrend\ from
-Starlink \KAPPA\ \citep[][\ascl{1403.022}, see \S\ref{sec:mfittrend}]{SUN95,2008ASPC..394..650C}, to determine
-emission-free spectral windows.
+is then used by the baseline-fitting routine, \mfittrend\ from
+Starlink \KAPPA\ \citep[][\ascl{1403.022}, see \S\ref{sec:mfittrend}]{SUN95,2008ASPC..394..650C},
+to determine emission-free spectral windows.
 The details of this process depend on the recipe: ranging from using two
 windows with a set width at each end of the frequency band
-for the ``broad-line'' case,  to a full automatic search for emission-free
+for the ``broad-line'' case, to a full automatic search for emission-free
 windows in case of multi-line spectra. Note that using the smoothed data has
-two advantages. Firstly, the significantly higher S/N  allows for a better
+two advantages. Firstly, the significantly higher S/N allows for a better
 distinction between emission and emission-free regions. Secondly, smoothing
 also spreads extended emission regions somewhat, both spatially and spectrally,
 resulting in a conservative estimate of emission-free regions that is better suited for
-the fit of low-order baselines in this first  pass. Once \mfittrend\ has
-had this first pass at the baselines,  a mask is written out containing the
-baseline  regions of the smoothed data cube. This mask is applied to the original
+the fit of low-order baselines in this first pass. Once \mfittrend\ has
+had this first pass at the baselines, a mask is written out containing the
+baseline regions of the smoothed data cube. This mask is applied to the original
 unsmoothed data cube resulting in a cube consisting solely of
 baselines. \mfittrend\ is then used again but this time fitting
 the entire (masked) spectrum, fitting a linear (or, optionally, higher-order) baseline
 to each spectrum in turn. The baselines are then finally subtracted from the
 original data cube.
 
-With proper baselines subtracted  the data cube can be analysed  using more
+With proper baselines subtracted the data cube can be analysed using more
 holistic approaches to isolate emission associated with the astronomical
 target. This step is critical since for most target fields the number of pixels with
 noise far exceed those with a signal rendering a simple collapse along an axis
-or moments  analysis of the baselined data cube virtually unusable. Instead
+or moments analysis of the baselined data cube virtually unusable. Instead
 the JCMT pipeline uses a clump-finding algorithm to isolate and identify
 emission features.
 The Starlink \cupid\ \citep[][\ascl{1311.007}]{2007ASPC..376..425B} application contains
 a number of clump-finding algorithms that work in three dimensions.
 The choice of a particular algorithm is not critical and either Fellwalker or
 Clumpfind \citep[][\ascl{1107.014}]{1994ApJ...428..693W} can be used.
-As for the baseline fit, the clump find is performed on  a smoothed version
+As for the baseline fit, the clump find is performed on a smoothed version
 of the baselined group cube, resulting in masks of emission regions that
 are applied to the unsmoothed baselined data. A moments analysis routine
 (see \S \ref{sec:moment}) can then be used with the masked data set to
@@ -562,11 +562,11 @@ be important for quality-assurance tests. The enhanced baseline
 subtraction can ``resurrect'' spectra that were originally determined
 to be of poor quality and not used in the final cube. This iterative
 cube production with enhanced QA can lead to minor improvements in
-quality of the final product.  In practice,  one iteration in general is enough
+quality of the final product.  In practice, one iteration in general is enough
 and more are rarely needed.
 
 A main objective for the iterative step was to allow for non-linear baseline fits
-(except for the broad-line recipe), both for  individual observations as well as
+(except for the broad-line recipe), both for individual observations as well as
 the group cube, given that accurate baseline windows have been determined.
 Initially the pipeline was configured to use up to fifth-order baselines in
 the second iteration step. In general this was very effective in successfully
@@ -619,11 +619,11 @@ with a particular fit order can be used as quality-assessment parameter.
 is ill-equiped to deal with that fields mix narrow and broad spectral
 lines, such as found in the central regions of galaxies or compact
 outflow sources. Given that the regular baseline routine also produces a
-cube with ``noise-free''  fitted baselines, this cube can be analyzed similar to a
+cube with ``noise-free'' fitted baselines, this cube can be analyzed similar to a
 broad-line observation to extract and check for broad
 spectral components that were erroneously subtracted.
 \item Similar tactics could be applied in reducing continuum observations:
-in the current default recipe  no baseline is subtracted. Instead the continuum
+in the current default recipe no baseline is subtracted. Instead the continuum
 level could be determined from the median level of each baseline fitted.
 \item Adding a routine that ``auto-detects'' the main velocity range based
 on a statistical analysis of the distribution of baseline windows or detected clumps
@@ -632,8 +632,8 @@ velocity range is a simply way to improve the pipeline result. In addition,
 such routine can flag serendipitous sources or spurious features outside
 a primary velocity range.
 \item Using a profile fitting routine instead of a moments analysis. Recently a
-comprehensive Gauss-Hermite multi-profile fitting task \textsc{Fit{\footnotesize{1}}d}  was
-added to the \smurf\ package that produces a cube with the fitted profiles as well
+comprehensive Gauss-Hermite multi-profile fitting task \textsc{Fit{\footnotesize{1}}d}
+was added to the \smurf\ package that produces a cube with the fitted profiles as well
 as cubes with the fitted parameters (amplitude, position, width, etc.) for
 each spectral feature. Gauss-Hermite functions can fit complex, asymmetric
 profiles and for certain projects, such as a spectral survey, this may be more
