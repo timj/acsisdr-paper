@@ -860,7 +860,19 @@ to artefacts in the spectral cube made by \makecube.  The interference
 usually manifests as stripes or additional noise in the reduced
 spectral cube.  Their presence at best degrades and sometimes dwarfs
 the astronomical content.  The latter occurring with greater frequency
-for early HARP observations.
+for early HARP observations.  In addition uneven baselines can lead
+to poorly determined line fluxes (see Fig.~\ref{fig:badbase:spectrum}).
+
+\begin{figure}[!ht]
+\includegraphics[width=\columnwidth]{badbaseline_spectrum_example}
+\caption{Example of a reduced spectrum affected by a bad baseline.
+ The lower panel shows a broad wave pattern, where a linear baseline
+ subtraction would grossly overestimate the emission's flux.  The upper
+ panel shows the correspnoding spectrum after the application of
+ non-linear baseline filtering described in \S\,\ref{sec:non-linearity}.}
+ \label{fig:badbase:spectrum}
+\end{figure}
+
 
 While many of the artefacts are readily visible in the raw time
 series, and thus could be excised manually, some are subtle and easily
