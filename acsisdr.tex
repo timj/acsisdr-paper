@@ -1,191 +1,65 @@
-%% This is file `elsarticle-template-2-harv.tex',
-%%
-%% Copyright 2009 Elsevier Ltd
-%%
-%% This file is part of the 'Elsarticle Bundle'.
-%% ---------------------------------------------
-%%
-%% It may be distributed under the conditions of the LaTeX Project Public
-%% License, either version 1.2 of this license or (at your option) any
-%% later version.  The latest version of this license is in
-%%    http://www.latex-project.org/lppl.txt
-%% and version 1.2 or later is part of all distributions of LaTeX
-%% version 1999/12/01 or later.
-%%
-%% The list of all files belonging to the 'Elsarticle Bundle' is
-%% given in the file `manifest.txt'.
-%%
-%% Template article for Elsevier's document class `elsarticle'
-%% with harvard style bibliographic references
-%%
-%% $Id: elsarticle-template-2-harv.tex 155 2009-10-08 05:35:05Z rishi $
-%% $URL: http://lenova.river-valley.com/svn/elsbst/trunk/elsarticle-template-2-harv.tex $
-%%
+% mn2esample.tex
+%
+% v2.1 released 22nd May 2002 (G. Hutton)
+%
+% The mnsample.tex file has been amended to highlight
+% the proper use of LaTeX2e code with the class file
+% and using natbib cross-referencing. These changes
+% do not reflect the original paper by A. V. Raveendran.
+%
+% Previous versions of this sample document were
+% compatible with the LaTeX 2.09 style file mn.sty
+% v1.2 released 5th September 1994 (M. Reed)
+% v1.1 released 18th July 1994
+% v1.0 released 28th January 1994
 
-%%\documentclass[preprint,authoryear,12pt]{elsarticle}
-
-%% Use the option review to obtain double line spacing
-%% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
-
-%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
-%% for a journal layout:
-
-%% Astronomy & Computing uses 5p
-%% \documentclass[final,authoryear,5p,times]{elsarticle}
-\documentclass[final,authoryear,5p,times,twocolumn]{elsarticle}
-
-%% if you use PostScript figures in your article
-%% use the graphics package for simple commands
-%% \usepackage{graphics}
-%% or use the graphicx package for more complicated commands
+\documentclass[useAMS,usenatbib]{mn2e}
 \usepackage{graphicx}
-%% or use the epsfig package if you prefer to use the old commands
-%% \usepackage{epsfig}
 
-%% The amssymb package provides various useful mathematical symbols
-\usepackage{amssymb}
-%% The amsthm package provides extended theorem environments
-%% \usepackage{amsthm}
+% If your system does not have the AMS fonts version 2.0 installed, then
+% remove the useAMS option.
+%
+% useAMS allows you to obtain upright Greek characters.
+% e.g. \umu, \upi etc.  See the section on "Upright Greek characters" in
+% this guide for further information.
+%
+% If you are using AMS 2.0 fonts, bold math letters/symbols are available
+% at a larger range of sizes for NFSS release 1 and 2 (using \boldmath or
+% preferably \bmath).
+%
+% The usenatbib command allows the use of Patrick Daly's natbib.sty for
+% cross-referencing.
+%
+% If you wish to typeset the paper in Times font (if you do not have the
+% PostScript Type 1 Computer Modern fonts you will need to do this to get
+% smoother fonts in a PDF file) then uncomment the next line
+% \usepackage{Times}
 
-\usepackage[pdftex,pdfpagemode={UseOutlines},bookmarks,bookmarksopen,colorlinks,linkcolor={blue},citecolor={green},urlcolor={red}]{hyperref}
-\usepackage{hypernat}
+%%%%% AUTHORS - PLACE YOUR OWN MACROS HERE %%%%%
+
+%\usepackage[pdftex,pdfpagemode={UseOutlines},bookmarks,bookmarksopen,colorlinks,linkcolor={blue},citecolor={green},urlcolor={red}]{hyperref}
+%\usepackage{hypernat}
 
 %% Alternatives to hyperref for testing
 %\usepackage{url}
 %\newcommand{\htmladdnormallinkfoot}[2]{#1\footnote{\texttt{#2}}}
 %\newcommand{\htmladdnormallink}[1]{\texttt{#1}}
 
-\usepackage{color}
-
-%% The lineno packages adds line numbers. Start line numbering with
-%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
-%% for the whole article with \linenumbers after \end{frontmatter}.
-%% \usepackage{lineno}
-
-%% natbib.sty is loaded by default. However, natbib options can be
-%% provided with \biboptions{...} command. Following options are
-%% valid:
-
-%%   round  -  round parentheses are used (default)
-%%   square -  square brackets are used   [option]
-%%   curly  -  curly braces are used      {option}
-%%   angle  -  angle brackets are used    <option>
-%%   semicolon  -  multiple citations separated by semi-colon (default)
-%%   colon  - same as semicolon, an earlier confusion
-%%   comma  -  separated by comma
-%%   authoryear - selects author-year citations (default)
-%%   numbers-  selects numerical citations
-%%   super  -  numerical citations as superscripts
-%%   sort   -  sorts multiple citations according to order in ref. list
-%%   sort&compress   -  like sort, but also compresses numerical citations
-%%   compress - compresses without sorting
-%%   longnamesfirst  -  makes first citation full author list
-%%
-%% \biboptions{longnamesfirst,comma}
-
-% \biboptions{}
-
-\journal{Astronomy \& Computing}
-
-\begin{document}
-
-\begin{frontmatter}
-
-%% Title, authors and addresses
-
-%% use the tnoteref command within \title for footnotes;
-%% use the tnotetext command for the associated footnote;
-%% use the fnref command within \author or \address for footnotes;
-%% use the fntext command for the associated footnote;
-%% use the corref command within \author for corresponding author footnotes;
-%% use the cortext command for the associated footnote;
-%% use the ead command for the email address,
-%% and the form \ead[url] for the home page:
-%%
-%% \title{Title\tnoteref{label1}}
-%% \tnotetext[label1]{}
-%% \author{Name\corref{cor1}\fnref{label2}}
-%% \ead{email address}
-%% \ead[url]{home page}
-%% \fntext[label2]{}
-%% \cortext[cor1]{}
-%% \address{Address\fnref{label3}}
-%% \fntext[label3]{}
-
-\title{Automated reduction of submillimetre single-dish heterodyne
-  data from the James Clerk Maxwell Telescope using ORAC-DR}
-
-%% use optional labels to link authors explicitly to addresses:
-%% \author[label1,label2]{<author name>}
-%% \address[label1]{<address>}
-%% \address[label2]{<address>}
-
-\author[jac,cornell]{Tim Jenness\corref{cor1}}
-\ead{t.jenness@jach.hawaii.edu}
-\author[jac]{Malcolm J.\ Currie}
-\author[jac]{Remo P.\ J.\ Tilanus\fnref{rpt}}
-\author[jac]{Brad Cavanagh}
-\author[jac]{David S. Berry}
-\author[jac]{Jamie Leech\fnref{jxl}}
-\author[jac]{Luca Rizzi\fnref{lr}}
-
-\cortext[cor1]{Corresponding author}
-\fntext[rpt]{Present address: Leiden Observatory, PO Box 9513, 2300 RA
-  Leiden, The Netherlands}
-\fntext[jxl]{Present address: Department of Physics, University of
-  Oxford, Denys Wilkinson Building, Keble Road, Oxford, OX1 3RH, UK}
-\fntext[lr]{Present address: W.\ M.\ Keck Observatory, 65-1120 Mamalahoa Hwy, Kamuela,
-  HI 96743, USA}
-
-\address[jac]{Joint Astronomy Centre, 660 N.\ A`oh\=ok\=u Place, Hilo, HI
-  96720, USA}
-\address[cornell]{Department of Astronomy, Cornell University, Ithaca,
-  NY 14853, USA}
-
-\begin{abstract}
-%% Text of abstract
-
-With the advent of modern multi-detector heterodyne instruments that
-can result in observations generating thousands of spectra per minute it is
-no longer feasible to reduce these data as individual spectra. This
-paper describes how baselined, mosaicked data cubes can be created by
-an automated pipeline in a reliable manner, including detection of bad
-spectra, removal of transient effects and creation of high fidelity
-moment maps.
-
-\end{abstract}
-
-\begin{keyword}
-%% keywords here, in the form: keyword \sep keyword
-
-%% MSC codes here, in the form: \MSC code \sep code
-%% or \MSC[2008] code \sep code (2000 is the default)
-
-submillimeter astronomy \sep
-methods: data analysis \sep
-pipelines \sep
-techniques: spectroscopic \sep
-techniques: image processing \sep
-James Clerk Maxwell Telescope
-
-\end{keyword}
-
-\end{frontmatter}
+%\usepackage{color}
 
 % \linenumbers
 
 %% Journal abbreviations
-\newcommand{\mnras}{Mon Not R Astron Soc}
-\newcommand{\aap}{Astron Astrophys}
-\newcommand{\aaps}{Astron Astrophys Suppl}
-\newcommand{\pasp}{Pub Astron Soc Pacific}
-\newcommand{\apj}{Astrophys J}
-\newcommand{\apjs}{Astrophys J Supp}
-\newcommand{\qjras}{Quart J R Astron Soc}
+%\newcommand{\mnras}{Mon Not R Astron Soc}
+%\newcommand{\aap}{Astron Astrophys}
+%\newcommand{\pasp}{Pub Astron Soc Pacific}
+%\newcommand{\apj}{Astrophys J}
+%\newcommand{\apjs}{Astrophys J Supp}
+%\newcommand{\qjras}{Quart J R Astron Soc}
 \newcommand{\an}{Astron.\ Nach.}
 \newcommand{\ijimw}{Int.\ J.\ Infrared \& Millimeter Waves}
-\newcommand{\procspie}{Proc.\ SPIE}
-\newcommand{\aspconf}{ASP Conf. Ser.}
+%\newcommand{\procspie}{Proc.\ SPIE}
+%\newcommand{\aspconf}{ASP Conf. Ser.}
 
 %% Applications
 \newcommand{\KAPPA}{\textsc{kappa}}
@@ -203,6 +77,63 @@ James Clerk Maxwell Telescope
 
 %% Links
 \newcommand{\ascl}[1]{\href{http://www.ascl.net/#1}{ascl:#1}}
+
+\title{Automated reduction of submillimetre single-dish heterodyne
+  data from the James Clerk Maxwell Telescope using ORAC-DR}
+
+\author[T. Jenness et al.]
+{Tim~Jenness,$^{1,2}$\thanks{Contact email: t.jenness@jach.hawaii.edu}
+Malcolm~J.~Currie,$^1$
+Remo~P.~J.~Tilanus,$^1$\thanks{Present address: Leiden Observatory, PO Box 9513, 2300 RA Leiden, The Netherlands}
+Brad~Cavanagh,$^1$
+\newauthor
+David~S.~Berry,$^1$
+Jamie~Leech,$^1$\thanks{Present address: Department of Physics, University of
+  Oxford, Denys Wilkinson Building, Keble Road, Oxford, OX1 3RH, UK}
+and
+Luca~Rizzi$^1$\thanks{Present address: W.\ M.\ Keck Observatory, 65-1120 Mamalahoa Hwy, Kamuela, HI 96743, USA}\\
+$^1$Joint Astronomy Centre, 660 N.\ A`oh\=ok\=u Place, Hilo, HI 96720, USA \\
+$^2$Department of Astronomy, Cornell University, Ithaca, NY 14853, USA
+}
+
+
+\begin{document}
+
+\date{in development}
+
+\pagerange{\pageref{firstpage}--\pageref{lastpage}} \pubyear{2014}
+
+\maketitle
+
+\label{firstpage}
+
+\begin{abstract}
+%% Text of abstract
+
+With the advent of modern multi-detector heterodyne instruments that
+can result in observations generating thousands of spectra per minute it is
+no longer feasible to reduce these data as individual spectra. This
+paper describes how baselined, mosaicked data cubes can be created by
+an automated pipeline in a reliable manner, including detection of bad
+spectra, removal of transient effects and creation of high fidelity
+moment maps.
+
+\end{abstract}
+
+\begin{keywords}
+%% keywords here, in the form: keyword \sep keyword
+
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+
+submillimeter astronomy --
+methods: data analysis --
+pipelines --
+techniques: spectroscopic --
+techniques: image processing --
+James Clerk Maxwell Telescope
+
+\end{keywords}
 
 %% main text
 \section{Introduction}
@@ -1493,7 +1424,7 @@ available on GitHub\footnote{\url{https://github.com/Starlink}}.
 
 %% References with bibTeX database:
 
-\bibliographystyle{model2-names-astronomy}
+\bibliographystyle{mn2e}
 \bibliography{acsisdr}
 
 %% Authors are advised to submit their bibtex database files. They are
@@ -1520,6 +1451,7 @@ available on GitHub\footnote{\url{https://github.com/Starlink}}.
 
 % \end{thebibliography}
 
+\bsp
 \end{document}
 
 %%
