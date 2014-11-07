@@ -262,8 +262,8 @@ of real-time regridding and coadding, this further data reduction was
 migrated to a pipeline and the calibrated spectra were the raw data
 written by the instrument.
 
-A post-acquisition data reduction pipeline has clear advantages and in
-some form is now implemented at most modern observatories. Foremost,
+A post-acquisition data reduction pipeline has clear advantages and is
+now implemented in some form at most modern observatories. Foremost,
 the process can be repeated both to correct for errors, but also, if
 necessary, to iteratively fine-tune the reduction to the
 characteristics of the individual observations. Although tunable, the
@@ -297,11 +297,11 @@ assurance (QA) tests (see \S\,\ref{sec:qa}). The latter are critical
 for the JCMT Legacy Survey projects
 \citep{2007PASP..119..855W,2009ApJ...693.1736W,2007PASP..119..102P}
 who want to ensure they receive data of consistent quality.  Quality
-assurance tests not only need to judge the data against absolute
+assurance tests not only need to enable the judgement of the data against absolute
 criteria, they also need to test the self-consistency of the overall
 data set being processed, which possibly attempts to combine
 observations taken under vastly different conditions and even
-different instrument configuration.
+different instrument configurations.
 
 A second design principle for the pipeline is that its products
 retain the spatial and spectral resolution of the original data.  The
@@ -853,7 +853,7 @@ integrated intensity image.
 
 
 The spectra delivered by ACSIS/HARP can often include non-astronomical
-signal arising from many sources, both local and external to JCMT. The
+signal arising from many sources, both local and external to the  JCMT. The
 extraneous signal can appear in all receptors or just one, for a short
 duration, or throughout an observation.  This interference gives rise
 to artefacts in the spectral cube made by \makecube.  The interference
@@ -868,7 +868,7 @@ to poorly determined line fluxes (see Fig.~\ref{fig:badbase:spectrum}).
 \caption{Example of a reduced spectrum affected by a bad baseline.
  The lower panel shows a broad wave pattern, where a linear baseline
  subtraction would grossly overestimate the emission's flux.  The upper
- panel shows the correspnoding spectrum after the application of
+ panel shows the corresponding spectrum after the application of
  non-linear baseline filtering described in \S\,\ref{sec:non-linearity}.}
  \label{fig:badbase:spectrum}
 \end{figure}
@@ -1014,10 +1014,10 @@ space might also prove effective.
 \subsubsection{Non-linearity Filtering}
 \label{sec:non-linearity}
 
-The low-frequency rippled and wobbly baselines are addressed by
+The low-frequency ripple and wobbly baselines are addressed by
 determining the non-linearity of each spectrum.  First the recipe
 excludes non-baseline features that would dilute the non-linearity
-signal.  These comprise a threshold to remove spikes and masking the
+signal.  These comprise a threshold to remove spikes and mask the
 astronomical signal.  To exclude the astronomical emission the recipe
 masks either in user-specified velocity ranges, or determines the
 location of the emission unaided.
@@ -1198,7 +1198,7 @@ towards spatial smoothing.
 
 \subsubsection{Broad line}
 
-Active galaxies have broad lines of many km/s so this recipe is tuned
+Active galaxies often have broad lines of several hundreds of km/s so this recipe is tuned
 to be less aggressive for automatic baseline subtraction than the
 standard recipe that is designed for nearby galaxies. An early
 form of this recipe, in the form of a standalone script, was used for
