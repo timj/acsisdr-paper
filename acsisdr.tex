@@ -145,7 +145,7 @@
 \begin{abstract}
 %% Text of abstract
 
-With the advent of modern multi-receptor heterodyne instruments that
+With the advent of modern multi-detector heterodyne instruments that
 can result in observations generating thousands of spectra per minute it is
 no longer feasible to reduce these data as individual spectra. This
 paper describes how baselined, mosaicked data cubes can be created by
@@ -207,7 +207,7 @@ James Clerk Maxwell Telescope
 \section{Introduction}
 \label{sec:intro}
 
-As heterodyne receivers have progressed from single-receptor
+As heterodyne receivers have progressed from single-detector
 instruments
 \citep{1992IJIMW..13.1487P,1992IJIMW..13..647D,1992IJIMW..13.1827C} to
 small focal plane arrays
@@ -227,7 +227,7 @@ In submillimeter astronomy data reductions packages such as
 \htmladdnormallinkfoot{CLASS}{http://www.iram.fr/IRAMFR/GILDAS}
 \citep[][\ascl{1305.010}]{2005sf2a.conf..721P} and
 \specx\ \citep[][\ascl{1310.008}]{SPECX} were developed that worked well with
-single-receptor instruments. Scripting interfaces and tools for
+single-detector instruments. Scripting interfaces and tools for
 curating collections of spectra were insufficient as the data rates
 increased and data pipelines \citep[e.g.,][]{1995ASPC...75..117W} and
 algorithms that work on the full data set
@@ -365,18 +365,18 @@ K-mirror rotates such that the array is angled relative to the scan,
 allowing a fully-sampled patch of sky to be observed in a single
 pass. Subsequent observations can repeat the area with the scan
 direction perpendicular to the first to ensure that each position on
-the sky is measured by different receptors and to help minimize
+the sky is measured by different detectors and to help minimize
 ``print through'' of the scan pattern.
 
 The Jiggle mode is used for areas the same size as the HARP field of
 view. Here the secondary mirror moves to fill in the gaps between the
 array and the telescope tracks the target position. This mode is
 non-optimal for the data reduction algorithm presented here since each
-area on the sky tends to be measured by a single receptor and this can
+area on the sky tends to be measured by a single detector and this can
 make it hard to calculate baseline regions and detect unstable
 detectors. Good quality maps require many repeats with the K-mirror
 at different angles, and with the telescope moved to different offsets
- to allow different receptors to be combined. Unless the source of
+ to allow different detectors to be combined. Unless the source of
  interest is of a size comparable to the telescope beam, it is usually
  better to do a small scan map instead.
 
@@ -389,15 +389,15 @@ found in \citet{OCS_ICD_022}, using NDF
 meta-data (single values, arrays, and tables) in addition to the astronomical
 data in a hierachical structure. Spectra from HARP arrive
 asynchronously from data-acquisition paths that in parallel handle
-data from the individual receptors. Long observations are split
+data from the individual detectors. Long observations are split
 over several files. One of the basic first data reduction steps is thus
-collating and ordering of spectra into a time and receptor sequence.
+collating and ordering of spectra into a time and detector sequence.
 
-For scanning observations different receptors will observe almost
+For scanning observations different detectors will observe almost
 the same sky position and will contribute to the same output pixel in
 the final gridded data-cube. The data reduction will thus need to keep
-accurate track of the performance of each receptor and the noise of
-each of the spectra individually. Moreover, since different receptors
+accurate track of the performance of each detector and the noise of
+each of the spectra individually. Moreover, since different detectors
 and varying channels may intermittently have problems, such as
 interference, flagging and noise-tracking may need to be propagated on a
 per-channel basis. Heterodyne data cubes at the JCMT for this reason
@@ -434,17 +434,17 @@ more detail next.
 
 The initial phase works on the ungridded individual observations,
 which in essence are a time series of spectra from each individual
-receptor with a typical dump time of 1 second or faster in case of scan
+detector with a typical dump time of 1 second or faster in case of scan
 observations.  Not all recipes perform exactly the same reduction, but
 common steps for each observation are:
 \begin{itemize}
 \item Combine all data files belonging to the observation
-\item Sort spectra by time and receptor
+\item Sort spectra by time and detector
 \item Remove median signal per time step (i.e.\ common-mode signal over
-all receptors and channels)
+all detectors and channels)
 \item Basic despiking and interference flagging
 \item Combination of overlapping spectral windows (sub-band merging)
-\item Basic QA assessment checks: flag noisy receptors, unexpectedly noisy
+\item Basic QA assessment checks: flag noisy detectors, unexpectedly noisy
 observations, spectra with large noise gradients etc.
 \item (Optional) Remove basic linear baseline and grid the individual
 observation.
@@ -538,7 +538,7 @@ of the individual observations. These in turn are used to generate an improved
 group file, which is then reduced using the same steps as in the first iteration.
 
 In order to apply the masks to the raw data, the masks need to be resampled
-in a time and receptor domain. The \smurf\ \unmakecube\ task
+in a time and detector domain. The \smurf\ \unmakecube\ task
 \citep[][\ascl{1310.007}]{SUN258} is used for this. This application
 reads a raw time-series cube and generates a new time series by
 calculating the position of each spectrum, looking up this position in
@@ -653,7 +653,7 @@ is required to determine the pixel grid from the data itself. In the
 grid but also has an \texttt{autogrid} option that leaves optimal grid
 determination to the application itself.
 
-To maximize overall aperture efficiency, receptors in HARP are spaced
+To maximize overall aperture efficiency, detectors in HARP are spaced
 30\,arcsecs apart, which introduces a natural scale of order an arcmin
 into the observations, even if scan and jiggle observations will be
 sampled on much smaller scales than that. Autogrid first projects the
@@ -873,7 +873,7 @@ Fig.\ \ref{fig:integ} compares integrated intensity images calculated
 in two different ways from a single data cube generated by the
 pipeline \citep[see][for details of earlier
 reductions of these data]{2010MNRAS.409.1412G,2010A&A...523A..29D}. This data set
-has some interference in a few spectral channels of a few receptors,
+has some interference in a few spectral channels of a few detectors,
 which has not yet been handled by the main pipeline
 processing. Neverthless, the right-hand image shows no sign of the grid
 printing through and shows much more dynamic range than the naive
@@ -884,7 +884,7 @@ integrated intensity image.
 
 The spectra delivered by ACSIS/HARP can often include non-astronomical
 signal arising from many sources, both local and external to the  JCMT. The
-extraneous signal can appear in all receptors or just one, for a short
+extraneous signal can appear in all detectors or just one, for a short
 duration, or throughout an observation.  This interference gives rise
 to artefacts in the spectral cube made by \makecube.  The interference
 usually manifests as stripes or additional noise in the reduced
@@ -940,13 +940,13 @@ Fig.~\ref{fig:badbase:highfreq} presents the most-common forms.
 
 The low-frequency ripples tend to occur in time-series blocks that are
 often visible because of baseline drift, but can apply to all spectra
-for a receptor.  They have a wide range of morphologies such as
+for a detector.  They have a wide range of morphologies such as
 sinusoids, irregular ripples, curved, and twin headlight-like beams
 that start strong but gradually pan out and fade with time.
 Fig.~\ref{fig:badbase:interference} displays some examples.
 Fig.~\ref{fig:badbase:interference_receptors} presents an example
 observation where all the spectra are markedly non-linear for two
-receptors.
+detectors.
 
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{examples_non-linear_baselines.pdf}
@@ -962,10 +962,10 @@ receptors.
 
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{receptors_nonlinearity}
-\caption{Examples of low-frequency interference by receptor.
- It shows time-averaged (clipped mean) spectra for each receptor in
- which the third and ninth (labelled \#10) receptor from the bottom
- exhibit strong global non-linear baselines.  Some other receptors
+\caption{Examples of low-frequency interference by detector.
+ It shows time-averaged (clipped mean) spectra for each detector in
+ which the third and ninth (labelled \#10) detector from the bottom
+ exhibit strong global non-linear baselines.  Some other detectors
  have weaker non-linear baselines.  The central emission line
  is masked out and the noisy peripheries are excluded.}
 \label{fig:badbase:interference_receptors}
@@ -977,13 +977,13 @@ The pipeline applies three steps in the quality-assurance stage:
 \begin{itemize}
 \item Laplacian filtering of high-frequency noise;
 \item non-linearity detection for individual spectra; and
-\item global non-linearity to reject whole receptors.
+\item global non-linearity to reject whole detectors.
 \end{itemize}
 
 \subsubsection{Masking of High-Frequency Noise}
 
 The recipe applies a one-dimensional Laplacian edge filter to all the
-spectra for each receptor, after trimming the outer 15\,\% where noise
+spectra for each detector, after trimming the outer 15\,\% where noise
 is always present.  This approximates to a difference-of-Gaussian
 filter.  It next averages the rms `edginess' along the spectral axis
 to form a profile through the time series.  An example profile is
@@ -1054,7 +1054,7 @@ location of the emission unaided.
 
 The automated method forms an integrated spectrum for the observation
 first by averaging in time, and then forming the clipped mean along
-receptors to exclude the effects of strong non-linearity in one or two
+detectors to exclude the effects of strong non-linearity in one or two
 detectors.  The representative spectrum is linear-baseline subtracted
 in automatic mode to remove any pronounced slope.  It is smoothed with
 a 51-element Gaussian kernel to narrow the histogram peak of baseline
@@ -1078,7 +1078,7 @@ remove structure smaller than a nominated scale.  Next it fits linear
 baselines to these and calculates the rms residuals to provide a
 rectified signal.  Then it averages the signal along the spectral axis
 to form a non-linearity profile through the time series for each good
-receptor.
+detector.
 
 The non-linear profiles are much noisier than the summed Laplacians
 for the high-frequency interference, and discrimination is harder.  To
@@ -1090,7 +1090,7 @@ standard deviation allows for positive skewness.  The final stage
 is apply the mask of rejected spectra to the input cube.
 
 The global non-linearity test is applied last so that a block of
-transient highly deviant spectra will not cause the whole receptor to
+transient highly deviant spectra will not cause the whole detector to
 be rejected.  It operates in a similar fashion to the above.  It
 diverges by determining a mean rms residual from non-linearity per
 detector, from which it evaluates the median and standard deviation of
@@ -1123,8 +1123,8 @@ assurance, but now has been used for science
 \subsection{Flatfielding}
 
 Early HARP data from 2006 seemed to have problems with the relative
-calibration of the receptors. A self flatfielding algorithm was
-developed that relied on the receptors on average seeing the same
+calibration of the detectors. A self flatfielding algorithm was
+developed that relied on the detectors on average seeing the same
 signal for large scan maps of molecular clouds
 \citep{2010MNRAS.401..455C} and this had some success in removing
 striping from integrated intensity images.
@@ -1137,10 +1137,10 @@ striping from integrated intensity images.
 \includegraphics[width=0.495\columnwidth]{12CO_L1455_flat.png}
 \caption{A flat-field comparison dislayed in an integrated intensity
   map.  The left panel shows a map without correction for
-  receptor-to-receptor performance.  The right panel shows the same
+  detector-to-detector performance.  The right panel shows the same
   data processed but also applying the sum method to flat-field.  Both
   images are scaled to the same percentile limits.  Most occurences
-  exhibit weaker receptor differences than this example.}
+  exhibit weaker detector differences than this example.}
 \label{fig:flatfield:results}
 \end{figure}
 
@@ -1168,7 +1168,7 @@ CALPEAKTOL & Percentage discrepancy allowed\\
     & in calibrator peak\\
 FLAGTSYSBAD & Percentage of data allowed \\
    & to be flagged due to T$_{sys}$\\
-GOODRECEP & Number of functioning receptors\\
+GOODRECEP & Number of functioning detectors\\
 RESTOL & Tolerance on residuals of baseline \\
    & region after baseline subtraction\\
 RESTOL\_SM & Variation of baseline residuals \\
@@ -1177,15 +1177,15 @@ RMSTOL & Consistency check comparing\\
   & T$_{sys}$ with spectrum rms\\
 RMSVAR\_MAP & Percentage variation of\\
   & rms noise across map \\
-RMSVAR\_RCP &  Percentage average rms receptors\\
+RMSVAR\_RCP &  Percentage average rms detectors\\
   & are allowed to vary from each other\\
 RMSVAR\_SPEC & Percentage variation of RMS\\
   & across spectrum \\
 TSYSBAD &  Maximum allowable T$_{sys}$\\
 TSYSMAX & Threshold for  average T$_{sys}$ \\
-  & allowed for a receptor\\
+  & allowed for a detector\\
 TSYSVAR &  Maximum allowed variation of\\
-  & T$_{sys}$ for a single receptor\\
+  & T$_{sys}$ for a single detector\\
 \end{tabular}
 \end{table}
 
@@ -1269,7 +1269,7 @@ to the DAS splitting the bandwidth into many overlapping
 sub-bands. ACSIS data only ever had included two sub-bands for hybrid-mode
 observations and so the sub-band merging algorithm had to be
 extended to support arbitrary numbers of sub-bands.  In addition the
-historical data are dominated by single-receptor instruments and most
+historical data are dominated by single-detector instruments and most
 observations generated relatively few spectra, and few repeats of the
 same area of sky (depth in the first pass was preferred over short
 integration times but many repeats). This sometimes
@@ -1281,7 +1281,7 @@ historical era. Observations of the Horsehead nebula were an
 observatory backup project from 1995 to 1997. The $^{13}$CO
 $J=2\rightarrow 1$ component of the project consisted of approximately
 14,000 spectra from 154 observations spread over 12 nights using the
-single-receptor receiver RxA2 \citep{1992IJIMW..13..647D}. Reducing
+single-detector receiver RxA2 \citep{1992IJIMW..13..647D}. Reducing
 the data with \specx\ was an involved process and preliminary results
 were presented in \citet{2001AAS...19915601S}. For this test the GSD data were
 downloaded from the CADC and converted to ACSIS format.
