@@ -379,44 +379,6 @@ While this roughly doubles the data volume, this is the only way to
 ensure correct error statistics and assignment of relative weights
 when data are combined.
 
-The JCMT heterodyne pipeline uses Starlink \citep[see
-e.g.][]{2013ASPC..475..247B} routines which
-have been designed to maintain accurate variance and flagging data.
-Nevertheless, this is not sufficient to fully deal with the issue of
-bad data. A simple illustration is the coadding of two spectra with a
-different DC level: the DC level of the result will be the average
-level. However, if one of the spectra has a bad channel, adopting the
-one remaining point in the output would result in a positive or
-negative spike since its DC level will not be average. In other words,
-a policy for dealing with bad data that is acceptable in one situation,
-i.e.\ spectra without a DC level or corrected for the DC level, can be
-problematic in a different situation.
-
-In combining data, the gridding software recognizes three schemes for
-dealing with bad data:
-\begin{description}
-\item[\texttt{AND}] An output pixel will be bad only if all the input
-   pixels are bad. This scheme will produce the least number of bad
-   output pixels, but memory requirements can be excessive and are much
-   larger than for the other two schemes. It also is affected by issues such
-   as the DC-level problem discussed above.
-\item[\texttt{OR}] An output pixel will be bad if any of the input
-   pixels are bad. This scheme will produce the most bad output pixels,
-   but a more homogenous noise across the image and avoids many
-   of the issues associated with the AND scheme.
-\item[\texttt{FIRST}] Only spectra that have the same bad pixel mask
-   as the first spectrum contribute to the output spectrum. It
-   produces fewer bad pixels in the output than the \texttt{OR}
-   scheme without the large memory footprint of the \texttt{AND} scheme.
-   This scheme is useful in absence of intermittent problems and where
-   the bad pixel mask, for example, results from a long-term instrumental effect, but
-   comes with the risk of rejecting large amounts of otherwise good data.
-\end{description}
-
-The pipeline processing defaults to using the \texttt{AND} scheme but
-can be overridden if either speed or memory is an issue.
-
-
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{flowchart}
 \caption{Flow chart of the pipeline recipe, including the initial step
@@ -698,6 +660,45 @@ centre.\footnote{If the positions do not form a regular grid, an option is
 available to create a 1-dimensional list of spectra in which the
 position of each spectrum is recorded explicitly in a table using
 the FITS-WCS \texttt{-TAB} algorithm \citep{2006A&A...446..747G}.}
+
+\subsection{Combining Spectra}
+
+The JCMT heterodyne pipeline uses Starlink \citep[see
+e.g.][]{2013ASPC..475..247B} routines which
+have been designed to maintain accurate variance and flagging data.
+Nevertheless, this is not sufficient to fully deal with the issue of
+bad data. A simple illustration is the coadding of two spectra with a
+different DC level: the DC level of the result will be the average
+level. However, if one of the spectra has a bad channel, adopting the
+one remaining point in the output would result in a positive or
+negative spike since its DC level will not be average. In other words,
+a policy for dealing with bad data that is acceptable in one situation,
+i.e.\ spectra without a DC level or corrected for the DC level, can be
+problematic in a different situation.
+
+In combining data, the gridding software recognizes three schemes for
+dealing with bad data:
+\begin{description}
+\item[\texttt{AND}] An output pixel will be bad only if all the input
+   pixels are bad. This scheme will produce the least number of bad
+   output pixels, but memory requirements can be excessive and are much
+   larger than for the other two schemes. It also is affected by issues such
+   as the DC-level problem discussed above.
+\item[\texttt{OR}] An output pixel will be bad if any of the input
+   pixels are bad. This scheme will produce the most bad output pixels,
+   but a more homogenous noise across the image and avoids many
+   of the issues associated with the AND scheme.
+\item[\texttt{FIRST}] Only spectra that have the same bad pixel mask
+   as the first spectrum contribute to the output spectrum. It
+   produces fewer bad pixels in the output than the \texttt{OR}
+   scheme without the large memory footprint of the \texttt{AND} scheme.
+   This scheme is useful in absence of intermittent problems and where
+   the bad pixel mask, for example, results from a long-term instrumental effect, but
+   comes with the risk of rejecting large amounts of otherwise good data.
+\end{description}
+
+The pipeline processing defaults to using the \texttt{AND} scheme but
+can be overridden if either speed or memory is an issue.
 
 \subsection{Cube forming}
 
