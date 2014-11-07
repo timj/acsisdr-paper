@@ -352,6 +352,33 @@ main pipeline. Its role is to provide simple quality assurance
 information and basic coadds to the observer and it will not be
 discussed further in this paper.
 
+\subsection{Observing modes}
+\label{sec:obsmodes}
+
+Full details of the JCMT heterodyne observing modes can be found in
+\citet{2009MNRAS.399.1026B}, but we provide a summary here. The most
+common observing mode is the scan mode used to map large area. In this
+mode the telescope fills a rectangular area by scanning a
+boustrophedon pattern: first scanning in one direction, then moving up
+to the next row and then scanning in the reverse direction. The
+K-mirror rotates such that the array is angled relative to the scan,
+allowing a fully-sampled patch of sky to be observed in a single
+pass. Subsequent observations can repeat the area with the scan
+direction perpendicular to the first to ensure that each position on
+the sky is measured by different receptors and to help minimize
+``print through'' of the scan pattern.
+
+The Jiggle mode is used for areas the same size as the HARP field of
+view. Here the secondary mirror moves to fill in the gaps between the
+array and the telescope tracks the target position. This mode is
+non-optimal for the data reduction algorithm presented here since each
+area on the sky tends to be measured by a single receptor and this can
+make it hard to calculate baseline regions and detect unstable
+detectors. Good quality maps require many repeats with the K-mirror
+at different angles, and with the telescope moved to different offsets
+ to allow different receptors to be combined. Unless the source of
+ interest is of a size comparable to the telescope beam, it is usually
+ better to do a small scan map instead.
 
 \subsection{Heterodyne Data Format}
 \label{sec:format}
