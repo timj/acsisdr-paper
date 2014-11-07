@@ -484,7 +484,7 @@ gradients within the field-of-view). The smoothing is done by applying
 a tophat convolution in three dimentions ($x$, $y$, $v$) with a smoothing
 factor in each direction that depends on the recipe.  By default a
 recipe biased towards spatial smoothing will have smoothing factors of
-($x=5$, $y=5$, $v=10$) pixels, whereas one biased towards spectral smoothing
+($x=5$, $y=5$, $v=10$) pixels\footnote{For scan maps the pixel sizes are approximately half beam whereas for jiggle maps they are either half or one-third of a beam.}, whereas one biased towards spectral smoothing
 will be ($x=3$, $y=3$, $v=25$). Note that both type of recipes will reduce
 the noise per pixel by a factor of about 15. While the smoothing
 factor in velocity may seem excessive, they reflect the very high
@@ -663,7 +663,7 @@ is required to determine the pixel grid from the data itself. In the
 grid but also has an \texttt{autogrid} option that leaves optimal grid
 determination to the application itself.
 
-Limited by the size of the horns, receptors in HARP are spaced
+To maximize overall aperture efficiency, receptors in HARP are spaced
 30\,arcsecs apart, which introduces a natural scale of order an arcmin
 into the observations, even if scan and jiggle observations will be
 sampled on much smaller scales than that. Autogrid first projects the
