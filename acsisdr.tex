@@ -288,11 +288,12 @@ reduction recipes for the ORAC-DR pipeline infrastructure
 use at the telescope. The first guiding principle for the overall
 design is for the pipeline to deliver sensible results based only on
 information in the data files themselves, without any further user
-input. This results in a number of key requirements such as that the
-output data cube is specified from the telescope pointing information
-and the location of each receptor on the sky, and that baseline
-regions are determined automatically by examining the spectra as an
-ensemble. On a more advanced level, it requires for the pipeline to be
+input. This driver for minimizing user input leads to two key requirements
+for the pipeline: the parameters of the resultant data cube must be
+derived solely from the positions of the individual data samples, and
+the spectral baseline regions must be determined automatically by
+looking at all the spectra together.
+On a more advanced level, it requires for the pipeline to be
 able to detect and remove bad spectra as well as carrying out quality
 assurance (QA) tests (see \S\,\ref{sec:qa}). The latter are critical
 for the JCMT Legacy Survey projects
