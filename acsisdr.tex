@@ -1056,28 +1056,8 @@ First the recipe excludes non-baseline features that would dilute the
 non-linearity signal.  These comprise a threshold to remove spikes and
 mask the astronomical signal.  To exclude the astronomical emission
 the recipe masks either in user-specified velocity ranges, or
-determines the location of the emission unaided.
-
-The automated method forms an integrated spectrum for the observation
-first by averaging in time, and then forming the clipped mean along
-detectors to exclude the effects of strong non-linearity in one or two
-detectors.  The representative spectrum is linear-baseline subtracted
-in automatic mode to remove any pronounced slope.  It is smoothed with
-a 51-element Gaussian kernel to narrow the histogram peak of baseline
-values, and make emission more prominent.  Then follows a multi-scale
-iterative approach using histograms and \mfittrend\ to progressively
-improve the baseline subtraction by excluding the outliers.  It starts
-with a smoothing box one eighth the width of the spectrum and halving
-the box at each iteration.  For each iteration the recipe forms a
-truncated histogram whose mode and standard deviation are estimated,
-the latter allowing for the positive skew from the astronomical
-signal.  Then the recipe masks positive outliers (defaults to a
-4-sigma clip).  Either \findback\ or a block smooth using the current
-box size is subtracted to give a flatish baseline for \mfittrend\ in
-automatic mode (\mbox{\S \ref{sec:mfittrend}}) to determine the baseline
-regions and hence the remaining emission.  \mfittrend\ on its own can
-have difficulty separating broadline emission from baseline.  One
-iteration is usually sufficient.
+determines the location of the emission unaided (see
+\S\,\ref{sec:emission_detection}).
 
 The recipe estimates the background level, effectively smoothing to
 remove structure smaller than a nominated scale.  Next it fits linear
@@ -1104,6 +1084,37 @@ the distribution of mean rms residuals from the entire observation,
 and performs iterative sigma clipping above the median to reject those
 detectors whose deviations from linearity are anomalous.  There is a
 tunable minimum threshold.
+
+\subsubsection{Emission detection for non-linearity}
+\label{sec:emission_detection}
+
+When processing nightly observations for the JCMT Science Archive, the
+location and extent of astronomical emission is usually unknown, yet
+non-linear baselines need to be removed to generate reduced products
+of acceptable fidelity.  The recipe uses an unsophisticated, but
+effective scheme, to remove sufficient power from emission lines for
+the non-linearity tests.
+
+First it forms an integrated spectrum for the observation by averaging
+in time, and then forming the clipped mean along detectors to exclude
+the effects of strong non-linearity in one or two detectors.  The
+representative spectrum has a linear baseline subtracted in the
+automatic mode of \mfittrend (see \S\,\ref{sec:mfittrend}) to remove
+any pronounced slope.  This spectrum is smoothed with a 51-element
+Gaussian kernel to narrow the histogram peak of baseline values, and
+make emission more prominent.  Then follows a multi-scale iterative
+approach using histograms and \mfittrend\ to progressively improve the
+baseline subtraction by excluding the outliers.  It starts with a
+smoothing box one eighth the width of the spectrum and halving the box
+at each iteration.  For each iteration the recipe forms a truncated
+histogram whose mode and standard deviation are estimated, the latter
+allowing for the positive skew from the astronomical signal.  Then the
+recipe masks positive outliers (defaults to a 4-sigma clip).  Either
+\findback\ or a block smooth using the current box size is subtracted
+to give a flatish baseline for \mfittrend\ in automatic mode to
+determine the baseline regions and hence the remaining emission.
+\mfittrend\ on its own can have difficulty separating broadline
+emission from baseline.  One iteration is usually sufficient.
 
 \subsubsection{Results}
 
