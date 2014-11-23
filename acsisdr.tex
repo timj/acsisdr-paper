@@ -1047,12 +1047,16 @@ space might also prove effective.
 \label{sec:non-linearity}
 
 The low-frequency ripple and wobbly baselines are addressed by
-determining the non-linearity of each spectrum.  First the recipe
-excludes non-baseline features that would dilute the non-linearity
-signal.  These comprise a threshold to remove spikes and mask the
-astronomical signal.  To exclude the astronomical emission the recipe
-masks either in user-specified velocity ranges, or determines the
-location of the emission unaided.
+determining the non-linearity of each spectrum.  Since the baseline
+is expected to be well fit by a straight line, the technique
+measures the broad deviations of the smoothed baseline from a
+straight-line fit.
+
+First the recipe excludes non-baseline features that would dilute the
+non-linearity signal.  These comprise a threshold to remove spikes and
+mask the astronomical signal.  To exclude the astronomical emission
+the recipe masks either in user-specified velocity ranges, or
+determines the location of the emission unaided.
 
 The automated method forms an integrated spectrum for the observation
 first by averaging in time, and then forming the clipped mean along
