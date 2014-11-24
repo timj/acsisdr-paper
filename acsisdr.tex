@@ -1141,15 +1141,54 @@ assurance, but now has been used for science
 
 \subsection{Flatfielding}
 
-Early HARP data from 2006 seemed to have problems with the relative
-calibration of the detectors. A self flatfielding algorithm was
-developed that relied on the detectors on average seeing the same
+HARP data from its early years seemed to have problems with the
+relative calibration of the detectors.  A self flatfielding algorithm
+was developed that relied on the detectors on average seeing the same
 signal for large scan maps of molecular clouds
-\citep{2010MNRAS.401..455C} and this had some success in removing
-striping from integrated intensity images.
+\citep{2010MNRAS.401..455C}, and this had some success in removing
+striping from integrated intensity images.  For an observation the
+Curtis technique creates spectral cubes for each detector
+independently and compares the integrated fluxes over the emission
+line.  This approach is, however, only successful where the signal
+being compared extends across a significant portion of the spatial
+plane to mitigate against different detectors observing different
+flux.  Self flatfielding is also limited to data whose signal-to-noise
+ratio of the total flux in each detector permits relative
+sensitivities to better than about 5 percent.  Since these constraints
+are often not true, the pipeline recipes by default do not apply
+flatfield corrections.
 
-{\color{red} Now discuss the pipeline implementation. Before and after
-  flatfielding examples: Fig.~\ref{fig:flatfield:results}.}
+When a user does request that aflatfield be applied, the recipe
+segregates all the observations supplied to the recipe by date or
+individually.  Although the dectector-to-detector response has been 
+known to vary during the course of a night, far more often it is
+stable.  Thus combining observations, such as the two directions of a
+weave, or any repeat observations through a night, permits a better
+determination of the flat field.  Such a flatfield can also be applied
+to low-signal data taken on the same night too.  The flux is summed
+either over a parameter-controlled spectral range, or from the
+group-determined emission map.  Then the fluxes are normalised by the
+flux of the reference detector, or its reserve, should the reference
+detector be disabled or has failed quality assurance.
+
+With appropriate data this works well (see
+Fig.~\ref{fig:flatfield:results} for an example).  However, weak
+residual graticule patterns can remain if the reference field contains
+a compact source whose line emission falls within the same spectral
+limits as the flux summation and is not observed uniformly by all
+detectors.  Fourier techniques can be used to filter such patterns and
+improve the cosmetic appearance of cubes \citep{2015WHITE_OPH}.
+
+We found one occurrence in early data where the flat field broke down
+because there appeared to be non-linearity in the signal.  Different
+flatfield ratios were needed for the bright regions compared with near
+the sky level.  The pipeline makes no provision for such data.
+
+We explored other methods to mitigate against the limitations with
+little or inconsistent success.  For instance, using the peaks of the
+histogram of the ratios of pixel by pixel was biased by the noise,
+even if comparisons were restricted to the spectral range of the
+astronomical emission.  None proved better than the Curtis formula.
 
 \begin{figure}
 \includegraphics[width=0.495\columnwidth]{12CO_L1455_noflat.png}
