@@ -254,7 +254,7 @@ pre-selected by the observer in the Observing Tool
 \citep{2002ASPC..281..453F}. It was also
 necessary that the observer specify the baseline regions and any
 frequency binning required. Since such a process as a whole is
-irreversable, on a fundamental level it is not well-adapted to
+irreversible, on a fundamental level it is not well-adapted to
 astronomical research where observations are not well characterized
 and pre-set values may turn out to be a poor choice.  Consequently,
 when it became clear in 2006 that computers were fast enough and storage
@@ -465,12 +465,12 @@ After the preprocessing is completed a gridded group cube is created
 from all the observations and processed further. Here is where the
 three-dimensional structure of the data becomes critical for the analysis
 and the different data reduction recipes become more specific. The first
-distinction is whether single spectral lines extend over a signicant
+distinction is whether single spectral lines extend over a significant
 fraction of the available band or not. If not, the second distinction
 is whether smoothing should be spatially biased (e.g.\ narrow spectral
 lines) or spectrally biased (broader lines and/or strong velocity
 gradients within the field-of-view). The smoothing is done by applying
-a tophat convolution in three dimentions ($x$, $y$, $v$) with a smoothing
+a tophat convolution in three dimensions ($x$, $y$, $v$) with a smoothing
 factor in each direction that depends on the recipe.  By default a
 recipe biased towards spatial smoothing will have smoothing factors of
 ($x=5$, $y=5$, $v=10$) pixels\footnote{For scan maps the pixel sizes are approximately half beam whereas for jiggle maps they are either half or one-third of a beam.}, whereas one biased towards spectral smoothing
@@ -521,7 +521,7 @@ As for the baseline fit, the clump find is performed on a smoothed version
 of the baselined group cube, resulting in masks of emission regions that
 are applied to the unsmoothed baselined data. A moments analysis routine
 (see \mbox{\S \ref{sec:moment}}) can then be used with the masked data set to
-extract, for example, a total emisson map or velocity field. Since higher-order moments are
+extract, for example, a total emission map or velocity field. Since higher-order moments are
 more sensitive to noise feature, different S/N cutoffs are used for the
 clump masks used for the different moments. This approach results in deep
 total emission (zero-moment) maps as well as reliable anomaly-free
@@ -608,7 +608,7 @@ parameters associated with fits to either flag high-order baselines
 or to optimize the choice of order used. The fraction of poor fits associated
 with a particular fit order can be used as quality-assessment parameter.
 \item Fields with narrow and broad profile features.  The current pipeline
-is ill-equiped to deal with that fields mix narrow and broad spectral
+is ill-equipped to deal with that fields mix narrow and broad spectral
 lines, such as found in the central regions of galaxies or compact
 outflow sources. Given that the regular baseline routine also produces a
 cube with ``noise-free'' fitted baselines, this cube can be analyzed similar to a
@@ -655,7 +655,7 @@ grid but also has an \texttt{autogrid} option that leaves optimal grid
 determination to the application itself.
 
 To maximize overall aperture efficiency, detectors in HARP are spaced
-30\,arcsecs apart, which introduces a natural scale of order an arcmin
+30\,arcsec apart, which introduces a natural scale of order an arcminute
 into the observations, even if scan and jiggle observations will be
 sampled on much smaller scales than that. Autogrid first projects the
 supplied sky positions into pixel positions using an arbitrary tangent
@@ -876,7 +876,7 @@ pipeline \citep[see][for details of earlier
 reductions of these data]{2010MNRAS.409.1412G,2010A&A...523A..29D}. This data set
 has some interference in a few spectral channels of a few detectors,
 which has not yet been handled by the main pipeline
-processing. Neverthless, the right-hand image shows no sign of the grid
+processing. Nevertheless, the right-hand image shows no sign of the grid
 printing through and shows much more dynamic range than the naive
 integrated intensity image.
 
@@ -944,7 +944,7 @@ often visible because of baseline drift, but can apply to all spectra
 for a detector.  They have a wide range of morphologies such as
 sinusoids; irregular ripples; curved; and apparent emission initially
 concentrated at two frequencies, but which disperse linearly in
-frequency and fade with time reminscent of fanned car headlight
+frequency and fade with time reminiscent of fanned car headlight
 beams seen from above.
 Fig.~\ref{fig:badbase:interference} displays some examples.
 Fig.~\ref{fig:badbase:interference_receptors} presents an example
@@ -986,7 +986,7 @@ The pipeline applies three steps in the quality-assurance stage:
 \subsubsection{Masking of High-Frequency Noise}
 
 The recipe applies a one-dimensional Laplacian edge filter to all the
-spectra for each detector, after trimming the outer 15\,\% where noise
+spectra for each detector, after trimming the outer 15\,per~cent where noise
 is always present.  This approximates to a difference-of-Gaussian
 filter.  It next averages the rms `edginess' along the spectral axis
 to form a profile through the time series.  An example profile is
@@ -1113,7 +1113,7 @@ histogram whose mode and standard deviation are estimated, the latter
 allowing for the positive skew from the astronomical signal.  Then the
 recipe masks positive outliers (defaults to a 4-sigma clip).  Either
 \findback\ or a block smooth using the current box size is subtracted
-to give a flatish baseline for \mfittrend\ in automatic mode to
+to give a flattish baseline for \mfittrend\ in automatic mode to
 determine the baseline regions and hence the remaining emission.
 \mfittrend\ on its own can have difficulty separating broadline
 emission from baseline.  One iteration is usually sufficient.
@@ -1158,9 +1158,9 @@ sensitivities to better than about 5 percent.  Since these constraints
 are often not true, the pipeline recipes by default do not apply
 flatfield corrections.
 
-When a user does request that aflatfield be applied, the recipe
+When a user does request that a flatfield be applied, the recipe
 segregates all the observations supplied to the recipe by date or
-individually.  Although the dectector-to-detector response has been 
+individually.  Although the detector-to-detector response has been
 known to vary during the course of a night, far more often it is
 stable.  Thus combining observations, such as the two directions of a
 weave, or any repeat observations through a night, permits a better
@@ -1179,7 +1179,7 @@ limits as the flux summation and is not observed uniformly by all
 detectors.  Fourier techniques can be used to filter such patterns and
 improve the cosmetic appearance of cubes \citep{2015WHITE_OPH}.
 
-We found one occurrence in early data where the flat field broke down
+We found one occurence in early data where the flat field broke down
 because there appeared to be non-linearity in the signal.  Different
 flatfield ratios were needed for the bright regions compared with near
 the sky level.  The pipeline makes no provision for such data.
