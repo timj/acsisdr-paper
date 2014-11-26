@@ -258,7 +258,7 @@ frequency binning required. Since such a process as a whole is
 irreversible, on a fundamental level it is not well-adapted to
 astronomical research where observations are not well characterized
 and pre-set values may turn out to be a poor choice.  Consequently,
-when it became clear in 2006 that computers were fast enough and storage
+when it became clear in 2006 that computers were fast enough and disk capacity
 large enough to be able to store the observed spectra without the need
 of real-time regridding and coadding, this further data reduction was
 migrated to a pipeline and the calibrated spectra were the raw data
@@ -371,15 +371,18 @@ the sky is measured by different detectors and to help minimize
 
 The Jiggle mode is used for areas the same size as the HARP field of
 view. Here the secondary mirror moves to fill in the gaps between the
-array and the telescope tracks the target position. This mode is
-non-optimal for the data reduction algorithm presented here since each
-area on the sky tends to be measured by a single detector and this can
-make it hard to calculate baseline regions and detect unstable
-detectors. Good quality maps require many repeats with the K-mirror
-at different angles, and with the telescope moved to different offsets
- to allow different detectors to be combined. Unless the source of
- interest is of a size comparable to the telescope beam, it is usually
- better to do a small scan map instead.
+array elements while the telescope tracks the target position.  While
+jiggling the secondary typically is fast and efficient, given that
+adjacent pixels in each area of the map tend to be measured by a
+single detector, this mode is non-optimal in the case where detector
+performance and stability significantly differ across the array. In
+such cases high quality maps require many repeats with, for example,
+the K-mirror at various angles and with the telescope moved to several
+offsets to ensure that different detectors contribute to each point in
+the map. For this reason, unless the source of interest is
+sufficiently compact compared to the field of view, for HARP it is
+usually better to do a small scan map for high-fidelity imaging.
+
 
 \subsection{Heterodyne Data Format}
 \label{sec:format}
@@ -417,10 +420,11 @@ when data are combined.
 
 \section{Pipeline processing}
 
-Fig.\ \ref{fig:flowchart} shows the key steps in the automatic
+Fig.~\ref{fig:flowchart} shows the key steps in the automatic
 pipeline reduction of heterodyne data at the JCMT. An initial phase
 checks individual observations and prepares them for coadding and
-gridding into the \texttt{group} cube. This is followed by a group
+gridding into the \texttt{group} cube (see the upper left of the figure).
+This is followed by a group
 phase where baselines are removed and emission selected in the coadded
 cube.  Next follows an iterative step: the resulting masks are
 re-expanded into the time-domain and applied to the individual
@@ -481,9 +485,9 @@ recipe biased towards spatial smoothing will have smoothing factors of
  whereas one biased towards spectral smoothing
 will be ($x=3$, $y=3$, $v=25$). Note that both type of recipes will reduce
 the noise per pixel by a factor of about 15. While the smoothing
-factor in velocity may seem excessive, they reflect the very high
-resolution and frequency coverage of present-day correlators in
-comparison with typical width of spectral lines.
+factors in velocity may seem excessive, they reflect the very high
+resolution and frequency coverage of present-day correlators
+compared to typical width of spectral lines.
 
 Smoothing the data will emphasize extended regions of emission in the
 three-dimensional data cube, but bias against weak narrow-line features that are also
@@ -527,7 +531,7 @@ of the baselined group cube, resulting in masks of emission regions that
 are applied to the unsmoothed baselined data. A moments analysis routine
 (see \mbox{\S \ref{sec:moment}}) can then be used with the masked data set to
 extract, for example, a total emission map or velocity field. Since higher-order moments are
-more sensitive to noise feature, different S/N cutoffs are used for the
+more sensitive to noise features, different S/N cutoffs are used for the
 clump masks used for the different moments. This approach results in deep
 total emission (zero-moment) maps as well as reliable anomaly-free
 velocity (first-moment) maps.
@@ -559,8 +563,7 @@ be important for quality-assurance tests. The enhanced baseline
 subtraction can ``resurrect'' spectra that were originally determined
 to be of poor quality and not used in the final cube. This iterative
 cube production with enhanced QA can lead to minor improvements in
-quality of the final product.  In practice, one iteration in general is enough
-and more are rarely needed.
+quality of the final product.
 
 A main objective for the iterative step was to allow for non-linear baseline fits
 (except for the broad-line recipe), both for individual observations as well as
@@ -620,12 +623,12 @@ cube with ``noise-free'' fitted baselines, this cube can be analyzed similar to 
 broad-line observation to extract and check for broad
 spectral components that were erroneously subtracted.
 \item Similar tactics could be applied in reducing continuum observations:
-in the current default recipe no baseline is subtracted. Instead the continuum
+in the current default continuum emission recipe no baseline is subtracted. Instead the continuum
 level could be determined from the median level of each baseline fitted.
 \item Adding a routine that ``auto-detects'' the main velocity range based
 on a statistical analysis of the distribution of baseline windows or detected clumps
 within the cube. As discussed in the previous section, restricting the allowable
-velocity range is a simply way to improve the pipeline result. In addition,
+velocity range is a simple way to improve the pipeline result. In addition,
 such routine can flag serendipitous sources or spurious features outside
 a primary velocity range.
 \item Using a profile fitting routine instead of a moments analysis. Recently a
@@ -855,7 +858,7 @@ the smoothing scheme used in the \textsc{momnt} command in AIPS
 \cite[][\ascl{9911.003}]{2003ASSL..285..109G}. As discussed in
 \mbox{\S \ref{sec:makecube}}
 observations of extended regions are potentially spread over multiple
-data cubes, which must be processed independently, and the resulting
+data cube tiles, which must be processed independently, and the resulting
 moment map is created by
 mosaicking the individual submaps, taking into account the border
 regions. This is configured such that no resampling is required as
