@@ -779,11 +779,18 @@ convolution kernel.
 \end{minipage}
 \end{figure*}
 
-In hybrid modes the correlator is configured to use multiple
-hardware subsystems to process parts of the required bandwidth so
-that they can be combined in the data reduction. The correlator is
-usually configured such that the individual spectra overlap and also
-have channels that are aligned to within a few per cent of a pixel.
+The ACSIS IF system contains two local oscillators which perform two
+stages of down-conversion, first to a \emph{parking} band between
+1-2\,GHz and then to a 0-1\,GHz \emph{baseband} which is then sampled
+by a 3-level ADC \citep{2000SPIE.4015..114H}. The downconverted bands
+can be either 250\,MHz or 1\,GHz wide, and several of these
+overlapping \emph{sub-bands} can be arranged in various ways to
+achieve the required total IF frequency coverages. Typically the
+sub-bands are arranged, by suitable LO tuning, to have areas of
+overlap in frequency space, and these must be combined in software in
+a process known as sub-band merging. The correlator is usually
+configured such that the individual spectra overlap and also have
+channels that are aligned to within a few per cent of a pixel.
 
 The data acquisition system does not combine the sub-bands and so this
 must be done by the pipeline. If the pipeline determines that it is
