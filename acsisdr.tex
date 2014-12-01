@@ -833,8 +833,7 @@ from secondary lines that bias the baseline fit.
 
 In the large majority of cases the masked spectrum will be free of
 emission.  However, the method is not guaranteed.  One such case is if
-the baseline is not linear, but that is indicative of interference in
-ACSIS data and such spectra are routinely rejected
+the baseline is not linear, and such spectra are routinely rejected
 (\mbox{\S \ref{sec:non-linearity}}).  More of an issue are very broad
 lines that occupy a substantial fraction, more than half in some
 cases, of the spectral range.
@@ -888,9 +887,9 @@ integrated intensity image.
 The spectra delivered by ACSIS/HARP can often include non-astronomical
 signal arising from many sources, both local and external to the  JCMT. The
 extraneous signal can appear in all detectors or just one, for a short
-duration, or throughout an observation.  This interference gives rise
-to artefacts in the spectral cube made by \makecube.  The interference
-usually manifests as stripes or additional noise in the reduced
+duration, or throughout an observation (see \S\ref{sec:obsmodes}).
+This gives rise to artefacts in the spectral cube made by \makecube.  The anomalies
+usually manifest as stripes or additional noise in the reduced
 spectral cube.  Their presence at best degrades and sometimes dwarfs
 the astronomical content.  The latter occurring with greater frequency
 for early HARP observations.  In addition uneven baselines can lead
@@ -910,20 +909,20 @@ to poorly determined line fluxes (see Fig.~\ref{fig:badbase:spectrum}).
 While many of the artefacts are readily visible in the raw time
 series, and thus could be excised manually, some are subtle and easily
 overlooked.  After a few years of operation of HARP, astronomers were
-suspicious of all the data from a detector afflicted by interference,
+suspicious of all the data from a detector afflicted by anomalous signals,
 choosing to exclude that detector's spectra completely, and thus
 discarded perfectly good spectra in the presence of merely transient
-interference.  The automated pipeline sought to address the
-interference in a systematic fashion and to retain unaffected spectra.
+interference.  The automated pipeline sought to address this
+in a systematic fashion and to retain unaffected spectra.
 This approach leads to more-uniform products within a survey.  Further
-filters can be added as newly identified forms of interference become
+filters can be added as newly identified forms of bad spectra become
 known.
 
 The bad baselines can be divided roughly into two classes:
 high-frequency and low-frequency patterns.  The high-frequency
-interference is usually characterised by large-amplitude noise
+patterns are usually characterised by large-amplitude noise
 arranged mostly in single isolated spectra or in bands comprising
-around ten spectra.  Less frequently the interference manifests as
+around ten spectra.  Less frequently it manifests as
 spiky spectra.  For the last two types the noise pattern phase shifts
 between adjacent spectra.  In the first type there is beating in the
 amplitudes.  A further form comprises weaker-amplitude striations
@@ -955,10 +954,10 @@ detectors.
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{examples_non-linear_baselines.pdf}
-\caption{Examples of low-frequency interference.  In each panel the
+\caption{Examples of low-frequency noise.  In each panel the
   black curve shows a single spectrum exhibiting a non-linear baseline
   of increasing degree from the lower to the top graphics.  A red curve
-  is the average spectrum during an interval of interference, offset
+  is the average spectrum during an interval of bad behaviour, offset
   for clarity.  The yellow curve in the lower-left plot is a
   1.5\,km~s$^{-1}$ Gaussian smooth of the noisy spectrum showing a
   weak non-linearity towards the ends of the spectrum.}
@@ -967,7 +966,7 @@ detectors.
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{receptors_nonlinearity}
-\caption{Examples of low-frequency interference by detector.
+\caption{Examples of low-frequency noise by detector.
   It shows time-averaged (clipped mean) spectra for each detector in
   which the third and ninth (labelled \#10) detector from the bottom
   exhibit strong global non-linear baselines.  Some other detectors
@@ -1022,7 +1021,7 @@ than compensated by fewer artefacts in the reduced cube.
 An optional second iteration removes most of the striation noise once
 the pronounced edginess peaks are masked.  Determining the extent of
 this ringing is problematic because of the noise, until we apply the
-knowledge that the interference is correlated, which permits smoothing
+knowledge that the effect is correlated, which permits smoothing
 along the time axis.
 Fig.~\ref{fig:badbase:ringing_edginess_profile} shows that a ringing
 signal can persist for longer than a mere visual inspection would
@@ -1136,7 +1135,7 @@ assurance, but now has been used for science
 \caption{A bad-spectra comparison displayed in an integrated intensity map.
   The left panel shows a map without bad-baseline removal.  The right
   panel shows the same data processed using the high- and
-  low-frequency interference filters.  Both images are scaled to the
+  low-frequency noise filters.  Both images are scaled to the
   same percentile limits.}
 \label{fig:badbase:results}
 \end{figure}
