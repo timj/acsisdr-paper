@@ -317,6 +317,32 @@ discussed further in this paper.
 \subsection{Observing modes}
 \label{sec:obsmodes}
 
+Single dish heterodyne submillimetre observing involves making
+observations through an atmosphere which can have a significant, time
+varying opacity which depends on the integrated precipitable water
+vapour above the observing site. In order to reduce the effects of
+this time varying atmospheric emission, several heterodyne observing
+modes are typically used at the JCMT. Position switching involves
+moving the telescope to observe through the same patch of atmosphere
+next to the astronomical object. Beam switching involves chopping the
+moveable secondary mirror of the JCMT at a rate faster than the
+typical time variation of the atmsopheric emission (a few
+Hz). Finally, frequency switching involves rapidly retuning the
+receiver's local oscillators to shift the position of the spectral
+lines in the IF passband. None of these methods are completely
+effective, especially in poorer weather conditions.  Imperfect
+atmospheric removal can lead to residual unwanted baselines, which may
+have linear, polynomial or sinusoidal forms. In addition, the effects
+of standing waves, cable flexure and unwanted frequency dependent
+phase slopes within the IF system itself can also lead to unwanted
+baseline features. These can be particularly problematic, in that
+they are often poorly described by simple linear or low order polynomial
+fitting and they take the form of slowly varying sinusoids or
+rapidly varying ``wiggles'' (see \S\ref{sec:non-linearity}).
+Characterising and, if possible, removing these baselines in a fashion
+which is as highly automated as possible is an important design
+requirement of any potential data reduction scheme.
+
 Full details of the JCMT heterodyne observing modes can be found in
 \citet{2009MNRAS.399.1026B}, but we provide a summary here. The most
 common observing mode is the scan mode used to map large area. In this
