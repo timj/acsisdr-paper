@@ -396,7 +396,7 @@ While this roughly doubles the data volume, this is the only way to
 ensure correct error statistics and assignment of relative weights
 when data are combined.
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\columnwidth]{flowchart}
 \caption{Flow chart of the pipeline recipe, including the initial step
   where individual observations are analysed. \emph{QA} here indicates
@@ -632,7 +632,7 @@ appropriate than fitting moments.
 \subsection{Determining Cube Parameters}
 \label{sec:makecube}
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\columnwidth]{autogrid}
 \caption{The Autogrid algorithm works by projecting each spectrum
   position onto a straight line at an arbitrary angle $\theta$, and then
@@ -765,7 +765,7 @@ convolution kernel.
 
 \subsection{Sub-band merging}
 
-\begin{figure*}[t]
+\begin{figure*}
 \begin{minipage}{\textwidth}
 \includegraphics[width=\textwidth]{hybrid}
 \caption{A hybrid spectrum from an observation in Orion of multiple
@@ -858,7 +858,7 @@ mosaicking the individual submaps, taking into account the border
 regions. This is configured such that no resampling is required as
 \makecube\ ensures that all tiles are on the same pixel grid.
 
-\begin{figure*}[t]
+\begin{figure*}
 \begin{minipage}{\textwidth}
 \centering
 \includegraphics[width=0.495\textwidth]{integ_manual.png}
@@ -896,7 +896,7 @@ the astronomical content.  The latter occurring with greater frequency
 for early HARP observations.  In addition uneven baselines can lead
 to poorly determined line fluxes (see Fig.~\ref{fig:badbase:spectrum}).
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\columnwidth]{badbaseline_spectrum_example}
 \caption{Example of a reduced spectrum affected by a bad baseline.
   The lower panel shows a broad wave pattern, where a linear baseline
@@ -932,7 +932,7 @@ addition to the short-duration intense noise.  This correlated
 `ringing' exhibits a bell-shape variation in intensity over time.
 Fig.~\ref{fig:badbase:highfreq} presents the most-common forms.
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\columnwidth]{high_freq_three_types.png}
 \caption{Examples of the three main types of high-frequency
   interference in spectral-time axes.  To the foot of this extract
@@ -953,7 +953,7 @@ Fig.~\ref{fig:badbase:interference_receptors} presents an example
 observation where all the spectra are markedly non-linear for two
 detectors.
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\columnwidth]{examples_non-linear_baselines.pdf}
 \caption{Examples of low-frequency interference.  In each panel the
   black curve shows a single spectrum exhibiting a non-linear baseline
@@ -965,7 +965,7 @@ detectors.
 \label{fig:badbase:interference}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\columnwidth]{receptors_nonlinearity}
 \caption{Examples of low-frequency interference by detector.
   It shows time-averaged (clipped mean) spectra for each detector in
@@ -1011,7 +1011,7 @@ regions.  While this may throw away the odd good spectrum, it is more
 than compensated by fewer artefacts in the reduced cube.
 
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\columnwidth]{raw_edginess_profile}
 \caption{An example raw edginess profile.  There are five broad
   peaks and one single-spectrum interference around 06:30.  Between
@@ -1038,7 +1038,7 @@ the intensity.  Thus more spectra would be combined into the reduced
 cube.  Given the apparent periodicities, filtering in frequency
 space might also prove effective.
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\columnwidth]{ringing_edginess_profile}
 \caption{The edginess profile after masking the short-duration
   interference, leaving the ringing signal.  The red is residual
@@ -1298,7 +1298,7 @@ for the initial Nearby Galaxy Survey data release and is documented in
 
 \section{Processing of Historical JCMT Data}
 
-\begin{figure*}[t]
+\begin{figure*}
 \begin{minipage}{\textwidth}
 \centering
 \includegraphics[width=0.46\textwidth]{horsehead-specx}
