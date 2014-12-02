@@ -115,7 +115,7 @@ can result in observations generating thousands of spectra per minute it is
 no longer feasible to reduce these data as individual spectra. This
 paper describes how baselined, mosaicked data cubes can be created by
 an automated pipeline in a reliable manner, including detection of bad
-spectra, removal of transient effects and creation of high fidelity
+spectra, removal of transient effects and creation of high-fidelity
 moment maps.
 
 \end{abstract}
@@ -126,7 +126,7 @@ moment maps.
 %% MSC codes here, in the form: \MSC code \sep code
 %% or \MSC[2008] code \sep code (2000 is the default)
 
-submillimeter astronomy --
+submillimetre astronomy --
 methods: data analysis --
 pipelines --
 techniques: spectroscopic --
@@ -142,8 +142,8 @@ James Clerk Maxwell Telescope
 As heterodyne receivers have progressed from single-detector
 instruments
 \citep{1992IJIMW..13.1487P,1992IJIMW..13..647D,1992IJIMW..13.1827C} to
-small focal plane arrays
-\citep{2003SPIE.4855..322G,2004A&A...423.1171S} to 16 element arrays
+small focal-plane arrays
+\citep{2003SPIE.4855..322G,2004A&A...423.1171S} to 16-element arrays
 such as HARP at JCMT \citep{2009MNRAS.399.1026B}, and beyond
 \citep{2012SPIE.8452E..04K,2014SPIE.9153E..27H}, and correlators have improved such that
 we can easily obtain spectra at 10\,Hz with 8192 channels, data rates
@@ -159,10 +159,10 @@ The work described in this paper follows the installation of the ACSIS
 (Auto-Correlation Spectral Imaging System) digital autocorrelation
 spectrometer at the JCMT \citep{2009MNRAS.399.1026B}. ACSIS was
 developed to provide a state-of-the-art spectroscopic backend for the
-then forthcoming 16 element SIS mixer-based HARP focal plane array. As
+then forthcoming 16-element SIS mixer-based HARP focal plane array. As
 well as having the capability to deal with 16 receptors at once, the
 ACSIS correlator was designed to be capable of delivering new wideband
-(up to 2\,GHz) and high resolution (down to 30\,kHz) observing
+(up to 2\,GHz) and high-resolution (down to 30\,kHz) observing
 modes. The ACSIS spectrometer was initially commissioned with the
 existing single mixer instruments at the JCMT operating at 230\,GHz,
 350\,GHz, 470\,GHz and 690\,GHz. While this work was being carried
@@ -173,7 +173,7 @@ together with the improvements in telescope software infrastructure,
 offered many observing advantages over the previous single
 receptor-capable spectrometer, the DAS \citep[Dutch Autocorrelation
 Spectrometer;][]{1986SPIE..598..134B}. Importantly, these included
-support for a much wider variety of telescope observing modes which
+support for a much wider variety of telescope observing modes, which
 could be processed by the reconfigurable real-time data reduction
 system known as ACSIS-DR \citep{2000ASPC..216..502L}. The HARP/ACSIS
 science goals involved mapping the intensity and characterising the
@@ -185,7 +185,7 @@ components using SCUBA-2 \citep{2013MNRAS.430.2513H} both within the
 Galaxy \citep{2007PASP..119..855W} and for external galaxies
 \citep{2009ApJ...693.1736W}.
 
-In submillimeter astronomy data reduction packages such as
+In submillimetre astronomy data reduction packages such as
 \htmladdnormallinkfoot{\textsc{class}}{http://www.iram.fr/IRAMFR/GILDAS}
 \citep[][\ascl{1305.010}]{2005sf2a.conf..721P} and
 \specx\ \citep[][\ascl{1310.008}]{SPECX} were developed that worked well with
@@ -317,16 +317,16 @@ discussed further in this paper.
 \subsection{Observing modes}
 \label{sec:obsmodes}
 
-Single dish heterodyne submillimetre observing involves making
+Single-dish heterodyne submillimetre observing involves making
 observations through an atmosphere which can have a significant, time
 varying opacity which depends on the integrated precipitable water
 vapour above the observing site. In order to reduce the effects of
-this time varying atmospheric emission, several heterodyne observing
+this time-varying atmospheric emission, several heterodyne observing
 modes are typically used at the JCMT. Position switching involves
 moving the telescope to observe through the same patch of atmosphere
 next to the astronomical object. Beam switching involves chopping the
-moveable secondary mirror of the JCMT at a rate faster than the
-typical time variation of the atmsopheric emission (a few
+movable secondary mirror of the JCMT at a rate faster than the
+typical time variation of the atmospheric emission (a few
 Hz). Finally, frequency switching involves rapidly retuning the
 receiver's local oscillators to shift the position of the spectral
 lines in the IF passband. None of these methods are completely
@@ -336,7 +336,7 @@ have linear, polynomial or sinusoidal forms. In addition, the effects
 of standing waves, cable flexure and unwanted frequency dependent
 phase slopes within the IF system itself can also lead to unwanted
 baseline features. These can be particularly problematic, in that
-they are often poorly described by simple linear or low order polynomial
+they are often poorly described by simple linear or low-order polynomial
 fitting and they take the form of slowly varying sinusoids or
 rapidly varying ``wiggles'' (see \S\ref{sec:non-linearity}).
 Characterising and, if possible, removing these baselines in a fashion
@@ -367,7 +367,7 @@ such cases high quality maps require many repeats with, for example,
 the K-mirror at various angles and with the telescope moved to several
 offsets to ensure that different detectors contribute to each point in
 the map. For this reason, unless the source of interest is
-sufficiently compact compared to the field of view, for HARP it is
+sufficiently compact compared with the field of view, for HARP it is
 usually better to do a small scan map for high-fidelity imaging.
 
 
@@ -377,7 +377,7 @@ usually better to do a small scan map for high-fidelity imaging.
 A full description of the heterodyne data files at the JCMT can be
 found in \citet{OCS_ICD_022}, using NDF files \citep{2015NDF} to store
 meta-data (single values, arrays, and tables) in addition to the astronomical
-data in a hierachical structure. Spectra from HARP arrive
+data in a hierarchical structure. Spectra from HARP arrive
 asynchronously from data-acquisition paths that in parallel handle
 data from the individual detectors. Long observations are split
 over several files. One of the basic first data reduction steps is thus
@@ -474,7 +474,7 @@ will be ($x=3$, $y=3$, $v=25$). Note that both type of recipes will reduce
 the noise per pixel by a factor of about 15. While the smoothing
 factors in velocity may seem excessive, they reflect the very high
 resolution and frequency coverage of present-day correlators
-compared to typical width of spectral lines.
+compared with typical width of spectral lines.
 
 Smoothing the data will emphasize extended regions of emission in the
 three-dimensional data cube, but bias against weak narrow-line features that are also
@@ -709,7 +709,7 @@ dealing with bad data:
    as the DC-level problem discussed above.
 \item[\texttt{OR}] An output pixel will be bad if any of the input
    pixels are bad. This scheme will produce the most bad output pixels,
-   but a more homogenous noise across the image and avoids many
+   but a more homogeneous noise across the image and avoids many
    of the issues associated with the AND scheme.
 \item[\texttt{FIRST}] Only spectra that have the same bad pixel mask
    as the first spectrum contribute to the output spectrum. It
@@ -781,8 +781,8 @@ convolution kernel.
 
 The ACSIS IF system contains two local oscillators which perform two
 stages of down-conversion, first to a \emph{parking} band between
-1-2\,GHz and then to a 0-1\,GHz \emph{baseband} which is then sampled
-by a 3-level ADC \citep{2000SPIE.4015..114H}. The downconverted bands
+1--2\,GHz and then to a 0--1\,GHz \emph{baseband} which is then sampled
+by a 3-level ADC \citep{2000SPIE.4015..114H}. The down-converted bands
 can be either 250\,MHz or 1\,GHz wide, and several of these
 overlapping \emph{sub-bands} can be arranged in various ways to
 achieve the required total IF frequency coverages. Typically the
@@ -922,7 +922,7 @@ The bad baselines can be divided roughly into two classes:
 high-frequency and low-frequency patterns.  The high-frequency
 patterns are usually characterised by large-amplitude noise
 arranged mostly in single isolated spectra or in bands comprising
-around ten spectra.  Less frequently it manifests as
+around ten spectra.  Less frequently the noise manifests as
 spiky spectra.  For the last two types the noise pattern phase shifts
 between adjacent spectra.  In the first type there is beating in the
 amplitudes.  A further form comprises weaker-amplitude striations
@@ -1116,7 +1116,7 @@ recipe masks positive outliers (defaults to a 4-sigma clip).  Either
 \findback\ or a block smooth using the current box size is subtracted
 to give a flattish baseline for \mfittrend\ in automatic mode to
 determine the baseline regions and hence the remaining emission.
-\mfittrend\ on its own can have difficulty separating broadline
+\mfittrend\ on its own can have difficulty separating broad-line
 emission from baseline.  One iteration is usually sufficient.
 
 \subsubsection{Results}
@@ -1180,7 +1180,7 @@ limits as the flux summation and is not observed uniformly by all
 detectors.  Fourier techniques can be used to filter such patterns and
 improve the cosmetic appearance of cubes \citep{2015WHITE_OPH}.
 
-We found one occurence in early data where the flat field broke down
+We found one occurrence in early data where the flat field broke down
 because there appeared to be non-linearity in the signal.  Different
 flatfield ratios were needed for the bright regions compared with near
 the sky level.  The pipeline makes no provision for such data.
@@ -1194,11 +1194,11 @@ astronomical emission.  None proved better than the Curtis formula.
 \begin{figure}
 \includegraphics[width=0.495\columnwidth]{12CO_L1455_noflat.png}
 \includegraphics[width=0.495\columnwidth]{12CO_L1455_flat.png}
-\caption{A flat-field comparison dislayed in an integrated intensity
+\caption{A flat-field comparison displayed in an integrated intensity
   map.  The left panel shows a map without correction for
   detector-to-detector performance.  The right panel shows the same
   data processed but also applying the sum method to flat-field.  Both
-  images are scaled to the same percentile limits.  Most occurences
+  images are scaled to the same percentile limits.  Most occurrences
   exhibit weaker detector differences than this example.}
 \label{fig:flatfield:results}
 \end{figure}
@@ -1317,7 +1317,7 @@ variety of backend systems including the Acousto-Optical Spectrometer
 Global Section Data (GSD) format \citep[e.g.][]{GSD1999} which was
 understood by the \specx\ data reduction package. To ensure that as many
 of these historical data as possible are made available to the community
-in a useable format, we have developed an extension to the \smurf\
+in a usable format, we have developed an extension to the \smurf\
 package called \gsdacsis, which converts the legacy data to the
 newer ACSIS data format. This enables the legacy data to be re-processed using
 the modern data reduction pipeline and automatically leads to these
