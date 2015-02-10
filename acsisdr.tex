@@ -850,18 +850,16 @@ mosaicking the individual submaps, taking into account the border
 regions. This is configured such that no resampling is required as
 \makecube\ ensures that all tiles are on the same pixel grid.
 
+% See scripts/mkfig4.bash
 \begin{figure*}
-\begin{minipage}{\textwidth}
 \centering
-\includegraphics[width=0.495\textwidth]{integ_manual.png}
-\includegraphics[width=0.495\textwidth]{integ_auto.png}
+\includegraphics[width=\textwidth]{integ_manual_auto}
 \caption{Two integrated intensity images from the same set of
   observations of Serpens from 2007 using the same display
   parameters. The left figure uses a naive sum over a significant part
   of the baseline. The right figure uses the automated baseline
-  masking.}
+  masking. The key is in units of K\,km\,s$^{-1}$.}
 \label{fig:integ}
-\end{minipage}
 \end{figure*}
 
 Fig.\ \ref{fig:integ} compares integrated intensity images calculated
