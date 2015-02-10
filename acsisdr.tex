@@ -735,7 +735,8 @@ from input spectra into the output cube.
 
 One complication is that the data cube for a large area survey is
 potentially extremely large and many software packages do not support
-data arrays with more than $2^{32}$ pixels. We overcome this by
+data arrays with more than $2^{31}$ pixels\footnote{Much of the code
+  is written in Fortran using a signed \texttt{INTEGER*4}.}. We overcome this by
 supporting the ability for the output cube from \makecube\ to
 be split into tiles. These tiles share projection parameters and can
 be recombined without further resampling if required. For
