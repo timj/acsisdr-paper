@@ -110,13 +110,21 @@ $^2$Department of Astronomy, Cornell University, Ithaca, NY 14853, USA
 \begin{abstract}
 %% Text of abstract
 
-With the advent of modern multi-detector heterodyne instruments that
-can result in observations generating thousands of spectra per minute it is
-no longer feasible to reduce these data as individual spectra. This
-paper describes how baselined, mosaicked data cubes can be created by
-an automated pipeline in a reliable manner, including detection of bad
-spectra, removal of transient effects and creation of high-fidelity
-moment maps.
+  With the advent of modern multi-detector heterodyne instruments that
+  can result in observations generating thousands of spectra per
+  minute it is no longer feasible to reduce these data as individual
+  spectra. We describe the automated data reduction procedure used to
+  generate baselined data cubes at the James Clerk Maxwell
+  Telescope. The system can automatically detect baseline regions in
+  spectra and automatically determine regridding parameters, all
+  without input from a user. Additionally it can detect and remove
+  spectra suffering from transient interference effects or anomalous
+  baselines. The pipeline is written as a set of recipes using the
+  ORAC-DR pipeline environment with the algorithmic code using
+  Starlink software packages and infrastructure.  The algorithms
+  presented here can be applied to other heterodyne array instruments
+  and have been applied to data from historical JCMT heterodyn
+  instrumentation.
 
 \end{abstract}
 
