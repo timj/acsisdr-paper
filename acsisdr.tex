@@ -285,11 +285,11 @@ can be used during the second step.
 
 It is not possible to run a general heterodyne pipeline without any a
 priori user-input at all. The reason for this is that at a fundamental
-level it is impossible to distinguish between e.g.\ a broad spectral
+level it is impossible to distinguish between, for example, a broad spectral
 line and a non-linear baseline feature, or a narrow emission feature
 and a spurious data spike extending over a few channels. For JCMT data
-different pipeline recipes have been designed optimized towards
-e.g.\ the broad and narrow-line case. The observer specifies the choice
+different pipeline recipes have been designed optimized towards,
+for example, the broad and narrow-line case (see \S\ref{sec:alt}). The observer specifies the choice
 of pipeline reduction recipe in the Observing Tool when preparing the
 observations. The desired recipe is documented in the meta-data of
 each data file. Recipes will be discussed in more detail below.
@@ -452,7 +452,7 @@ three-dimensional structure of the data becomes critical for the analysis
 and the different data reduction recipes become more specific. The first
 distinction is whether single spectral lines extend over a significant
 fraction of the available band or not. If not, the second distinction
-is whether smoothing should be spatially biased (e.g.\ narrow spectral
+is whether smoothing should be spatially biased (e.g., narrow spectral
 lines) or spectrally biased (broader lines and/or strong velocity
 gradients within the field-of-view). The smoothing is done by applying
 a tophat convolution in three dimensions ($x$, $y$, $v$) with a smoothing
@@ -680,7 +680,7 @@ the FITS-WCS \texttt{-TAB} algorithm \citep{2006A&A...446..747G}.}
 \subsection{Combining Spectra}
 
 The JCMT heterodyne pipeline uses Starlink \citep[see
-e.g.][]{2014ASPC..485..391C} routines which
+e.g.,][]{2014ASPC..485..391C} routines which
 have been designed to maintain accurate variance and flagging data.
 Nevertheless, this is not sufficient to fully deal with the issue of
 bad data. A simple illustration is the coadding of two spectra with a
@@ -754,7 +754,7 @@ under-sampled. Image rotators and clever scanning modes can overcome
 this deficiency to a certain extent but in many cases the spatial
 distribution of samples is inherently uneven. There may be benefits
 associated with using an unbiased linear interpolation method such as
-\emph{Kriging} \citep[e.g.][]{1990Cressie} rather than a simple
+\emph{Kriging} \citep[e.g.,][]{1990Cressie} rather than a simple
 convolution kernel.
 
 \subsection{Sub-band merging}
@@ -1253,6 +1253,7 @@ be observed next. There are also QA tests designed to look at the
 time-series data and others that analyse the map/cube products.
 
 \subsection{Alternative Recipes}
+\label{sec:alt}
 
 It is not possible or even desirable for a single data reduction
 technique to apply to many different types of sources and science
@@ -1304,7 +1305,7 @@ Until ACSIS was delivered in 2005, heterodyne data were taken with a
 variety of backend systems including the Acousto-Optical Spectrometer
 (AOSC) and the Dutch Autocorrelation Spectrometer (DAS)
 \citep{1986SPIE..598..134B}. These backends wrote data in the
-Global Section Data (GSD) format \citep[e.g.][]{GSD1999} which was
+Global Section Data (GSD) format \citep[e.g.,][]{GSD1999} which was
 understood by the \specx\ data reduction package. To ensure that as many
 of these historical data as possible are made available to the community
 in a usable format, we have developed an extension to the \smurf\
@@ -1379,7 +1380,7 @@ The iterative pipeline processing described in this paper demonstrates
 the possibilities for advanced heterodyne cube reconstruction if we
 begin to use techniques more akin to those used by iterative
 map-makers for bolometer cameras
-\citep[e.g.][]{2013MNRAS.430.2545C}. The next step is to explicitly
+\citep[e.g.,][]{2013MNRAS.430.2545C}. The next step is to explicitly
 embrace such techniques, building up explicit models of the
 astronomical emission and baselines and enhance this to have models
 involving knowledge of which detectors have related local oscillators
