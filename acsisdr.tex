@@ -175,8 +175,8 @@ offered many observing advantages over the previous single
 receptor-capable spectrometer, the DAS \citep[Dutch Autocorrelation
 Spectrometer;][]{1986SPIE..598..134B}. Importantly, these included
 support for a much wider variety of telescope observing modes, which
-could be processed by the reconfigurable real-time data reduction
-system known as ACSIS-DR \citep{2000ASPC..216..502L}. The HARP/ACSIS
+could be processed by the reconfigurable real-time online data reduction
+system \citep{2000ASPC..216..502L}. The HARP/ACSIS
 science goals involved mapping the intensity and characterising the
 dynamics of cold molecular species in the ISM (such as CO and HCN), as
 part of a programme of large scale JCMT legacy surveys
@@ -194,7 +194,7 @@ single-detector instruments. Scripting interfaces and tools for
 curating collections of spectra were insufficient as the data rates
 increased and data pipelines \citep[e.g.,][]{1995ASPC...75..117W} and
 algorithms that work on the full data set
-\citep[e.g.,][]{2002ASPC..278..329M} were suggested. The ACSIS data
+\citep[e.g.,][]{2002ASPC..278..329M} were suggested. The ACSIS online data
 reduction system \citep{2000ASPC..216..502L,2000SPIE.4015..114H},
 delivered to the JCMT in 2005, aimed to deal with the data rate issues
 by providing a real-time pipeline that co-added the calibrated
@@ -205,7 +205,7 @@ with it. Coadding spectra into the cube allowed for impressive ``data
 compression'' for stare and jiggle observing modes, which repeatedly
 observe a fixed set of positions, but the gains were less in scanning
 observing modes.
-The gridded and co-added data cube was the product that was archived
+The gridded, baselined and co-added data cube was the product that was archived
 and taken away by the astronomer for further analysis, although it was
 also possible to store the raw data in CASA (\ascl{1107.013}) measurement sets
 \citep{2012ASPC..461..849P}\footnote{At the time this was being
@@ -219,12 +219,16 @@ necessary that the observer specify the baseline regions and any
 frequency binning required. Since such a process as a whole is
 irreversible, on a fundamental level it is not well-adapted to
 astronomical research where observations are not well characterized
-and pre-set values may turn out to be a poor choice.  Consequently,
+and pre-set values may turn out to be a poor choice. It is also not
+compatible with modern approaches to flexible scheduling
+\citep{2002ASPC..281..488E} where the astronomer planning the
+observations is not doing the observing. Consequently,
 when it became clear in 2006 that computers were fast enough and disk capacity
 large enough to be able to store the observed spectra without the need
 of real-time regridding and coadding, this further data reduction was
-migrated to a pipeline and the calibrated spectra were the raw data
-written by the instrument.
+migrated to a separate loosely coupled pipeline system and the calibrated
+spectra became the raw data written by the instrument and archived by
+the observatory.
 
 A post-acquisition data reduction pipeline has clear advantages and is
 now implemented in some form at most modern observatories. Foremost,
@@ -248,7 +252,7 @@ different projects.
 The pipeline at the JCMT is implemented by writing heterodyne data
 reduction recipes for the ORAC-DR pipeline infrastructure
 \citep[][\ascl{1310.001}]{2011tfa..confE..42J,2015A&C.....9...40J} that was already in
-use at the telescope. The first guiding principle for the overall
+use at the telescope with SCUBA \citep[e.g.,][]{1999ASPC..172..171J}. The first guiding principle for the overall
 design is for the pipeline to deliver sensible results based only on
 information in the data files themselves, without any further user
 input. This driver for minimizing user input leads to two key requirements
