@@ -1446,8 +1446,8 @@ available on GitHub\footnote{\url{https://github.com/Starlink}}.
 \label{sec:rawdata}
 
 Raw data files at JCMT are written to HDS format files
-\citep[e.g.,][]{2015HDS} using the extensible \emph{N}-Dimensional
-Data Format \citep[NDF;][]{2015NDF}. The spectral data are stored in a
+\citep[e.g.,][\ascl{1502.009}]{2015HDS} using the extensible \emph{N}-Dimensional
+Data Format \citep[NDF;][\ascl{1411.023}]{2015NDF}. The spectral data are stored in a
 3-D data array dimensioned by spectrum channels/frequency, detector
 number and time. In addition to a FITS-style header, three extensions
 are used to describe the data. The \texttt{JCMTOCS} extension contains
@@ -1461,7 +1461,8 @@ and acquisition time of each spectrum (using TAI), but also includes
 the local oscillator settings, environmental parameters such as
 temperature and air pressure and the position of the secondary mirror
 (only needed for jiggle observing modes).  A complete description of
-the heterodyne data file format can be found in \citet{OCS_ICD_022}.
+the heterodyne data file format, including a full list of header
+parameters, can be found in \citet{OCS_ICD_022}.
 
 
 %% References
