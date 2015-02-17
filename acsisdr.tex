@@ -584,17 +584,25 @@ The pipeline can then be instructed to use this custom recipe instead of the def
 
 The parameters associated with the primitives, however, give access to only a small
 number of the full set of parameters allowable for the Starlink routines. A user can access
-these by setting up a special configuration file. A single configuration file for a project can
+a subset of these by setting up a special configuration file called a recipe
+parameter file. A single configuration file for a project can
 be used to assign different parameter values for observations of different fields and
 different observing frequencies. An example is setting an allowable velocity range for
 spectral features: the default pipeline makes no assumption about this which often results
 in including in its analysis large sections of the data cube with only noise. This can lead
 to problems from the cumulative effect of 4- or 5-sigma noise spikes. Pre-specifying the
-allowed velocity range typically is an effective way to improve pipeline results.
+allowed velocity range typically is an effective way to improve
+pipeline results. Recipe parameters can also be used to control how to
+bin up the frequency scale, specifying the output grid and any
+regridding parameters, and also whether to enable or disable
+flatfielding (\S\,\ref{sec:flat}) and bad-baseline filtering (\S\,\ref{sec:badbase}).
 
 The JSA is configured to accept ``user'' defined configuration files: if such
 a file exists for the observation being requested, it will be used in place of the default
-pipeline reduction of the data.
+pipeline reduction of the data. The pipeline is designed at the moment
+to always start from the raw data and can not begin part way through a
+recipe; modifying a recipe parameter that is only used late in the
+processing still requires that all the initial processing is performed.
 
 \subsection{Improvements}
 
@@ -888,7 +896,7 @@ printing through and shows much more dynamic range than the naive
 integrated intensity image.
 
 \subsection{Removal of Bad-Baseline Spectra}
-
+\label{sec:badbase}
 
 The spectra delivered by ACSIS/HARP can often include non-astronomical
 signal arising from many sources, both local and external to the  JCMT. The
@@ -1148,6 +1156,7 @@ assurance, but now has been used for science
 \end{figure}
 
 \subsection{Flatfielding}
+\label{sec:flat}
 
 HARP data from its early years seemed to have problems with the
 relative calibration of the detectors.  A self flatfielding algorithm
@@ -1209,15 +1218,6 @@ astronomical emission.  None proved better than the Curtis formula.
   exhibit weaker detector differences than this example.}
 \label{fig:flatfield:results}
 \end{figure}
-
-
-\subsection{Recipe Tuning}
-
-The data reduction system can be configured by using recipe parameters
-supplied to ORAC-DR in a file. Each recipe has its own set of
-parameters that are supported and these can include options to bin up
-the frequency scale, control the output grid and any regridding
-parameters, and enable or disable flatfielding and bad-baseline filtering.
 
 \subsection{Quality-Assurance Parameters \label{sec:qa}}
 
