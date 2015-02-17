@@ -1390,6 +1390,26 @@ heterodyne part of the Gould's Belt JCMT Legacy Survey
 \citep{2007PASP..119..855W} and the CO High Resolution Survey
 (COHRS), also from the JCMT \citep{2013ApJS..209....8D}.
 
+The algorithms and approach described in this paper should be
+applicable to other heterodyne instrumentation and are not
+JCMT-specific. The implementation using ORAC-DR can only be used with
+raw data written using the JCMT data model
+(Appendix~\ref{sec:rawdata}). Some work has been done on software to
+import data from Supercam \citep{2012SPIE.8452E..04K} and NANTEN2
+SMART \citep{2008stt..conf..488G} into the JCMT format and tests are
+ongoing. We hope that this work will influence the data acquisition
+and data processing plans for other observatories building large focal
+plane arrays. Accurate metadata is a critical component when
+attempting to automate the reduction of thousands of spectra and it is
+no longer acceptable for the data reduction software to have to guess
+important information. For example, some telescopes report the
+position at the start of the row but not the position during a scan,
+and assume that the position of each spectra can be derived by looking
+at the integration time. Trusting that the telescope behaved according
+to the guesses of the software can work when the telescope is moving
+slowly and someone is examining each spectrum but this approach is not
+scalable.
+
 The iterative pipeline processing described in this paper demonstrates
 the possibilities for advanced heterodyne cube reconstruction if we
 begin to use techniques more akin to those used by iterative
