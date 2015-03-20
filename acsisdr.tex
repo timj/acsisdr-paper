@@ -191,7 +191,7 @@ increased and data pipelines \citep[e.g.,][]{1995ASPC...75..117W} and
 algorithms that work on the full data set
 \citep[e.g.,][]{2002ASPC..278..329M} were suggested. The ACSIS online data
 reduction system \citep{2000ASPC..216..502L,2000SPIE.4015..114H},
-delivered to the JCMT in 2005, aimed to deal with the data rate issues
+delivered to the JCMT in 2005, aimed to deal with the data-rate issues
 by providing a real-time pipeline that co-added the calibrated
 spectra, with optional baselining, into a data cube with two spatial axes and one spectral axis.  This strategy
 was forced on us given the computer resources available when ACSIS was
@@ -759,8 +759,8 @@ from input spectra into the output cube.
 One complication is that the data cube for a large area survey is
 potentially extremely large and many software packages do not support
 data arrays with more than $2^{31}$ pixels\footnote{Much of the code
-  is written in Fortran using a signed \texttt{INTEGER*4}.}. We overcome this by
-supporting the ability for the output cube from \makecube\ to
+is written in Fortran using a signed \texttt{INTEGER*4}.}. We overcome
+this by supporting the ability for the output cube from \makecube\ to
 be split into tiles. These tiles share projection parameters and can
 be recombined without further resampling if required. For
 pixel-spreading techniques that are susceptible to edge effects care is
