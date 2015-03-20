@@ -154,7 +154,7 @@ The work described in this paper follows the installation of the ACSIS
 (Auto-Correlation Spectral Imaging System) digital autocorrelation
 spectrometer at the JCMT \citep{2009MNRAS.399.1026B}. ACSIS was
 developed to provide a state-of-the-art spectroscopic backend for the
-then forthcoming 16-element SIS mixer-based HARP focal plane array \citep{2003SPIE.4855..338S}. As
+then forthcoming 16-element SIS mixer-based HARP focal-plane array \citep{2003SPIE.4855..338S}. As
 well as having the capability to deal with 16 receptors at once, the
 ACSIS correlator was designed to be capable of delivering new wideband
 (up to 2\,GHz) and high-resolution (down to 30\,kHz) observing
@@ -254,8 +254,7 @@ main Starlink applications used for the heterodyne pipeline are
 \smurf\ \citep[][\ascl{1310.007}]{SUN258} for instrument-specific
 algorithms, \cupid\ \citep[][\ascl{1311.007}]{2007ASPC..376..425B} for
 determining emission regions, and \KAPPA\
-\citep[][\ascl{1403.022}]{SUN95} for general
-purpose data analysis.
+\citep[][\ascl{1403.022}]{SUN95} for general-purpose data processing.
 
 The first guiding principle for the overall
 design is for the pipeline to deliver sensible results based only on
@@ -619,7 +618,7 @@ parameters associated with fits to either flag high-order baselines
 or to optimize the choice of order used. The fraction of poor fits associated
 with a particular fit order can be used as quality-assessment parameter.
 \item Fields with narrow and broad profile features.  The current pipeline
-is ill-equipped to deal with that fields mix narrow and broad spectral
+is ill-equipped to deal with fields that mix narrow and broad spectral
 lines, such as found in the central regions of galaxies or compact
 outflow sources. Given that the regular baseline routine also produces a
 cube with ``noise-free'' fitted baselines, this cube can be analyzed similar to a
@@ -1468,18 +1467,18 @@ available on GitHub\footnote{\url{https://github.com/Starlink}}.
 Raw data files at JCMT are written to HDS format files
 \citep[e.g.,][\ascl{1502.009}]{2015HDS} using the extensible \emph{N}-Dimensional
 Data Format \citep[NDF;][\ascl{1411.023}]{2015NDF}. The spectral data are stored in a
-3-D data array dimensioned by spectrum channels/frequency, detector
+three-dimensional data array dimensioned by spectrum channels/frequency, detector
 number and time. In addition to a FITS-style header, three extensions
 are used to describe the data. The \texttt{JCMTOCS} extension contains
 a full description of the requested observation in XML format. The
 \texttt{ACSIS} extension describes the individual detectors including
-their positions in the focal plane, their names and the system and
+their positions in the focal plane, their names, and the system and
 receiver temperatures. The \texttt{JCMTSTATE} extensions contains
 time-varying information associated with each time step in the primary
 data array. This primarily includes the telescope tracking position
 and acquisition time of each spectrum (using TAI), but also includes
-the local oscillator settings, environmental parameters such as
-temperature and air pressure and the position of the secondary mirror
+the local oscillator settings; environmental parameters, such as
+temperature and air pressure; and the position of the secondary mirror
 (only needed for jiggle observing modes).  A complete description of
 the heterodyne data file format, including a full list of header
 parameters, can be found in \citet{OCS_ICD_022}.
