@@ -163,7 +163,8 @@ existing single mixer instruments at the JCMT operating at 230\,GHz,
 350\,GHz, 470\,GHz and 690\,GHz. While this work was being carried
 out, the Telescope Control Systems (TCS) and Real Time Sequencer (RTS)
 control systems \citep{2002SPIE.4848..283R} for the JCMT were
-rewritten in preparation for HARP/ACSIS and SCUBA-2 receivers. ACSIS,
+rewritten in preparation for HARP/ACSIS and SCUBA-2
+\citep{2013MNRAS.430.2513H} receivers. ACSIS,
 together with the improvements in telescope software infrastructure,
 offered many observing advantages over the previous single
 receptor-capable spectrometer, the DAS \citep[Dutch Autocorrelation
@@ -176,7 +177,7 @@ dynamics of cold molecular species in the ISM (such as CO and HCN), as
 part of a programme of large scale JCMT legacy surveys
 \citep{2010HiA....15..797C}. These legacy surveys involved wide area
 mapping of both molecular components (using HARP/ACSIS) and dust
-components using SCUBA-2 \citep{2013MNRAS.430.2513H} both within the
+components using SCUBA-2 both within the
 Galaxy \citep{2007PASP..119..855W} and for external galaxies
 \citep{2009ApJ...693.1736W}.
 
@@ -338,7 +339,7 @@ movable secondary mirror of the JCMT at a rate faster than the
 typical time variation of the atmospheric emission (a few
 Hz). Finally, frequency switching involves rapidly retuning the
 receiver's local oscillators to shift the position of the spectral
-lines in the IF passband. None of these methods are completely
+lines in the intermediate-frequency (IF) passband. None of these methods are completely
 effective, especially in poorer weather conditions.  Imperfect
 atmospheric removal can lead to residual unwanted baselines, which may
 have linear, polynomial or sinusoidal forms. In addition, the effects
@@ -700,6 +701,7 @@ position of each spectrum is recorded explicitly in a table using
 the FITS-WCS \texttt{-TAB} algorithm \citep{2006A&A...446..747G}.}
 
 \subsection{Combining Spectra}
+\label{sec:combine_spectra}
 
 The JCMT heterodyne pipeline uses Starlink routines which
 have been designed to maintain accurate variance and flagging data.
@@ -729,7 +731,7 @@ dealing with bad data:
    as the first spectrum contribute to the output spectrum. It
    produces fewer bad pixels in the output than the \texttt{OR}
    scheme without the large memory footprint of the \texttt{AND} scheme.
-   This scheme is useful in absence of intermittent problems and where
+   This scheme is useful in the absence of intermittent problems and where
    the bad pixel mask, for example, results from a long-term instrumental effect, but
    comes with the risk of rejecting large amounts of otherwise good data.
 \end{description}
@@ -751,7 +753,7 @@ neighbours, a Gaussian kernel, and various flavours of kernels based
 on a sinc function.
 
 The resampling can use any of the three schemes described in
-\S\ref{sec:format} to determine how bad pixels are propagated
+\S\ref{sec:combine_spectra} to determine how bad pixels are propagated
 from input spectra into the output cube.
 
 One complication is that the data cube for a large area survey is
@@ -769,8 +771,8 @@ associated bit mask to ensure that it can be disabled during further
 mosaicking or combination steps as the data in the border region will
 have edge effects and is duplicating data found in other tiles.
 
-Heterodyne arrays currently require the detectors have spacing much
-larger than the beam such that the data are inherently
+Heterodyne arrays currently require that the detectors have spacing
+much larger than the beam such that the data are inherently
 under-sampled. Image rotators and clever scanning modes can overcome
 this deficiency to a certain extent but in many cases the spatial
 distribution of samples is inherently uneven. There may be benefits
@@ -855,8 +857,9 @@ cases, of the spectral range.
 
 \subsection{Clumpfind and moments maps \label{sec:moment}}
 
-The Starlink \cupid\ task \findclumps\ is used to do the clump
-find. This is an essential step since moment maps can be compromised
+The Starlink \cupid\ task \findclumps\ is used to finds clumps of
+emission within each spectrum.
+This is an essential step since moment maps can be compromised
 if excessive baseline is included in the calculation. For example, in an
 integrated-intensity calculation the inclusion of all the baseline noise can
 hide a weak line.
@@ -1010,7 +1013,7 @@ shown in Fig.~\ref{fig:badbase:raw_edginess_profile}.  \cupid\
 interference spikes.  Steps in the profile baseline are removed, where
 possible.\footnote{Step correction currently invokes the \smurf\ \fixsteps\
 application which was designed for long time series from the SCUBA-2
-instrument \citep{2013MNRAS.430.2513H}, and in practice
+instrument \citep{2013MNRAS.430.2545C}, and in practice
 requires hundreds of profile elements that are not always available.}
 The final stage is to eject spectra whose rms edginess exceeds the
 median level by a nominated number of clipped standard deviations.
