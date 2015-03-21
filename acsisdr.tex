@@ -1027,13 +1027,15 @@ regions.  While this may throw away the odd good spectrum, it is more
 than compensated by fewer artefacts in the reduced cube.
 
 
-\begin{figure}
-\includegraphics[width=\columnwidth]{raw_edginess_profile}
+\begin{figure*}
+\begin{minipage}{\textwidth}
+\includegraphics[width=\textwidth]{raw_edginess_profile}
 \caption{An example raw edginess profile.  There are five broad
   peaks and one single-spectrum interference around 06:30.  Between
   06:32 and 06:35 is the much weaker signature of ringing.}
 \label{fig:badbase:raw_edginess_profile}
-\end{figure}
+\end{minipage}
+\end{figure*}
 
 An optional second iteration removes most of the striation noise once
 the pronounced edginess peaks are masked.  Determining the extent of
@@ -1054,13 +1056,15 @@ the intensity.  Thus more spectra would be combined into the reduced
 cube.  Given the apparent periodicities, filtering in frequency
 space might also prove effective.
 
-\begin{figure}
-\includegraphics[width=\columnwidth]{ringing_edginess_profile}
+\begin{figure*}
+\begin{minipage}{\textwidth}
+\includegraphics[width=\textwidth]{ringing_edginess_profile}
 \caption{The edginess profile after masking the short-duration
   interference, leaving the ringing signal.  The red is residual
   short-duration interference removed by the dilation.}
 \label{fig:badbase:ringing_edginess_profile}
-\end{figure}
+\end{minipage}
+\end{figure*}
 
 
 \subsubsection{Non-linearity Filtering}
