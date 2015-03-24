@@ -1150,16 +1150,19 @@ sets. This includes at least one that had originally failed quality
 assurance, but now has been used for science
 \citep{2013ApJ...767..126S}.
 
-\begin{figure}
-\includegraphics[width=0.495\columnwidth]{NGC1333_with_badbaselines.png}
-\includegraphics[width=0.495\columnwidth]{NGC1333_badbaselines_removed.png}
+\begin{figure*}
+\begin{minipage}{\textwidth}
+\includegraphics[width=\textwidth]{NGC1333_badbaseline_removal.pdf}
 \caption{A bad-spectra comparison displayed in an integrated intensity map.
   The left panel shows a map without bad-baseline removal.  The right
   panel shows the same data processed using the high- and
-  low-frequency noise filters.  Both images are scaled to the
-  same percentile limits.}
+  low-frequency noise filters.  While the peak astronomical signal in
+  the image is approximately 8, the presence of artefacts cause nearly
+  two percent of all pixels to appear brighter, reaching a maximum over 17.
+  No flatfield correction has been applied.}
 \label{fig:badbase:results}
-\end{figure}
+\end{minipage}
+\end{figure*}
 
 \subsection{Flatfielding}
 \label{sec:flat}
