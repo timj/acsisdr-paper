@@ -4,7 +4,7 @@
 wcsattrib ndf=ga20141117_23_2_integ mode=set name=format"(1)" newval=hms
 wcsattrib ndf=ga20141117_23_2_integ mode=set name=format"(2)" newval=dm
 wcsattrib ndf=12CO_AN-a-bottom_narrow_INTEG mode=set name=format"(1)" newval=hms
-wcsattrib ndf=12CO_AN-a-bottom_narrow_INTEG mode-=set name=format"(2)" newval=dm
+wcsattrib ndf=12CO_AN-a-bottom_narrow_INTEG mode=set name=format"(2)" newval=dm
 
 # Annotate with the Times fount (introduced 2015 Feb 6).
 setenv PGPLOT_PS_FONT Times
