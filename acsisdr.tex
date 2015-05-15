@@ -1,58 +1,60 @@
-% mn2esample.tex
+% mnras_template.tex
 %
-% v2.1 released 22nd May 2002 (G. Hutton)
+% LaTeX template for creating an MNRAS paper
 %
-% The mnsample.tex file has been amended to highlight
-% the proper use of LaTeX2e code with the class file
-% and using natbib cross-referencing. These changes
-% do not reflect the original paper by A. V. Raveendran.
+% v3.0 released 14 May 2015
+% (version numbers match those of mnras.cls)
 %
-% Previous versions of this sample document were
-% compatible with the LaTeX 2.09 style file mn.sty
-% v1.2 released 5th September 1994 (M. Reed)
-% v1.1 released 18th July 1994
-% v1.0 released 28th January 1994
+% Copyright (C) Royal Astronomical Society 2015
+% Authors:
+% Keith T. Smith (Royal Astronomical Society)
 
-\documentclass[useAMS,usenatbib]{mnras}
-\usepackage{graphicx}
-
-% If your system does not have the AMS fonts version 2.0 installed, then
-% remove the useAMS option.
+% Change log
 %
-% useAMS allows you to obtain upright Greek characters.
-% e.g. \umu, \upi etc.  See the section on "Upright Greek characters" in
-% this guide for further information.
-%
-% If you are using AMS 2.0 fonts, bold math letters/symbols are available
-% at a larger range of sizes for NFSS release 1 and 2 (using \boldmath or
-% preferably \bmath).
-%
-% The usenatbib command allows the use of Patrick Daly's natbib.sty for
-% cross-referencing.
-%
-% If you wish to typeset the paper in Times font (if you do not have the
-% PostScript Type 1 Computer Modern fonts you will need to do this to get
-% smoother fonts in a PDF file) then uncomment the next line
-% \usepackage{Times}
+% v3.0 May 2015
+%    Renamed to match the new package name
+%    Version number matches mnras.cls
+%    A few minor tweaks to wording
+% v1.0 September 2013
+%    Beta testing only - never publicly released
+%    First version: a simple (ish) template for creating an MNRAS paper
 
-%%%%% AUTHORS - PLACE YOUR OWN MACROS HERE %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic setup. Most papers should leave these options alone.
+\documentclass[a4paper,fleqn,usenatbib]{mnras}
 
-%\hypersetup{draft=true}
+% MNRAS is set in Times font. If you don't have this installed (most LaTeX
+% installations will be fine) or prefer the old Computer Modern fonts, comment
+% out the following line
+\usepackage{mathptmx}
+% Depending on your LaTeX fonts installation, you might get better results with one of these:
+%\usepackage{txfonts}
+%\usepackage{newtxtext,newtxmath}
 
-%\usepackage{color}
+% Use vector fonts, so it zooms properly in on-screen viewing software
+% Don't change these lines unless you know what you are doing
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
 
-% \linenumbers
+
+%%%%% AUTHORS - PLACE YOUR OWN PACKAGES HERE %%%%%
+
+% Only include extra packages if you really need them. Common packages are:
+\usepackage{graphicx}	% Including figure files
+\usepackage{amsmath}	% Advanced maths commands
+\usepackage{amssymb}	% Extra maths symbols
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% AUTHORS - PLACE YOUR OWN COMMANDS HERE %%%%%
+
+% Please keep new commands to a minimum, and use \newcommand not \def to avoid
+% overwriting existing commands. Example:
+%\newcommand{\pcm}{\,cm$^{-2}$}	% per cm-squared
 
 %% Journal abbreviations
-%\newcommand{\mnras}{Mon Not R Astron Soc}
-%\newcommand{\aap}{Astron Astrophys}
-%\newcommand{\pasp}{Pub Astron Soc Pacific}
-%\newcommand{\apj}{Astrophys J}
-%\newcommand{\apjs}{Astrophys J Supp}
-%\newcommand{\qjras}{Quart J R Astron Soc}
 \newcommand{\an}{Astron.\ Nach.}
 \newcommand{\ijimw}{Int.\ J.\ Infrared \& Millimeter Waves}
-%\newcommand{\procspie}{Proc.\ SPIE}
 \newcommand{\aspconf}{ASP Conf. Ser.}
 
 %% Applications
@@ -72,11 +74,18 @@
 %% Links
 \newcommand{\ascl}[1]{\href{http://www.ascl.net/#1}{ascl:#1}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
+
+% Title of the paper, and the short title which is used in the headers.
+% Keep the title short and informative.
+
 \title[JCMT Heterodyne Data Reduction Pipeline]{Automated reduction of submillimetre single-dish heterodyne
   data from the James Clerk Maxwell Telescope using ORAC-DR}
 
 \author[T. Jenness et al.]
-{Tim~Jenness,$^{1,2}$\thanks{Contact email: tjenness@lsst.org}\thanks{Present address: LSST Project Office, 933 N.\ Cherry Ave, Tucson, AZ~85721, USA}
+{Tim~Jenness,$^{1,2}$\thanks{E-mail: tjenness@lsst.org (TJ)}\thanks{Present address: LSST Project Office, 933 N.\ Cherry Ave, Tucson, AZ~85721, USA}
 Malcolm~J.~Currie,$^1$\thanks{Present address: RAL Space, STFC Rutherford Appleton Laboratory, Harwell Oxford, Didcot, Oxfordshire OX11~0QX, UK}
 Remo~P.~J.~Tilanus,$^1$\thanks{Present address: Leiden Observatory, PO Box 9513, 2300 RA Leiden, The Netherlands}
 Brad~Cavanagh,$^1$
@@ -90,16 +99,14 @@ $^1$Joint Astronomy Centre, 660 N.\ A`oh\=ok\=u Place, Hilo, HI~96720, USA \\
 $^2$Department of Astronomy, Cornell University, Ithaca, NY~14853, USA
 }
 
-
-\begin{document}
-
 \date{in development; in original form 2014 December 2}
+\pubyear{2015}
 
-\pagerange{\pageref{firstpage}--\pageref{lastpage}} \pubyear{2015}
-
-\maketitle
-
+% Don't change these lines
+\begin{document}
 \label{firstpage}
+\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+\maketitle
 
 \begin{abstract}
 %% Text of abstract
@@ -1490,82 +1497,13 @@ temperature and air pressure; and the position of the secondary mirror
 the heterodyne data file format, including a full list of header
 parameters, can be found in \citet{OCS_ICD_022}.
 
-
-%% References
-%%
-%% Following citation commands can be used in the body text:
-%%
-%%  \citet{key}  ==>>  Jones et al. (1990)
-%%  \citep{key}  ==>>  (Jones et al., 1990)
-%%
-%% Multiple citations as normal:
-%% \citep{key1,key2}         ==>> (Jones et al., 1990; Smith, 1989)
-%%                            or  (Jones et al., 1990, 1991)
-%%                            or  (Jones et al., 1990a,b)
-%% \cite{key} is the equivalent of \citet{key} in author-year mode
-%%
-%% Full author lists may be forced with \citet* or \citep*, e.g.
-%%   \citep*{key}            ==>> (Jones, Baker, and Williams, 1990)
-%%
-%% Optional notes as:
-%%   \citep[chap. 2]{key}    ==>> (Jones et al., 1990, chap. 2)
-%%   \citep[e.g.,][]{key}    ==>> (e.g., Jones et al., 1990)
-%%   \citep[see][pg. 34]{key}==>> (see Jones et al., 1990, pg. 34)
-%%  (Note: in standard LaTeX, only one note is allowed, after the ref.
-%%   Here, one note is like the standard, two make pre- and post-notes.)
-%%
-%%   \citealt{key}          ==>> Jones et al. 1990
-%%   \citealt*{key}         ==>> Jones, Baker, and Williams 1990
-%%   \citealp{key}          ==>> Jones et al., 1990
-%%   \citealp*{key}         ==>> Jones, Baker, and Williams, 1990
-%%
-%% Additional citation possibilities
-%%   \citeauthor{key}       ==>> Jones et al.
-%%   \citeauthor*{key}      ==>> Jones, Baker, and Williams
-%%   \citeyear{key}         ==>> 1990
-%%   \citeyearpar{key}      ==>> (1990)
-%%   \citetext{priv. comm.} ==>> (priv. comm.)
-%%   \citenum{key}          ==>> 11 [non-superscripted]
-%% Note: full author lists depends on whether the bib style supports them;
-%%       if not, the abbreviated list is printed even when full requested.
-%%
-%% For names like della Robbia at the start of a sentence, use
-%%   \Citet{dRob98}         ==>> Della Robbia (1998)
-%%   \Citep{dRob98}         ==>> (Della Robbia, 1998)
-%%   \Citeauthor{dRob98}    ==>> Della Robbia
-
-
 %% References with bibTeX database:
 
 \bibliographystyle{mnras}
 \bibliography{acsisdr}
 
-%% Authors are advised to submit their bibtex database files. They are
-%% requested to list a bibtex style file in the manuscript if they do
-%% not want to use model2-names.bst.
-
-%% References without bibTeX database:
-
-% \begin{thebibliography}{00}
-
-%% \bibitem must have one of the following forms:
-%%   \bibitem[Jones et al.(1990)]{key}...
-%%   \bibitem[Jones et al.(1990)Jones, Baker, and Williams]{key}...
-%%   \bibitem[Jones et al., 1990]{key}...
-%%   \bibitem[\protect\citeauthoryear{Jones, Baker, and Williams}{Jones
-%%       et al.}{1990}]{key}...
-%%   \bibitem[\protect\citeauthoryear{Jones et al.}{1990}]{key}...
-%%   \bibitem[\protect\astroncite{Jones et al.}{1990}]{key}...
-%%   \bibitem[\protect\citename{Jones et al., }1990]{key}...
-%%   \harvarditem[Jones et al.]{Jones, Baker, and Williams}{1990}{key}...
-%%
-
-% \bibitem[ ()]{}
-
-% \end{thebibliography}
+% Don't change these lines
+\bsp	% typesetting comment
 \label{lastpage}
-\bsp
 \end{document}
 
-%%
-%% End of file `elsarticle-template-2-harv.tex'.
