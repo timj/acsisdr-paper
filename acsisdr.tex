@@ -66,6 +66,7 @@
 \newcommand{\makecube}{\textsc{makecube}}
 \newcommand{\unmakecube}{\textsc{unmakecube}}
 \newcommand{\mfittrend}{\textsc{mfittrend}}
+\newcommand{\collapse}{\textsc{collapse}}
 \newcommand{\gsdacsis}{\textsc{gsd{\footnotesize{2}}acsis}}
 \newcommand{\findback}{\textsc{findback}}
 \newcommand{\findclumps}{\textsc{findclumps}}
@@ -534,9 +535,12 @@ are applied to the unsmoothed baselined data. A moments analysis routine
 (see \mbox{\S \ref{sec:moment}}) can then be used with the masked data set to
 extract, for example, a total emission map or velocity field. Since higher-order moments are
 more sensitive to noise features, different S/N cutoffs are used for the
-clump masks used for the different moments. This approach results in deep
+clump masks used for the different moments; the RMS threshold
+is 3 sigma for integrated intensity determination, but 4.5 sigma for
+moments higher than zero. This approach results in deep
 total emission (zero-moment) maps as well as reliable anomaly-free
-velocity (first-moment) maps.
+velocity (first-moment) maps. The moments supported by the pipeline are
+those implemented by the \KAPPA\ \collapse\ command.
 
 
 \subsection{Iterative processing}
