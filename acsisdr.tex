@@ -604,12 +604,15 @@ bin up the frequency scale, specifying the output grid and any
 regridding parameters, and also whether to enable or disable
 flatfielding (\S\,\ref{sec:flat}) and bad-baseline filtering (\S\,\ref{sec:badbase}).
 
-The JSA is configured to accept ``user'' defined configuration files: if such
-a file exists for the observation being requested, it will be used in place of the default
-pipeline reduction of the data. The pipeline is designed at the moment
-to always start from the raw data and can not begin part way through a
-recipe; modifying a recipe parameter that is only used late in the
-processing still requires that all the initial processing is performed.
+The JSA is configured to accept ``user'' defined configuration files:
+if such a file exists for the observation being requested, it will be
+used in place of the default pipeline reduction of the data. Given the
+origins of ORAC-DR as an on-line data reduction pipeline
+\citep{2015A&C.....9...40J,1999ASPC..172...11E}, the design is such
+that the pipeline is currently constrained to always start from the
+raw data and can not begin part way through a recipe; modifying a
+recipe parameter that is only used late in the processing still
+requires that all the initial processing is performed.
 
 \subsection{Improvements}
 
