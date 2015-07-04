@@ -430,7 +430,7 @@ This is followed by a group
 phase where baselines are removed and emission selected in the coadded
 cube.  Next follows an iterative step: the resulting masks are
 re-expanded into the time-domain and applied to the individual
-observations with the aim at producing a better group file. Given that
+observations with the aim at producing a better group cube. Given that
 accurate baseline (emission-free) regions are available, higher
 order baselines can be removed from the individual observations and
 tighter QA tests can be applied. These three phases are discussed in
@@ -494,7 +494,7 @@ compared with typical width of spectral lines.
 Smoothing the data will emphasize extended regions of emission in the
 three-dimensional data cube, but bias against weak narrow-line features that are also
 point-like. Projects that search for such objects need to use specialized
-software to analyze the basic, unsmoothed, group file directly.
+software to analyze the basic, unsmoothed, group cube directly.
 
 For standard processing, the resulting smoothed high-S/N cube
 is then used by the baseline-fitting routine, \mfittrend\ from
@@ -545,7 +545,7 @@ The group processing described above delivers a baselined data cube,
 baseline and clump masks, and moments maps. Iterative processing uses
 the baseline mask from the group data cube to improve the baseline fit
 of the individual observations. These in turn are used to generate an improved
-group file, which is then reduced using the same steps as in the first iteration.
+group cube, which is then reduced using the same steps as in the first iteration.
 
 In order to apply the masks to the raw data, the masks need to be resampled
 in a time and detector domain. This is done using the \smurf\ \unmakecube\ task.
